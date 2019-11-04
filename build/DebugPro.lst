@@ -1,0 +1,229 @@
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccWaNl7K.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"DebugPro.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.global	__aeabi_fmul
+  16              		.global	__aeabi_f2uiz
+  17              		.section	.text.DebugPro,"ax",%progbits
+  18              		.align	1
+  19              		.global	DebugPro
+  20              		.arch armv7-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu softvfp
+  26              	DebugPro:
+  27              	.LFB65:
+  28              		.file 1 "APP/DebugPro.c"
+   1:APP/DebugPro.c **** #include "DebugPro.h"
+   2:APP/DebugPro.c **** 
+   3:APP/DebugPro.c **** u8 msg[21];
+   4:APP/DebugPro.c **** 
+   5:APP/DebugPro.c **** void DebugPro(void)
+   6:APP/DebugPro.c **** {
+  29              		.loc 1 6 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 38B5     		push	{r3, r4, r5, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 3, -16
+  37              		.cfi_offset 4, -12
+  38              		.cfi_offset 5, -8
+  39              		.cfi_offset 14, -4
+   7:APP/DebugPro.c **** 	u16 *p;
+  40              		.loc 1 7 2 view .LVU1
+   8:APP/DebugPro.c **** 	*(u32*)msg = 0x55335533;
+  41              		.loc 1 8 2 view .LVU2
+  42              		.loc 1 8 13 is_stmt 0 view .LVU3
+  43 0002 244C     		ldr	r4, .L3
+  44 0004 244B     		ldr	r3, .L3+4
+  45 0006 2360     		str	r3, [r4]	@ unaligned
+   9:APP/DebugPro.c **** 	msg[4] = Vol.VAC;
+  46              		.loc 1 9 2 is_stmt 1 view .LVU4
+  47              		.loc 1 9 14 is_stmt 0 view .LVU5
+  48 0008 244D     		ldr	r5, .L3+8
+  49 000a 95F86630 		ldrb	r3, [r5, #102]	@ zero_extendqisi2
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccWaNl7K.s 			page 2
+
+
+  50              		.loc 1 9 9 view .LVU6
+  51 000e 2371     		strb	r3, [r4, #4]
+  10:APP/DebugPro.c **** 	p = (u16*)&msg[5];
+  52              		.loc 1 10 2 is_stmt 1 view .LVU7
+  53              	.LVL0:
+  11:APP/DebugPro.c **** 	*p++ = 17;
+  54              		.loc 1 11 2 view .LVU8
+  55              		.loc 1 11 7 is_stmt 0 view .LVU9
+  56 0010 4FF01103 		mov	r3, #17	@ movhi
+  57 0014 A4F80530 		strh	r3, [r4, #5]	@ unaligned
+  12:APP/DebugPro.c **** 	*p++ = (u16)(Vol.VFN * 100);
+  58              		.loc 1 12 2 is_stmt 1 view .LVU10
+  59              		.loc 1 12 23 is_stmt 0 view .LVU11
+  60 0018 2149     		ldr	r1, .L3+12
+  61 001a A86E     		ldr	r0, [r5, #104]	@ float
+  62 001c FFF7FEFF 		bl	__aeabi_fmul
+  63              	.LVL1:
+  64              		.loc 1 12 9 view .LVU12
+  65 0020 FFF7FEFF 		bl	__aeabi_f2uiz
+  66              	.LVL2:
+  67              		.loc 1 12 7 view .LVU13
+  68 0024 A4F80700 		strh	r0, [r4, #7]	@ unaligned
+  13:APP/DebugPro.c **** 	*p++ = (u16)(Vol.VTY * 100);
+  69              		.loc 1 13 2 is_stmt 1 view .LVU14
+  70              		.loc 1 13 23 is_stmt 0 view .LVU15
+  71 0028 1D49     		ldr	r1, .L3+12
+  72 002a E86E     		ldr	r0, [r5, #108]	@ float
+  73 002c FFF7FEFF 		bl	__aeabi_fmul
+  74              	.LVL3:
+  75              		.loc 1 13 9 view .LVU16
+  76 0030 FFF7FEFF 		bl	__aeabi_f2uiz
+  77              	.LVL4:
+  78              		.loc 1 13 7 view .LVU17
+  79 0034 A4F80900 		strh	r0, [r4, #9]	@ unaligned
+  14:APP/DebugPro.c **** 	*p++ = (u16)(Vol.BAT * 100);
+  80              		.loc 1 14 2 is_stmt 1 view .LVU18
+  81              		.loc 1 14 23 is_stmt 0 view .LVU19
+  82 0038 1949     		ldr	r1, .L3+12
+  83 003a 286F     		ldr	r0, [r5, #112]	@ float
+  84 003c FFF7FEFF 		bl	__aeabi_fmul
+  85              	.LVL5:
+  86              		.loc 1 14 9 view .LVU20
+  87 0040 FFF7FEFF 		bl	__aeabi_f2uiz
+  88              	.LVL6:
+  89              		.loc 1 14 7 view .LVU21
+  90 0044 A4F80B00 		strh	r0, [r4, #11]	@ unaligned
+  15:APP/DebugPro.c **** 	*p++ = (u16)(Vol.VBAT * 100);
+  91              		.loc 1 15 2 is_stmt 1 view .LVU22
+  92              		.loc 1 15 24 is_stmt 0 view .LVU23
+  93 0048 1549     		ldr	r1, .L3+12
+  94 004a 686F     		ldr	r0, [r5, #116]	@ float
+  95 004c FFF7FEFF 		bl	__aeabi_fmul
+  96              	.LVL7:
+  97              		.loc 1 15 9 view .LVU24
+  98 0050 FFF7FEFF 		bl	__aeabi_f2uiz
+  99              	.LVL8:
+ 100              		.loc 1 15 7 view .LVU25
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccWaNl7K.s 			page 3
+
+
+ 101 0054 A4F80D00 		strh	r0, [r4, #13]	@ unaligned
+  16:APP/DebugPro.c **** 	*p++ = (u16)(Vol.IF * 100);
+ 102              		.loc 1 16 2 is_stmt 1 view .LVU26
+ 103              		.loc 1 16 22 is_stmt 0 view .LVU27
+ 104 0058 1149     		ldr	r1, .L3+12
+ 105 005a A86F     		ldr	r0, [r5, #120]	@ float
+ 106 005c FFF7FEFF 		bl	__aeabi_fmul
+ 107              	.LVL9:
+ 108              		.loc 1 16 9 view .LVU28
+ 109 0060 FFF7FEFF 		bl	__aeabi_f2uiz
+ 110              	.LVL10:
+ 111              		.loc 1 16 7 view .LVU29
+ 112 0064 A4F80F00 		strh	r0, [r4, #15]	@ unaligned
+  17:APP/DebugPro.c **** 	*p++ = (u16)(Vol.IC * 100);
+ 113              		.loc 1 17 2 is_stmt 1 view .LVU30
+ 114              		.loc 1 17 22 is_stmt 0 view .LVU31
+ 115 0068 0D49     		ldr	r1, .L3+12
+ 116 006a E86F     		ldr	r0, [r5, #124]	@ float
+ 117 006c FFF7FEFF 		bl	__aeabi_fmul
+ 118              	.LVL11:
+ 119              		.loc 1 17 9 view .LVU32
+ 120 0070 FFF7FEFF 		bl	__aeabi_f2uiz
+ 121              	.LVL12:
+ 122              		.loc 1 17 7 view .LVU33
+ 123 0074 A4F81100 		strh	r0, [r4, #17]	@ unaligned
+  18:APP/DebugPro.c **** 	CrcUtil.SetCrc(msg,21);
+ 124              		.loc 1 18 2 is_stmt 1 view .LVU34
+ 125              		.loc 1 18 9 is_stmt 0 view .LVU35
+ 126 0078 0A4B     		ldr	r3, .L3+16
+ 127 007a 1B68     		ldr	r3, [r3]
+ 128              		.loc 1 18 2 view .LVU36
+ 129 007c 1521     		movs	r1, #21
+ 130 007e 2046     		mov	r0, r4
+ 131 0080 9847     		blx	r3
+ 132              	.LVL13:
+  19:APP/DebugPro.c **** 	Uart1SendData(msg,21);
+ 133              		.loc 1 19 2 is_stmt 1 view .LVU37
+ 134 0082 1521     		movs	r1, #21
+ 135 0084 2046     		mov	r0, r4
+ 136 0086 FFF7FEFF 		bl	Uart1SendData
+ 137              	.LVL14:
+  20:APP/DebugPro.c **** 	Uart2SendData(msg,21);
+ 138              		.loc 1 20 2 view .LVU38
+ 139 008a 1521     		movs	r1, #21
+ 140 008c 2046     		mov	r0, r4
+ 141 008e FFF7FEFF 		bl	Uart2SendData
+ 142              	.LVL15:
+  21:APP/DebugPro.c **** }
+ 143              		.loc 1 21 1 is_stmt 0 view .LVU39
+ 144 0092 38BD     		pop	{r3, r4, r5, pc}
+ 145              	.L4:
+ 146              		.align	2
+ 147              	.L3:
+ 148 0094 00000000 		.word	msg
+ 149 0098 33553355 		.word	1429427507
+ 150 009c 00000000 		.word	Vol
+ 151 00a0 0000C842 		.word	1120403456
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccWaNl7K.s 			page 4
+
+
+ 152 00a4 00000000 		.word	CrcUtil
+ 153              		.cfi_endproc
+ 154              	.LFE65:
+ 156              		.comm	msg,21,4
+ 157              		.text
+ 158              	.Letext0:
+ 159              		.file 2 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 160              		.file 3 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/_stdint.h"
+ 161              		.file 4 "Inc/stm32l152xe.h"
+ 162              		.file 5 "/Users/shuuyou/gcc-arm-none-eabi/lib/gcc/arm-none-eabi/8.3.1/include/stddef.h"
+ 163              		.file 6 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/_types.h"
+ 164              		.file 7 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/reent.h"
+ 165              		.file 8 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/lock.h"
+ 166              		.file 9 "Inc/core_cm3.h"
+ 167              		.file 10 "APP/inc/Public.h"
+ 168              		.file 11 "RML1028B/RML1028B.h"
+ 169              		.file 12 "HARDWARE/inc/Temputer.h"
+ 170              		.file 13 "HARDWARE/inc/Adc.h"
+ 171              		.file 14 "HARDWARE/inc/Timer.h"
+ 172              		.file 15 "HARDWARE/inc/Control.h"
+ 173              		.file 16 "TOOL/inc/malloc.h"
+ 174              		.file 17 "TOOL/inc/TaskManger.h"
+ 175              		.file 18 "DISPALY/inc/DispManger.h"
+ 176              		.file 19 "TOOL/inc/CrcUtil.h"
+ 177              		.file 20 "APP/inc/VolPro.h"
+ 178              		.file 21 "APP/inc/FreqPro.h"
+ 179              		.file 22 "APP/inc/ParasCheckPro.h"
+ 180              		.file 23 "APP/inc/TemputerPro.h"
+ 181              		.file 24 "HARDWARE/inc/Uart.h"
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccWaNl7K.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 DebugPro.c
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccWaNl7K.s:18     .text.DebugPro:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccWaNl7K.s:26     .text.DebugPro:0000000000000000 DebugPro
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccWaNl7K.s:148    .text.DebugPro:0000000000000094 $d
+                            *COM*:0000000000000015 msg
+
+UNDEFINED SYMBOLS
+__aeabi_fmul
+__aeabi_f2uiz
+Uart1SendData
+Uart2SendData
+Vol
+CrcUtil

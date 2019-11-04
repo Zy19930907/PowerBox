@@ -1,0 +1,336 @@
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccNRLjU8.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"CrcUtil.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.CalCrc16,"ax",%progbits
+  16              		.align	1
+  17              		.arch armv7-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	CalCrc16:
+  24              	.LVL0:
+  25              	.LFB65:
+  26              		.file 1 "TOOL/CrcUtil.c"
+   1:TOOL/CrcUtil.c **** #include "CrcUtil.h"
+   2:TOOL/CrcUtil.c **** 
+   3:TOOL/CrcUtil.c **** #define CRCGENP   0xA001
+   4:TOOL/CrcUtil.c **** 
+   5:TOOL/CrcUtil.c **** static void SetCrc(u8 *dat,u16 len);
+   6:TOOL/CrcUtil.c **** static u8 CheckCrc(u8 *dat,u16 len);
+   7:TOOL/CrcUtil.c **** 
+   8:TOOL/CrcUtil.c **** _CrcUtil CrcUtil = {
+   9:TOOL/CrcUtil.c ****     .SetCrc = SetCrc,
+  10:TOOL/CrcUtil.c ****     .CheckCrc = CheckCrc,
+  11:TOOL/CrcUtil.c **** };
+  12:TOOL/CrcUtil.c **** //计算数据CRC校验值
+  13:TOOL/CrcUtil.c **** static u16 CalCrc16(u8 *read_buf,u16 len)
+  14:TOOL/CrcUtil.c **** {
+  27              		.loc 1 14 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32              		.loc 1 14 1 is_stmt 0 view .LVU1
+  33 0000 30B4     		push	{r4, r5}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 4, -8
+  37              		.cfi_offset 5, -4
+  15:TOOL/CrcUtil.c **** 	u16 i,Crc16 = 0xFFFF;
+  38              		.loc 1 15 2 is_stmt 1 view .LVU2
+  39              	.LVL1:
+  16:TOOL/CrcUtil.c **** 	u8 j,k ;
+  40              		.loc 1 16 2 view .LVU3
+  17:TOOL/CrcUtil.c **** 	for(i=0;i<len;i++)
+  41              		.loc 1 17 2 view .LVU4
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccNRLjU8.s 			page 2
+
+
+  15:TOOL/CrcUtil.c **** 	u16 i,Crc16 = 0xFFFF;
+  42              		.loc 1 15 8 is_stmt 0 view .LVU5
+  43 0002 4FF6FF73 		movw	r3, #65535
+  44              		.loc 1 17 7 view .LVU6
+  45 0006 0025     		movs	r5, #0
+  46              		.loc 1 17 2 view .LVU7
+  47 0008 10E0     		b	.L2
+  48              	.LVL2:
+  49              	.L4:
+  18:TOOL/CrcUtil.c **** 	{
+  19:TOOL/CrcUtil.c **** 		k = 0;
+  20:TOOL/CrcUtil.c **** 		Crc16 ^= *(read_buf + i);
+  21:TOOL/CrcUtil.c **** 		for(j=0;j<8;j++)
+  50              		.loc 1 21 16 discriminator 2 view .LVU8
+  51 000a 0132     		adds	r2, r2, #1
+  52              	.LVL3:
+  53              		.loc 1 21 16 discriminator 2 view .LVU9
+  54 000c D2B2     		uxtb	r2, r2
+  55              	.LVL4:
+  56              	.L3:
+  57              		.loc 1 21 3 discriminator 1 view .LVU10
+  58 000e 072A     		cmp	r2, #7
+  59 0010 0AD8     		bhi	.L8
+  22:TOOL/CrcUtil.c **** 		{
+  23:TOOL/CrcUtil.c **** 			k = (Crc16 & 0x0001);
+  60              		.loc 1 23 4 is_stmt 1 view .LVU11
+  61              		.loc 1 23 6 is_stmt 0 view .LVU12
+  62 0012 03F00104 		and	r4, r3, #1
+  63              	.LVL5:
+  24:TOOL/CrcUtil.c **** 			Crc16 >>= 1;
+  64              		.loc 1 24 4 is_stmt 1 view .LVU13
+  65              		.loc 1 24 10 is_stmt 0 view .LVU14
+  66 0016 5B08     		lsrs	r3, r3, #1
+  67              	.LVL6:
+  25:TOOL/CrcUtil.c **** 			Crc16 &= 0x7FFF;
+  68              		.loc 1 25 4 is_stmt 1 view .LVU15
+  26:TOOL/CrcUtil.c **** 			if(k)
+  69              		.loc 1 26 4 view .LVU16
+  70              		.loc 1 26 6 is_stmt 0 view .LVU17
+  71 0018 002C     		cmp	r4, #0
+  72 001a F6D0     		beq	.L4
+  27:TOOL/CrcUtil.c **** 				Crc16 ^= CRCGENP;
+  73              		.loc 1 27 5 is_stmt 1 view .LVU18
+  74              		.loc 1 27 11 is_stmt 0 view .LVU19
+  75 001c 83F42043 		eor	r3, r3, #40960
+  76              	.LVL7:
+  77              		.loc 1 27 11 view .LVU20
+  78 0020 83F00103 		eor	r3, r3, #1
+  79              	.LVL8:
+  80              		.loc 1 27 11 view .LVU21
+  81 0024 9BB2     		uxth	r3, r3
+  82              	.LVL9:
+  83              		.loc 1 27 11 view .LVU22
+  84 0026 F0E7     		b	.L4
+  85              	.LVL10:
+  86              	.L8:
+  17:TOOL/CrcUtil.c **** 	{
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccNRLjU8.s 			page 3
+
+
+  87              		.loc 1 17 17 discriminator 2 view .LVU23
+  88 0028 0135     		adds	r5, r5, #1
+  89              	.LVL11:
+  17:TOOL/CrcUtil.c **** 	{
+  90              		.loc 1 17 17 discriminator 2 view .LVU24
+  91 002a ADB2     		uxth	r5, r5
+  92              	.LVL12:
+  93              	.L2:
+  17:TOOL/CrcUtil.c **** 	{
+  94              		.loc 1 17 2 discriminator 1 view .LVU25
+  95 002c 8D42     		cmp	r5, r1
+  96 002e 03D2     		bcs	.L9
+  19:TOOL/CrcUtil.c **** 		Crc16 ^= *(read_buf + i);
+  97              		.loc 1 19 3 is_stmt 1 view .LVU26
+  98              	.LVL13:
+  20:TOOL/CrcUtil.c **** 		for(j=0;j<8;j++)
+  99              		.loc 1 20 3 view .LVU27
+  20:TOOL/CrcUtil.c **** 		for(j=0;j<8;j++)
+ 100              		.loc 1 20 12 is_stmt 0 view .LVU28
+ 101 0030 425D     		ldrb	r2, [r0, r5]	@ zero_extendqisi2
+  20:TOOL/CrcUtil.c **** 		for(j=0;j<8;j++)
+ 102              		.loc 1 20 9 view .LVU29
+ 103 0032 5340     		eors	r3, r3, r2
+ 104              	.LVL14:
+  21:TOOL/CrcUtil.c **** 		{
+ 105              		.loc 1 21 3 is_stmt 1 view .LVU30
+  21:TOOL/CrcUtil.c **** 		{
+ 106              		.loc 1 21 8 is_stmt 0 view .LVU31
+ 107 0034 0022     		movs	r2, #0
+  21:TOOL/CrcUtil.c **** 		{
+ 108              		.loc 1 21 3 view .LVU32
+ 109 0036 EAE7     		b	.L3
+ 110              	.LVL15:
+ 111              	.L9:
+  28:TOOL/CrcUtil.c **** 		}
+  29:TOOL/CrcUtil.c **** 	}
+  30:TOOL/CrcUtil.c **** 	return Crc16;
+ 112              		.loc 1 30 2 is_stmt 1 view .LVU33
+  31:TOOL/CrcUtil.c **** }
+ 113              		.loc 1 31 1 is_stmt 0 view .LVU34
+ 114 0038 1846     		mov	r0, r3
+ 115              	.LVL16:
+ 116              		.loc 1 31 1 view .LVU35
+ 117 003a 30BC     		pop	{r4, r5}
+ 118              	.LCFI1:
+ 119              		.cfi_restore 5
+ 120              		.cfi_restore 4
+ 121              		.cfi_def_cfa_offset 0
+ 122              	.LVL17:
+ 123              		.loc 1 31 1 view .LVU36
+ 124 003c 7047     		bx	lr
+ 125              		.cfi_endproc
+ 126              	.LFE65:
+ 128              		.section	.text.SetCrc,"ax",%progbits
+ 129              		.align	1
+ 130              		.syntax unified
+ 131              		.thumb
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccNRLjU8.s 			page 4
+
+
+ 132              		.thumb_func
+ 133              		.fpu softvfp
+ 135              	SetCrc:
+ 136              	.LVL18:
+ 137              	.LFB66:
+  32:TOOL/CrcUtil.c **** 
+  33:TOOL/CrcUtil.c **** static void SetCrc(u8 *dat,u16 len)
+  34:TOOL/CrcUtil.c **** {
+ 138              		.loc 1 34 1 is_stmt 1 view -0
+ 139              		.cfi_startproc
+ 140              		@ args = 0, pretend = 0, frame = 0
+ 141              		@ frame_needed = 0, uses_anonymous_args = 0
+ 142              		.loc 1 34 1 is_stmt 0 view .LVU38
+ 143 0000 38B5     		push	{r3, r4, r5, lr}
+ 144              	.LCFI2:
+ 145              		.cfi_def_cfa_offset 16
+ 146              		.cfi_offset 3, -16
+ 147              		.cfi_offset 4, -12
+ 148              		.cfi_offset 5, -8
+ 149              		.cfi_offset 14, -4
+ 150 0002 0546     		mov	r5, r0
+  35:TOOL/CrcUtil.c ****     u16 Crc16 = CalCrc16(dat,len-2);
+ 151              		.loc 1 35 5 is_stmt 1 view .LVU39
+ 152              		.loc 1 35 17 is_stmt 0 view .LVU40
+ 153 0004 8C1E     		subs	r4, r1, #2
+ 154 0006 A1B2     		uxth	r1, r4
+ 155              	.LVL19:
+ 156              		.loc 1 35 17 view .LVU41
+ 157 0008 FFF7FEFF 		bl	CalCrc16
+ 158              	.LVL20:
+  36:TOOL/CrcUtil.c **** 	*(u16*)&dat[len-2] =  Crc16;
+ 159              		.loc 1 36 2 is_stmt 1 view .LVU42
+ 160              		.loc 1 36 21 is_stmt 0 view .LVU43
+ 161 000c 2853     		strh	r0, [r5, r4]	@ movhi
+  37:TOOL/CrcUtil.c **** }
+ 162              		.loc 1 37 1 view .LVU44
+ 163 000e 38BD     		pop	{r3, r4, r5, pc}
+ 164              		.loc 1 37 1 view .LVU45
+ 165              		.cfi_endproc
+ 166              	.LFE66:
+ 168              		.section	.text.CheckCrc,"ax",%progbits
+ 169              		.align	1
+ 170              		.syntax unified
+ 171              		.thumb
+ 172              		.thumb_func
+ 173              		.fpu softvfp
+ 175              	CheckCrc:
+ 176              	.LVL21:
+ 177              	.LFB67:
+  38:TOOL/CrcUtil.c **** 
+  39:TOOL/CrcUtil.c **** static u8 CheckCrc(u8 *dat,u16 len)
+  40:TOOL/CrcUtil.c **** {
+ 178              		.loc 1 40 1 is_stmt 1 view -0
+ 179              		.cfi_startproc
+ 180              		@ args = 0, pretend = 0, frame = 0
+ 181              		@ frame_needed = 0, uses_anonymous_args = 0
+ 182              		.loc 1 40 1 is_stmt 0 view .LVU47
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccNRLjU8.s 			page 5
+
+
+ 183 0000 38B5     		push	{r3, r4, r5, lr}
+ 184              	.LCFI3:
+ 185              		.cfi_def_cfa_offset 16
+ 186              		.cfi_offset 3, -16
+ 187              		.cfi_offset 4, -12
+ 188              		.cfi_offset 5, -8
+ 189              		.cfi_offset 14, -4
+ 190 0002 0546     		mov	r5, r0
+  41:TOOL/CrcUtil.c ****     u16 Crc16 = CalCrc16(dat,len-2);
+ 191              		.loc 1 41 5 is_stmt 1 view .LVU48
+ 192              		.loc 1 41 17 is_stmt 0 view .LVU49
+ 193 0004 8C1E     		subs	r4, r1, #2
+ 194 0006 A1B2     		uxth	r1, r4
+ 195              	.LVL22:
+ 196              		.loc 1 41 17 view .LVU50
+ 197 0008 FFF7FEFF 		bl	CalCrc16
+ 198              	.LVL23:
+  42:TOOL/CrcUtil.c ****     if(Crc16 == *(u16*)&dat[len-2])
+ 199              		.loc 1 42 5 is_stmt 1 view .LVU51
+ 200              		.loc 1 42 17 is_stmt 0 view .LVU52
+ 201 000c 2B5B     		ldrh	r3, [r5, r4]
+ 202              		.loc 1 42 7 view .LVU53
+ 203 000e 8342     		cmp	r3, r0
+ 204 0010 01D0     		beq	.L16
+  43:TOOL/CrcUtil.c ****         return 1;
+  44:TOOL/CrcUtil.c ****     else
+  45:TOOL/CrcUtil.c ****         return 0;
+ 205              		.loc 1 45 16 view .LVU54
+ 206 0012 0020     		movs	r0, #0
+ 207              	.LVL24:
+ 208              	.L13:
+  46:TOOL/CrcUtil.c **** }
+ 209              		.loc 1 46 1 view .LVU55
+ 210 0014 38BD     		pop	{r3, r4, r5, pc}
+ 211              	.LVL25:
+ 212              	.L16:
+  43:TOOL/CrcUtil.c ****         return 1;
+ 213              		.loc 1 43 16 view .LVU56
+ 214 0016 0120     		movs	r0, #1
+ 215              	.LVL26:
+  43:TOOL/CrcUtil.c ****         return 1;
+ 216              		.loc 1 43 16 view .LVU57
+ 217 0018 FCE7     		b	.L13
+ 218              		.cfi_endproc
+ 219              	.LFE67:
+ 221              		.global	CrcUtil
+ 222              		.section	.data.CrcUtil,"aw"
+ 223              		.align	2
+ 226              	CrcUtil:
+ 227 0000 00000000 		.word	SetCrc
+ 228 0004 00000000 		.word	CheckCrc
+ 229              		.text
+ 230              	.Letext0:
+ 231              		.file 2 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 232              		.file 3 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/_stdint.h"
+ 233              		.file 4 "Inc/stm32l152xe.h"
+ 234              		.file 5 "/Users/shuuyou/gcc-arm-none-eabi/lib/gcc/arm-none-eabi/8.3.1/include/stddef.h"
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccNRLjU8.s 			page 6
+
+
+ 235              		.file 6 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/_types.h"
+ 236              		.file 7 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/reent.h"
+ 237              		.file 8 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/lock.h"
+ 238              		.file 9 "Inc/core_cm3.h"
+ 239              		.file 10 "APP/inc/Public.h"
+ 240              		.file 11 "RML1028B/RML1028B.h"
+ 241              		.file 12 "HARDWARE/inc/Temputer.h"
+ 242              		.file 13 "HARDWARE/inc/Adc.h"
+ 243              		.file 14 "HARDWARE/inc/Timer.h"
+ 244              		.file 15 "HARDWARE/inc/Control.h"
+ 245              		.file 16 "TOOL/inc/malloc.h"
+ 246              		.file 17 "TOOL/inc/TaskManger.h"
+ 247              		.file 18 "DISPALY/inc/DispManger.h"
+ 248              		.file 19 "APP/inc/VolPro.h"
+ 249              		.file 20 "APP/inc/FreqPro.h"
+ 250              		.file 21 "APP/inc/ParasCheckPro.h"
+ 251              		.file 22 "APP/inc/TemputerPro.h"
+ 252              		.file 23 "TOOL/inc/CrcUtil.h"
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccNRLjU8.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CrcUtil.c
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccNRLjU8.s:16     .text.CalCrc16:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccNRLjU8.s:23     .text.CalCrc16:0000000000000000 CalCrc16
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccNRLjU8.s:129    .text.SetCrc:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccNRLjU8.s:135    .text.SetCrc:0000000000000000 SetCrc
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccNRLjU8.s:169    .text.CheckCrc:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccNRLjU8.s:175    .text.CheckCrc:0000000000000000 CheckCrc
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccNRLjU8.s:226    .data.CrcUtil:0000000000000000 CrcUtil
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccNRLjU8.s:223    .data.CrcUtil:0000000000000000 $d
+
+NO UNDEFINED SYMBOLS

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="PowerBox"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\cmake-build-debug\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PowerBox">
+				<Option output="/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/PowerBox" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/inc"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/DISPALY/inc"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Device"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Device/ST"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Device/ST/STM32L1xx"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Device/ST/STM32L1xx/Include"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/inc"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/Inc"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/RML1028B"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/TOOL/inc"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 PowerBox"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PowerBox/fast">
+				<Option output="/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/PowerBox" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/inc"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/DISPALY/inc"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Device"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Device/ST"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Device/ST/STM32L1xx"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Device/ST/STM32L1xx/Include"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/inc"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/Inc"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/RML1028B"/>
+					<Add directory="/Users/shuuyou/STM32Cube/Repository/PowerBox/TOOL/inc"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 PowerBox/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/CtrPro.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/DebugPro.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/FreqPro.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/KeyPro.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/ParasCheckPro.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/Public.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/TemputerPro.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/VolPro.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/inc/CtrPro.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/inc/DebugPro.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/inc/FreqPro.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/inc/KeyPro.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/inc/ParasCheckPro.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/inc/Public.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/inc/TemputerPro.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/inc/VolPro.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/APP/main.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/DISPALY/CURINFOPAGE/CurInfoPage.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/DISPALY/DISPMANGER/DispManger.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/DISPALY/inc/CurInfoPage.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/DISPALY/inc/DispManger.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Device/ST/STM32L1xx/Include/stm32l152xe.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Device/ST/STM32L1xx/Include/stm32l1xx.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Device/ST/STM32L1xx/Include/system_stm32l1xx.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/cmsis_armcc.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/cmsis_armclang.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/cmsis_compiler.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/cmsis_gcc.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/cmsis_iccarm.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/cmsis_version.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/core_armv8mbl.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/core_armv8mml.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/core_cm0.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/core_cm0plus.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/core_cm1.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/core_cm23.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/core_cm3.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/core_cm33.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/core_cm4.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/core_cm7.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/core_sc000.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/core_sc300.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/mpu_armv7.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/mpu_armv8.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Drivers/CMSIS/Include/tz_context.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/Adc.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/Beep.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/Control.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/Exti.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/Keys.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/Mcu.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/Temputer.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/Timer.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/Uart.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/inc/Adc.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/inc/Beep.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/inc/Control.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/inc/Exti.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/inc/Keys.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/inc/Leds.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/inc/Mcu.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/inc/Temputer.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/inc/Timer.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/HARDWARE/inc/Uart.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Inc/main.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Inc/stm32l1xx_hal_conf.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/Inc/stm32l1xx_it.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/RML1028B/RML1028B.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/RML1028B/RML1028B.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/TOOL/CrcUtil.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/TOOL/TaskManger.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/TOOL/cJSON.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/TOOL/inc/CrcUtil.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/TOOL/inc/TaskManger.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/TOOL/inc/cJSON.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/TOOL/inc/malloc.h">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/TOOL/malloc.c">
+			<Option target="PowerBox"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/cmake_install.cmake">
+			<Option virtualFolder="CMake Files\cmake-build-debug\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

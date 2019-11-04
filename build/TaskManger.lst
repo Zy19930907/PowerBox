@@ -1,0 +1,718 @@
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"TaskManger.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.StartTask,"ax",%progbits
+  16              		.align	1
+  17              		.arch armv7-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	StartTask:
+  24              	.LFB66:
+  25              		.file 1 "TOOL/TaskManger.c"
+   1:TOOL/TaskManger.c **** #include "TaskManger.h"
+   2:TOOL/TaskManger.c **** #include "malloc.h"
+   3:TOOL/TaskManger.c **** 
+   4:TOOL/TaskManger.c **** unsigned long tick;
+   5:TOOL/TaskManger.c **** static inline void StartTask(void);
+   6:TOOL/TaskManger.c **** static inline void EndTask(void);
+   7:TOOL/TaskManger.c **** extern _Task sTask;
+   8:TOOL/TaskManger.c **** _Task eTask={0,0,0,EndTask,&sTask,&sTask};
+   9:TOOL/TaskManger.c **** _Task sTask={0,0,0,StartTask,&eTask,&eTask};
+  10:TOOL/TaskManger.c **** _TaskManger TaskManger = {0,0,&sTask,&sTask,&eTask};
+  11:TOOL/TaskManger.c **** 
+  12:TOOL/TaskManger.c **** //¼ÆËãÈÎÎñÖ´ÐÐÊ±ÖÓ
+  13:TOOL/TaskManger.c **** static inline u64 TaskTickDiff(u64 tick)
+  14:TOOL/TaskManger.c **** {
+  15:TOOL/TaskManger.c **** 	u64 systick = TaskManger.Tick;	
+  16:TOOL/TaskManger.c **** 	if(tick > systick)
+  17:TOOL/TaskManger.c **** 		return 0xFFFFFFFFFFFFFFFF - tick + systick;
+  18:TOOL/TaskManger.c **** 	else
+  19:TOOL/TaskManger.c **** 		return systick - tick;
+  20:TOOL/TaskManger.c **** }
+  21:TOOL/TaskManger.c **** //Ä¬ÈÏ´´½¨ÈÎÎñ£¬Î»ÓÚÈÎÎñÁ´±í¿ªÊ¼½Úµã
+  22:TOOL/TaskManger.c **** static inline void StartTask(void)
+  23:TOOL/TaskManger.c **** {
+  26              		.loc 1 23 1 view -0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  24:TOOL/TaskManger.c **** 	tick = TaskManger.Tick;
+  31              		.loc 1 24 2 view .LVU1
+  32              		.loc 1 24 19 is_stmt 0 view .LVU2
+  33 0000 024B     		ldr	r3, .L2
+  34 0002 5A68     		ldr	r2, [r3, #4]
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s 			page 2
+
+
+  35              		.loc 1 24 7 view .LVU3
+  36 0004 024B     		ldr	r3, .L2+4
+  37 0006 1A60     		str	r2, [r3]
+  25:TOOL/TaskManger.c **** }
+  38              		.loc 1 25 1 view .LVU4
+  39 0008 7047     		bx	lr
+  40              	.L3:
+  41 000a 00BF     		.align	2
+  42              	.L2:
+  43 000c 00000000 		.word	.LANCHOR0
+  44 0010 00000000 		.word	tick
+  45              		.cfi_endproc
+  46              	.LFE66:
+  48              		.section	.text.EndTask,"ax",%progbits
+  49              		.align	1
+  50              		.syntax unified
+  51              		.thumb
+  52              		.thumb_func
+  53              		.fpu softvfp
+  55              	EndTask:
+  56              	.LFB67:
+  26:TOOL/TaskManger.c **** //Ä¬ÈÏ´´½¨ÈÎÎñ£¬Î»ÓÚÈÎÎñÁ´±í½áÊø½Úµã
+  27:TOOL/TaskManger.c **** static inline void EndTask(void)
+  28:TOOL/TaskManger.c **** {
+  57              		.loc 1 28 1 is_stmt 1 view -0
+  58              		.cfi_startproc
+  59              		@ args = 0, pretend = 0, frame = 0
+  60              		@ frame_needed = 0, uses_anonymous_args = 0
+  61              		@ link register save eliminated.
+  29:TOOL/TaskManger.c **** 	TaskManger.exeTime = TaskTickDiff(tick);
+  62              		.loc 1 29 2 view .LVU6
+  63              		.loc 1 29 23 is_stmt 0 view .LVU7
+  64 0000 084B     		ldr	r3, .L7
+  65 0002 1868     		ldr	r0, [r3]
+  66 0004 0021     		movs	r1, #0
+  67              	.LVL0:
+  68              	.LBB8:
+  69              	.LBI8:
+  13:TOOL/TaskManger.c **** {
+  70              		.loc 1 13 19 is_stmt 1 view .LVU8
+  71              	.LBB9:
+  15:TOOL/TaskManger.c **** 	if(tick > systick)
+  72              		.loc 1 15 2 view .LVU9
+  15:TOOL/TaskManger.c **** 	if(tick > systick)
+  73              		.loc 1 15 26 is_stmt 0 view .LVU10
+  74 0006 084B     		ldr	r3, .L7+4
+  75 0008 5A68     		ldr	r2, [r3, #4]
+  15:TOOL/TaskManger.c **** 	if(tick > systick)
+  76              		.loc 1 15 6 view .LVU11
+  77 000a 0023     		movs	r3, #0
+  78              	.LVL1:
+  16:TOOL/TaskManger.c **** 		return 0xFFFFFFFFFFFFFFFF - tick + systick;
+  79              		.loc 1 16 2 is_stmt 1 view .LVU12
+  16:TOOL/TaskManger.c **** 		return 0xFFFFFFFFFFFFFFFF - tick + systick;
+  80              		.loc 1 16 4 is_stmt 0 view .LVU13
+  81 000c 8B42     		cmp	r3, r1
+  82 000e 08BF     		it	eq
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s 			page 3
+
+
+  83 0010 8242     		cmpeq	r2, r0
+  84 0012 05D2     		bcs	.L5
+  17:TOOL/TaskManger.c **** 	else
+  85              		.loc 1 17 3 is_stmt 1 view .LVU14
+  17:TOOL/TaskManger.c **** 	else
+  86              		.loc 1 17 36 is_stmt 0 view .LVU15
+  87 0014 121A     		subs	r2, r2, r0
+  88              	.LVL2:
+  17:TOOL/TaskManger.c **** 	else
+  89              		.loc 1 17 36 view .LVU16
+  90 0016 12F1FF32 		adds	r2, r2, #-1
+  91              	.L6:
+  92              	.LVL3:
+  17:TOOL/TaskManger.c **** 	else
+  93              		.loc 1 17 36 view .LVU17
+  94              	.LBE9:
+  95              	.LBE8:
+  96              		.loc 1 29 21 view .LVU18
+  97 001a 034B     		ldr	r3, .L7+4
+  98 001c 1A60     		str	r2, [r3]
+  30:TOOL/TaskManger.c **** }
+  99              		.loc 1 30 1 view .LVU19
+ 100 001e 7047     		bx	lr
+ 101              	.LVL4:
+ 102              	.L5:
+ 103              	.LBB11:
+ 104              	.LBB10:
+  19:TOOL/TaskManger.c **** }
+ 105              		.loc 1 19 3 is_stmt 1 view .LVU20
+  19:TOOL/TaskManger.c **** }
+ 106              		.loc 1 19 18 is_stmt 0 view .LVU21
+ 107 0020 121A     		subs	r2, r2, r0
+ 108              	.LVL5:
+  19:TOOL/TaskManger.c **** }
+ 109              		.loc 1 19 18 view .LVU22
+ 110 0022 FAE7     		b	.L6
+ 111              	.L8:
+ 112              		.align	2
+ 113              	.L7:
+ 114 0024 00000000 		.word	tick
+ 115 0028 00000000 		.word	.LANCHOR0
+ 116              	.LBE10:
+ 117              	.LBE11:
+ 118              		.cfi_endproc
+ 119              	.LFE67:
+ 121              		.section	.text.CreateTask,"ax",%progbits
+ 122              		.align	1
+ 123              		.global	CreateTask
+ 124              		.syntax unified
+ 125              		.thumb
+ 126              		.thumb_func
+ 127              		.fpu softvfp
+ 129              	CreateTask:
+ 130              	.LVL6:
+ 131              	.LFB68:
+  31:TOOL/TaskManger.c **** 
+  32:TOOL/TaskManger.c **** //´´½¨ÐÂÈÎÎñ£¬Ìí¼Óµ½ÈÎÎñÁ´±í½áÊø½ÚµãµÄÉÏÒ»½Úµã
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s 			page 4
+
+
+  33:TOOL/TaskManger.c **** _Task* CreateTask(u64 day,u64 hour,u64 min,u64 sec,u64 ms,void(*Func)(void))
+  34:TOOL/TaskManger.c **** {
+ 132              		.loc 1 34 1 is_stmt 1 view -0
+ 133              		.cfi_startproc
+ 134              		@ args = 28, pretend = 0, frame = 0
+ 135              		@ frame_needed = 0, uses_anonymous_args = 0
+ 136              		.loc 1 34 1 is_stmt 0 view .LVU24
+ 137 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 138              	.LCFI0:
+ 139              		.cfi_def_cfa_offset 24
+ 140              		.cfi_offset 4, -24
+ 141              		.cfi_offset 5, -20
+ 142              		.cfi_offset 6, -16
+ 143              		.cfi_offset 7, -12
+ 144              		.cfi_offset 8, -8
+ 145              		.cfi_offset 14, -4
+ 146 0004 0546     		mov	r5, r0
+ 147 0006 9046     		mov	r8, r2
+ 148 0008 069F     		ldr	r7, [sp, #24]
+ 149 000a 089C     		ldr	r4, [sp, #32]
+ 150 000c 0A9E     		ldr	r6, [sp, #40]
+  35:TOOL/TaskManger.c **** 	_Task *Task=0;
+ 151              		.loc 1 35 2 is_stmt 1 view .LVU25
+ 152              	.LVL7:
+  36:TOOL/TaskManger.c **** 	Task = mymalloc(sizeof(_Task));
+ 153              		.loc 1 36 2 view .LVU26
+ 154              		.loc 1 36 9 is_stmt 0 view .LVU27
+ 155 000e 1820     		movs	r0, #24
+ 156              	.LVL8:
+ 157              		.loc 1 36 9 view .LVU28
+ 158 0010 FFF7FEFF 		bl	mymalloc
+ 159              	.LVL9:
+  37:TOOL/TaskManger.c **** 	if(Task != 0)
+ 160              		.loc 1 37 2 is_stmt 1 view .LVU29
+ 161              		.loc 1 37 4 is_stmt 0 view .LVU30
+ 162 0014 0346     		mov	r3, r0
+ 163 0016 D8B1     		cbz	r0, .L9
+  38:TOOL/TaskManger.c **** 	{
+  39:TOOL/TaskManger.c **** 		Task->Func = Func;
+ 164              		.loc 1 39 3 is_stmt 1 view .LVU31
+ 165              		.loc 1 39 14 is_stmt 0 view .LVU32
+ 166 0018 0C9A     		ldr	r2, [sp, #48]
+ 167 001a C260     		str	r2, [r0, #12]
+  40:TOOL/TaskManger.c **** 		Task->period = ((day * 86400000) + (hour * 3600000) + (min * 60000) + (sec * 1000) + ms);	//¼ÆËãÈ
+ 168              		.loc 1 40 3 is_stmt 1 view .LVU33
+ 169              		.loc 1 40 36 is_stmt 0 view .LVU34
+ 170 001c 0E4A     		ldr	r2, .L12
+ 171 001e 02FB08F2 		mul	r2, r2, r8
+ 172 0022 0E49     		ldr	r1, .L12+4
+ 173 0024 01FB0525 		mla	r5, r1, r5, r2
+ 174              		.loc 1 40 71 view .LVU35
+ 175 0028 4EF66022 		movw	r2, #60000
+ 176 002c 02FB07F2 		mul	r2, r2, r7
+ 177 0030 4FF47A71 		mov	r1, #1000
+ 178 0034 01FB0424 		mla	r4, r1, r4, r2
+ 179 0038 2C44     		add	r4, r4, r5
+ 180              		.loc 1 40 86 view .LVU36
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s 			page 5
+
+
+ 181 003a 3444     		add	r4, r4, r6
+ 182              		.loc 1 40 16 view .LVU37
+ 183 003c 4460     		str	r4, [r0, #4]
+  41:TOOL/TaskManger.c **** 		Task->pre = TaskManger.lasTask->pre;
+ 184              		.loc 1 41 3 is_stmt 1 view .LVU38
+ 185              		.loc 1 41 25 is_stmt 0 view .LVU39
+ 186 003e 084A     		ldr	r2, .L12+8
+ 187 0040 1169     		ldr	r1, [r2, #16]
+ 188              		.loc 1 41 33 view .LVU40
+ 189 0042 0969     		ldr	r1, [r1, #16]
+ 190              		.loc 1 41 13 view .LVU41
+ 191 0044 0161     		str	r1, [r0, #16]
+  42:TOOL/TaskManger.c **** 		Task->next = TaskManger.lasTask;
+ 192              		.loc 1 42 3 is_stmt 1 view .LVU42
+ 193              		.loc 1 42 26 is_stmt 0 view .LVU43
+ 194 0046 1269     		ldr	r2, [r2, #16]
+ 195              		.loc 1 42 14 view .LVU44
+ 196 0048 4261     		str	r2, [r0, #20]
+  43:TOOL/TaskManger.c **** 		TaskManger.lasTask->pre->next = Task;
+ 197              		.loc 1 43 3 is_stmt 1 view .LVU45
+ 198              		.loc 1 43 21 is_stmt 0 view .LVU46
+ 199 004a 1169     		ldr	r1, [r2, #16]
+ 200              		.loc 1 43 33 view .LVU47
+ 201 004c 4861     		str	r0, [r1, #20]
+  44:TOOL/TaskManger.c **** 		TaskManger.lasTask->pre = Task;
+ 202              		.loc 1 44 3 is_stmt 1 view .LVU48
+ 203              		.loc 1 44 27 is_stmt 0 view .LVU49
+ 204 004e 1061     		str	r0, [r2, #16]
+  45:TOOL/TaskManger.c **** 	}
+  46:TOOL/TaskManger.c **** 	return Task;
+ 205              		.loc 1 46 2 is_stmt 1 view .LVU50
+ 206              	.L9:
+  47:TOOL/TaskManger.c **** }
+ 207              		.loc 1 47 1 is_stmt 0 view .LVU51
+ 208 0050 1846     		mov	r0, r3
+ 209              	.LVL10:
+ 210              		.loc 1 47 1 view .LVU52
+ 211 0052 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 212              	.LVL11:
+ 213              	.L13:
+ 214              		.loc 1 47 1 view .LVU53
+ 215 0056 00BF     		.align	2
+ 216              	.L12:
+ 217 0058 80EE3600 		.word	3600000
+ 218 005c 005C2605 		.word	86400000
+ 219 0060 00000000 		.word	.LANCHOR0
+ 220              		.cfi_endproc
+ 221              	.LFE68:
+ 223              		.section	.text.DelTask,"ax",%progbits
+ 224              		.align	1
+ 225              		.global	DelTask
+ 226              		.syntax unified
+ 227              		.thumb
+ 228              		.thumb_func
+ 229              		.fpu softvfp
+ 231              	DelTask:
+ 232              	.LVL12:
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s 			page 6
+
+
+ 233              	.LFB69:
+  48:TOOL/TaskManger.c **** 
+  49:TOOL/TaskManger.c **** //´ÓÈÎÎñÁ´±íÖÐÉ¾³ýÈÎÎñ
+  50:TOOL/TaskManger.c **** void DelTask(_Task *delTask)
+  51:TOOL/TaskManger.c **** {
+ 234              		.loc 1 51 1 is_stmt 1 view -0
+ 235              		.cfi_startproc
+ 236              		@ args = 0, pretend = 0, frame = 0
+ 237              		@ frame_needed = 0, uses_anonymous_args = 0
+  52:TOOL/TaskManger.c **** 	if(delTask != 0)
+ 238              		.loc 1 52 2 view .LVU55
+ 239              		.loc 1 52 4 is_stmt 0 view .LVU56
+ 240 0000 40B1     		cbz	r0, .L17
+  51:TOOL/TaskManger.c **** 	if(delTask != 0)
+ 241              		.loc 1 51 1 view .LVU57
+ 242 0002 08B5     		push	{r3, lr}
+ 243              	.LCFI1:
+ 244              		.cfi_def_cfa_offset 8
+ 245              		.cfi_offset 3, -8
+ 246              		.cfi_offset 14, -4
+  53:TOOL/TaskManger.c **** 	{
+  54:TOOL/TaskManger.c **** 		delTask->pre->next = delTask->next;
+ 247              		.loc 1 54 3 is_stmt 1 view .LVU58
+ 248              		.loc 1 54 10 is_stmt 0 view .LVU59
+ 249 0004 0269     		ldr	r2, [r0, #16]
+ 250              		.loc 1 54 31 view .LVU60
+ 251 0006 4369     		ldr	r3, [r0, #20]
+ 252              		.loc 1 54 22 view .LVU61
+ 253 0008 5361     		str	r3, [r2, #20]
+  55:TOOL/TaskManger.c **** 		delTask->next->pre = delTask->pre;
+ 254              		.loc 1 55 3 is_stmt 1 view .LVU62
+ 255              		.loc 1 55 31 is_stmt 0 view .LVU63
+ 256 000a 0269     		ldr	r2, [r0, #16]
+ 257              		.loc 1 55 22 view .LVU64
+ 258 000c 1A61     		str	r2, [r3, #16]
+  56:TOOL/TaskManger.c **** 		myfree(delTask);
+ 259              		.loc 1 56 3 is_stmt 1 view .LVU65
+ 260 000e FFF7FEFF 		bl	myfree
+ 261              	.LVL13:
+  57:TOOL/TaskManger.c **** 	}
+  58:TOOL/TaskManger.c **** }
+ 262              		.loc 1 58 1 is_stmt 0 view .LVU66
+ 263 0012 08BD     		pop	{r3, pc}
+ 264              	.LVL14:
+ 265              	.L17:
+ 266              	.LCFI2:
+ 267              		.cfi_def_cfa_offset 0
+ 268              		.cfi_restore 3
+ 269              		.cfi_restore 14
+ 270              		.loc 1 58 1 view .LVU67
+ 271 0014 7047     		bx	lr
+ 272              		.cfi_endproc
+ 273              	.LFE69:
+ 275              		.section	.text.SetTaskDelay,"ax",%progbits
+ 276              		.align	1
+ 277              		.global	SetTaskDelay
+ 278              		.syntax unified
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s 			page 7
+
+
+ 279              		.thumb
+ 280              		.thumb_func
+ 281              		.fpu softvfp
+ 283              	SetTaskDelay:
+ 284              	.LVL15:
+ 285              	.LFB70:
+  59:TOOL/TaskManger.c **** 
+  60:TOOL/TaskManger.c **** //ÐÞ¸ÄÈÎÎñÖ´ÐÐÖÜÆÚ
+  61:TOOL/TaskManger.c **** void SetTaskDelay(u64 day,u64 hour,u64 min,u64 sec,u64 ms,_Task *Task)
+  62:TOOL/TaskManger.c **** {
+ 286              		.loc 1 62 1 is_stmt 1 view -0
+ 287              		.cfi_startproc
+ 288              		@ args = 28, pretend = 0, frame = 0
+ 289              		@ frame_needed = 0, uses_anonymous_args = 0
+ 290              		@ link register save eliminated.
+  63:TOOL/TaskManger.c **** 	Task->period = ((day * 86400000) + (hour * 3600000) + (min * 60000) + (sec * 1000) + ms);	//¼ÆËãÈÎ
+ 291              		.loc 1 63 2 view .LVU69
+ 292              		.loc 1 63 35 is_stmt 0 view .LVU70
+ 293 0000 0A4B     		ldr	r3, .L21
+ 294 0002 03FB02F2 		mul	r2, r3, r2
+ 295              	.LVL16:
+ 296              		.loc 1 63 35 view .LVU71
+ 297 0006 0A4B     		ldr	r3, .L21+4
+ 298 0008 03FB0020 		mla	r0, r3, r0, r2
+ 299              	.LVL17:
+ 300              		.loc 1 63 70 view .LVU72
+ 301 000c 4EF66023 		movw	r3, #60000
+ 302 0010 009A     		ldr	r2, [sp]
+ 303 0012 03FB02F2 		mul	r2, r3, r2
+ 304 0016 4FF47A71 		mov	r1, #1000
+ 305 001a 029B     		ldr	r3, [sp, #8]
+ 306 001c 01FB0323 		mla	r3, r1, r3, r2
+ 307 0020 0344     		add	r3, r3, r0
+ 308              		.loc 1 63 85 view .LVU73
+ 309 0022 0498     		ldr	r0, [sp, #16]
+ 310 0024 0344     		add	r3, r3, r0
+ 311              		.loc 1 63 15 view .LVU74
+ 312 0026 069A     		ldr	r2, [sp, #24]
+ 313 0028 5360     		str	r3, [r2, #4]
+  64:TOOL/TaskManger.c **** }
+ 314              		.loc 1 64 1 view .LVU75
+ 315 002a 7047     		bx	lr
+ 316              	.L22:
+ 317              		.align	2
+ 318              	.L21:
+ 319 002c 80EE3600 		.word	3600000
+ 320 0030 005C2605 		.word	86400000
+ 321              		.cfi_endproc
+ 322              	.LFE70:
+ 324              		.section	.text.ExecTask,"ax",%progbits
+ 325              		.align	1
+ 326              		.global	ExecTask
+ 327              		.syntax unified
+ 328              		.thumb
+ 329              		.thumb_func
+ 330              		.fpu softvfp
+ 332              	ExecTask:
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s 			page 8
+
+
+ 333              	.LFB71:
+  65:TOOL/TaskManger.c **** 
+  66:TOOL/TaskManger.c **** //Ñ­»·Ö´ÐÐÈÎÎñÁ´±íÖÐµÄÈÎÎñ
+  67:TOOL/TaskManger.c **** void ExecTask(void)
+  68:TOOL/TaskManger.c **** {
+ 334              		.loc 1 68 1 is_stmt 1 view -0
+ 335              		.cfi_startproc
+ 336              		@ Volatile: function does not return.
+ 337              		@ args = 0, pretend = 0, frame = 0
+ 338              		@ frame_needed = 0, uses_anonymous_args = 0
+ 339 0000 2DE98848 		push	{r3, r7, fp, lr}
+ 340              	.LCFI3:
+ 341              		.cfi_def_cfa_offset 16
+ 342              		.cfi_offset 3, -16
+ 343              		.cfi_offset 7, -12
+ 344              		.cfi_offset 11, -8
+ 345              		.cfi_offset 14, -4
+ 346 0004 09E0     		b	.L29
+ 347              	.L24:
+ 348              	.LBB12:
+ 349              	.LBB13:
+  19:TOOL/TaskManger.c **** }
+ 350              		.loc 1 19 3 view .LVU77
+  19:TOOL/TaskManger.c **** }
+ 351              		.loc 1 19 18 is_stmt 0 view .LVU78
+ 352 0006 BC1A     		subs	r4, r7, r2
+ 353 0008 61EB0C05 		sbc	r5, r1, ip
+ 354 000c 17E0     		b	.L25
+ 355              	.LVL18:
+ 356              	.L27:
+  19:TOOL/TaskManger.c **** }
+ 357              		.loc 1 19 18 view .LVU79
+ 358              	.LBE13:
+ 359              	.LBE12:
+ 360              	.LBB15:
+ 361              	.LBB16:
+  19:TOOL/TaskManger.c **** }
+ 362              		.loc 1 19 3 is_stmt 1 view .LVU80
+  19:TOOL/TaskManger.c **** }
+ 363              		.loc 1 19 18 is_stmt 0 view .LVU81
+ 364 000e 121A     		subs	r2, r2, r0
+ 365              	.LVL19:
+ 366              	.L28:
+  19:TOOL/TaskManger.c **** }
+ 367              		.loc 1 19 18 view .LVU82
+ 368              	.LBE16:
+ 369              	.LBE15:
+  69:TOOL/TaskManger.c **** 	for(;;)
+  70:TOOL/TaskManger.c **** 	{
+  71:TOOL/TaskManger.c **** 		if(TaskTickDiff(TaskManger.curTask->tick) >= TaskManger.curTask->period)
+  72:TOOL/TaskManger.c **** 		{
+  73:TOOL/TaskManger.c **** 			TaskManger.curTask->tick = TaskManger.Tick;
+  74:TOOL/TaskManger.c **** 			TaskManger.curTask->Func();//µ÷ÓÃÈÎÎñ´¦Àíº¯Êý
+  75:TOOL/TaskManger.c **** 			TaskManger.curTask->time = TaskTickDiff(TaskManger.curTask->tick);
+ 370              		.loc 1 75 29 view .LVU83
+ 371 0010 BA60     		str	r2, [r7, #8]
+ 372              	.L26:
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s 			page 9
+
+
+  76:TOOL/TaskManger.c **** 		}
+  77:TOOL/TaskManger.c **** 		TaskManger.curTask = TaskManger.curTask->next;
+ 373              		.loc 1 77 3 is_stmt 1 view .LVU84
+ 374              		.loc 1 77 34 is_stmt 0 view .LVU85
+ 375 0012 174B     		ldr	r3, .L31
+ 376 0014 9A68     		ldr	r2, [r3, #8]
+ 377              		.loc 1 77 42 view .LVU86
+ 378 0016 5269     		ldr	r2, [r2, #20]
+ 379              		.loc 1 77 22 view .LVU87
+ 380 0018 9A60     		str	r2, [r3, #8]
+ 381              	.L29:
+  69:TOOL/TaskManger.c **** 	for(;;)
+ 382              		.loc 1 69 2 is_stmt 1 view .LVU88
+  71:TOOL/TaskManger.c **** 		{
+ 383              		.loc 1 71 3 view .LVU89
+  71:TOOL/TaskManger.c **** 		{
+ 384              		.loc 1 71 29 is_stmt 0 view .LVU90
+ 385 001a 1549     		ldr	r1, .L31
+ 386 001c 8E68     		ldr	r6, [r1, #8]
+  71:TOOL/TaskManger.c **** 		{
+ 387              		.loc 1 71 37 view .LVU91
+ 388 001e 3268     		ldr	r2, [r6]
+  71:TOOL/TaskManger.c **** 		{
+ 389              		.loc 1 71 6 view .LVU92
+ 390 0020 4FF0000C 		mov	ip, #0
+ 391              	.LBB18:
+ 392              	.LBI12:
+  13:TOOL/TaskManger.c **** {
+ 393              		.loc 1 13 19 is_stmt 1 view .LVU93
+ 394              	.LBB14:
+  15:TOOL/TaskManger.c **** 	if(tick > systick)
+ 395              		.loc 1 15 2 view .LVU94
+  15:TOOL/TaskManger.c **** 	if(tick > systick)
+ 396              		.loc 1 15 26 is_stmt 0 view .LVU95
+ 397 0024 4F68     		ldr	r7, [r1, #4]
+  15:TOOL/TaskManger.c **** 	if(tick > systick)
+ 398              		.loc 1 15 6 view .LVU96
+ 399 0026 0021     		movs	r1, #0
+  16:TOOL/TaskManger.c **** 		return 0xFFFFFFFFFFFFFFFF - tick + systick;
+ 400              		.loc 1 16 2 is_stmt 1 view .LVU97
+  16:TOOL/TaskManger.c **** 		return 0xFFFFFFFFFFFFFFFF - tick + systick;
+ 401              		.loc 1 16 4 is_stmt 0 view .LVU98
+ 402 0028 6145     		cmp	r1, ip
+ 403 002a 08BF     		it	eq
+ 404 002c 9742     		cmpeq	r7, r2
+ 405 002e EAD2     		bcs	.L24
+  17:TOOL/TaskManger.c **** 	else
+ 406              		.loc 1 17 3 is_stmt 1 view .LVU99
+  17:TOOL/TaskManger.c **** 	else
+ 407              		.loc 1 17 36 is_stmt 0 view .LVU100
+ 408 0030 BA1A     		subs	r2, r7, r2
+ 409 0032 61EB0C03 		sbc	r3, r1, ip
+ 410 0036 12F1FF34 		adds	r4, r2, #-1
+ 411 003a 43F1FF35 		adc	r5, r3, #-1
+ 412              	.L25:
+ 413              	.LBE14:
+ 414              	.LBE18:
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s 			page 10
+
+
+  71:TOOL/TaskManger.c **** 		{
+ 415              		.loc 1 71 66 view .LVU101
+ 416 003e 7268     		ldr	r2, [r6, #4]
+ 417 0040 0023     		movs	r3, #0
+  71:TOOL/TaskManger.c **** 		{
+ 418              		.loc 1 71 5 view .LVU102
+ 419 0042 9D42     		cmp	r5, r3
+ 420 0044 08BF     		it	eq
+ 421 0046 9442     		cmpeq	r4, r2
+ 422 0048 E3D3     		bcc	.L26
+  73:TOOL/TaskManger.c **** 			TaskManger.curTask->Func();//µ÷ÓÃÈÎÎñ´¦Àíº¯Êý
+ 423              		.loc 1 73 4 is_stmt 1 view .LVU103
+  73:TOOL/TaskManger.c **** 			TaskManger.curTask->Func();//µ÷ÓÃÈÎÎñ´¦Àíº¯Êý
+ 424              		.loc 1 73 29 is_stmt 0 view .LVU104
+ 425 004a 3760     		str	r7, [r6]
+  74:TOOL/TaskManger.c **** 			TaskManger.curTask->time = TaskTickDiff(TaskManger.curTask->tick);
+ 426              		.loc 1 74 4 is_stmt 1 view .LVU105
+  74:TOOL/TaskManger.c **** 			TaskManger.curTask->time = TaskTickDiff(TaskManger.curTask->tick);
+ 427              		.loc 1 74 14 is_stmt 0 view .LVU106
+ 428 004c 084E     		ldr	r6, .L31
+ 429 004e B368     		ldr	r3, [r6, #8]
+  74:TOOL/TaskManger.c **** 			TaskManger.curTask->time = TaskTickDiff(TaskManger.curTask->tick);
+ 430              		.loc 1 74 22 view .LVU107
+ 431 0050 DB68     		ldr	r3, [r3, #12]
+  74:TOOL/TaskManger.c **** 			TaskManger.curTask->time = TaskTickDiff(TaskManger.curTask->tick);
+ 432              		.loc 1 74 4 view .LVU108
+ 433 0052 9847     		blx	r3
+ 434              	.LVL20:
+  75:TOOL/TaskManger.c **** 		}
+ 435              		.loc 1 75 4 is_stmt 1 view .LVU109
+  75:TOOL/TaskManger.c **** 		}
+ 436              		.loc 1 75 54 is_stmt 0 view .LVU110
+ 437 0054 B768     		ldr	r7, [r6, #8]
+  75:TOOL/TaskManger.c **** 		}
+ 438              		.loc 1 75 62 view .LVU111
+ 439 0056 3A68     		ldr	r2, [r7]
+  75:TOOL/TaskManger.c **** 		}
+ 440              		.loc 1 75 31 view .LVU112
+ 441 0058 1046     		mov	r0, r2
+ 442 005a 0021     		movs	r1, #0
+ 443              	.LVL21:
+ 444              	.LBB19:
+ 445              	.LBI15:
+  13:TOOL/TaskManger.c **** {
+ 446              		.loc 1 13 19 is_stmt 1 view .LVU113
+ 447              	.LBB17:
+  15:TOOL/TaskManger.c **** 	if(tick > systick)
+ 448              		.loc 1 15 2 view .LVU114
+  15:TOOL/TaskManger.c **** 	if(tick > systick)
+ 449              		.loc 1 15 26 is_stmt 0 view .LVU115
+ 450 005c 7268     		ldr	r2, [r6, #4]
+  15:TOOL/TaskManger.c **** 	if(tick > systick)
+ 451              		.loc 1 15 6 view .LVU116
+ 452 005e 0023     		movs	r3, #0
+ 453              	.LVL22:
+  16:TOOL/TaskManger.c **** 		return 0xFFFFFFFFFFFFFFFF - tick + systick;
+ 454              		.loc 1 16 2 is_stmt 1 view .LVU117
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s 			page 11
+
+
+  16:TOOL/TaskManger.c **** 		return 0xFFFFFFFFFFFFFFFF - tick + systick;
+ 455              		.loc 1 16 4 is_stmt 0 view .LVU118
+ 456 0060 8B42     		cmp	r3, r1
+ 457 0062 08BF     		it	eq
+ 458 0064 8242     		cmpeq	r2, r0
+ 459 0066 D2D2     		bcs	.L27
+  17:TOOL/TaskManger.c **** 	else
+ 460              		.loc 1 17 3 is_stmt 1 view .LVU119
+  17:TOOL/TaskManger.c **** 	else
+ 461              		.loc 1 17 36 is_stmt 0 view .LVU120
+ 462 0068 121A     		subs	r2, r2, r0
+ 463              	.LVL23:
+  17:TOOL/TaskManger.c **** 	else
+ 464              		.loc 1 17 36 view .LVU121
+ 465 006a 12F1FF32 		adds	r2, r2, #-1
+ 466 006e CFE7     		b	.L28
+ 467              	.L32:
+ 468              		.align	2
+ 469              	.L31:
+ 470 0070 00000000 		.word	.LANCHOR0
+ 471              	.LBE17:
+ 472              	.LBE19:
+ 473              		.cfi_endproc
+ 474              	.LFE71:
+ 476              		.global	TaskManger
+ 477              		.global	sTask
+ 478              		.global	eTask
+ 479              		.comm	tick,4,4
+ 480              		.section	.data.TaskManger,"aw"
+ 481              		.align	2
+ 482              		.set	.LANCHOR0,. + 0
+ 485              	TaskManger:
+ 486 0000 00000000 		.word	0
+ 487 0004 00000000 		.word	0
+ 488 0008 00000000 		.word	sTask
+ 489 000c 00000000 		.word	sTask
+ 490 0010 00000000 		.word	eTask
+ 491              		.section	.data.eTask,"aw"
+ 492              		.align	2
+ 495              	eTask:
+ 496 0000 00000000 		.word	0
+ 497 0004 00000000 		.word	0
+ 498 0008 00000000 		.word	0
+ 499 000c 00000000 		.word	EndTask
+ 500 0010 00000000 		.word	sTask
+ 501 0014 00000000 		.word	sTask
+ 502              		.section	.data.sTask,"aw"
+ 503              		.align	2
+ 506              	sTask:
+ 507 0000 00000000 		.word	0
+ 508 0004 00000000 		.word	0
+ 509 0008 00000000 		.word	0
+ 510 000c 00000000 		.word	StartTask
+ 511 0010 00000000 		.word	eTask
+ 512 0014 00000000 		.word	eTask
+ 513              		.text
+ 514              	.Letext0:
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s 			page 12
+
+
+ 515              		.file 2 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 516              		.file 3 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/_stdint.h"
+ 517              		.file 4 "Inc/stm32l152xe.h"
+ 518              		.file 5 "/Users/shuuyou/gcc-arm-none-eabi/lib/gcc/arm-none-eabi/8.3.1/include/stddef.h"
+ 519              		.file 6 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/_types.h"
+ 520              		.file 7 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/reent.h"
+ 521              		.file 8 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/lock.h"
+ 522              		.file 9 "Inc/core_cm3.h"
+ 523              		.file 10 "APP/inc/Public.h"
+ 524              		.file 11 "RML1028B/RML1028B.h"
+ 525              		.file 12 "HARDWARE/inc/Temputer.h"
+ 526              		.file 13 "HARDWARE/inc/Adc.h"
+ 527              		.file 14 "HARDWARE/inc/Timer.h"
+ 528              		.file 15 "HARDWARE/inc/Control.h"
+ 529              		.file 16 "TOOL/inc/malloc.h"
+ 530              		.file 17 "DISPALY/inc/DispManger.h"
+ 531              		.file 18 "TOOL/inc/CrcUtil.h"
+ 532              		.file 19 "APP/inc/VolPro.h"
+ 533              		.file 20 "APP/inc/FreqPro.h"
+ 534              		.file 21 "APP/inc/ParasCheckPro.h"
+ 535              		.file 22 "APP/inc/TemputerPro.h"
+ 536              		.file 23 "TOOL/inc/TaskManger.h"
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 TaskManger.c
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:16     .text.StartTask:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:23     .text.StartTask:0000000000000000 StartTask
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:43     .text.StartTask:000000000000000c $d
+                            *COM*:0000000000000004 tick
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:49     .text.EndTask:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:55     .text.EndTask:0000000000000000 EndTask
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:114    .text.EndTask:0000000000000024 $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:122    .text.CreateTask:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:129    .text.CreateTask:0000000000000000 CreateTask
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:217    .text.CreateTask:0000000000000058 $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:224    .text.DelTask:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:231    .text.DelTask:0000000000000000 DelTask
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:276    .text.SetTaskDelay:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:283    .text.SetTaskDelay:0000000000000000 SetTaskDelay
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:319    .text.SetTaskDelay:000000000000002c $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:325    .text.ExecTask:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:332    .text.ExecTask:0000000000000000 ExecTask
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:470    .text.ExecTask:0000000000000070 $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:485    .data.TaskManger:0000000000000000 TaskManger
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:506    .data.sTask:0000000000000000 sTask
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:495    .data.eTask:0000000000000000 eTask
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:481    .data.TaskManger:0000000000000000 $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:492    .data.eTask:0000000000000000 $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc5E68NV.s:503    .data.sTask:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+mymalloc
+myfree

@@ -1,0 +1,1326 @@
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"Uart.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.global	__aeabi_ui2f
+  16              		.global	__aeabi_fdiv
+  17              		.global	__aeabi_f2uiz
+  18              		.global	__aeabi_i2f
+  19              		.global	__aeabi_fsub
+  20              		.global	__aeabi_fmul
+  21              		.section	.text.Uart1Init,"ax",%progbits
+  22              		.align	1
+  23              		.global	Uart1Init
+  24              		.arch armv7-m
+  25              		.syntax unified
+  26              		.thumb
+  27              		.thumb_func
+  28              		.fpu softvfp
+  30              	Uart1Init:
+  31              	.LVL0:
+  32              	.LFB65:
+  33              		.file 1 "HARDWARE/Uart.c"
+   1:HARDWARE/Uart.c **** #include "Uart.h"
+   2:HARDWARE/Uart.c **** 
+   3:HARDWARE/Uart.c **** u8 UART1BUF[MAXUARTBUFLENN];
+   4:HARDWARE/Uart.c **** u8 UART2BUF[MAXUARTBUFLENN];
+   5:HARDWARE/Uart.c **** 
+   6:HARDWARE/Uart.c **** void Uart1Init(u32 baud)
+   7:HARDWARE/Uart.c **** {
+  34              		.loc 1 7 1 view -0
+  35              		.cfi_startproc
+  36              		@ args = 0, pretend = 0, frame = 0
+  37              		@ frame_needed = 0, uses_anonymous_args = 0
+  38              		.loc 1 7 1 is_stmt 0 view .LVU1
+  39 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  40              	.LCFI0:
+  41              		.cfi_def_cfa_offset 20
+  42              		.cfi_offset 4, -20
+  43              		.cfi_offset 5, -16
+  44              		.cfi_offset 6, -12
+  45              		.cfi_offset 7, -8
+  46              		.cfi_offset 14, -4
+  47 0002 83B0     		sub	sp, sp, #12
+  48              	.LCFI1:
+  49              		.cfi_def_cfa_offset 32
+   8:HARDWARE/Uart.c **** 	float temp = 500000;
+  50              		.loc 1 8 2 is_stmt 1 view .LVU2
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 2
+
+
+  51              	.LVL1:
+   9:HARDWARE/Uart.c **** 	u16 mantissa;
+  52              		.loc 1 9 2 view .LVU3
+  10:HARDWARE/Uart.c **** 	u16 fraction;	   
+  53              		.loc 1 10 2 view .LVU4
+  11:HARDWARE/Uart.c **** 	temp/=baud;//µÃµ½USARTDIV@OVER8=0
+  54              		.loc 1 11 2 view .LVU5
+  55              		.loc 1 11 6 is_stmt 0 view .LVU6
+  56 0004 FFF7FEFF 		bl	__aeabi_ui2f
+  57              	.LVL2:
+  58              		.loc 1 11 6 view .LVU7
+  59 0008 0146     		mov	r1, r0
+  60 000a 5448     		ldr	r0, .L3
+  61 000c FFF7FEFF 		bl	__aeabi_fdiv
+  62              	.LVL3:
+  63 0010 0546     		mov	r5, r0
+  64              	.LVL4:
+  12:HARDWARE/Uart.c **** 	mantissa=temp;				 //µÃµ½ÕûÊý²¿·Ö
+  65              		.loc 1 12 2 is_stmt 1 view .LVU8
+  66              		.loc 1 12 10 is_stmt 0 view .LVU9
+  67 0012 FFF7FEFF 		bl	__aeabi_f2uiz
+  68              	.LVL5:
+  69              		.loc 1 12 10 view .LVU10
+  70 0016 84B2     		uxth	r4, r0
+  71              	.LVL6:
+  13:HARDWARE/Uart.c **** 	fraction=(temp-mantissa)*16; //µÃµ½Ð¡Êý²¿·Ö@OVER8=0 
+  72              		.loc 1 13 2 is_stmt 1 view .LVU11
+  73              		.loc 1 13 16 is_stmt 0 view .LVU12
+  74 0018 2046     		mov	r0, r4
+  75 001a FFF7FEFF 		bl	__aeabi_i2f
+  76              	.LVL7:
+  77 001e 0146     		mov	r1, r0
+  78 0020 2846     		mov	r0, r5
+  79 0022 FFF7FEFF 		bl	__aeabi_fsub
+  80              	.LVL8:
+  81              		.loc 1 13 26 view .LVU13
+  82 0026 4FF08341 		mov	r1, #1098907648
+  83 002a FFF7FEFF 		bl	__aeabi_fmul
+  84              	.LVL9:
+  85              		.loc 1 13 10 view .LVU14
+  86 002e FFF7FEFF 		bl	__aeabi_f2uiz
+  87              	.LVL10:
+  88 0032 80B2     		uxth	r0, r0
+  89              	.LVL11:
+  14:HARDWARE/Uart.c ****     mantissa<<=4;
+  90              		.loc 1 14 5 is_stmt 1 view .LVU15
+  91              		.loc 1 14 13 is_stmt 0 view .LVU16
+  92 0034 2401     		lsls	r4, r4, #4
+  93              	.LVL12:
+  94              		.loc 1 14 13 view .LVU17
+  95 0036 A4B2     		uxth	r4, r4
+  96              	.LVL13:
+  15:HARDWARE/Uart.c **** 	mantissa+=fraction; 
+  97              		.loc 1 15 2 is_stmt 1 view .LVU18
+  98              		.loc 1 15 10 is_stmt 0 view .LVU19
+  99 0038 0444     		add	r4, r4, r0
+ 100              	.LVL14:
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 3
+
+
+ 101              		.loc 1 15 10 view .LVU20
+ 102 003a A7B2     		uxth	r7, r4
+ 103              	.LVL15:
+  16:HARDWARE/Uart.c **** 	
+  17:HARDWARE/Uart.c **** 	RCC->AHBENR|=1<<1;   	//Ê¹ÄÜPB¿ÚÊ±ÖÓ 
+ 104              		.loc 1 17 2 is_stmt 1 view .LVU21
+ 105              		.loc 1 17 13 is_stmt 0 view .LVU22
+ 106 003c 484D     		ldr	r5, .L3+4
+ 107              	.LVL16:
+ 108              		.loc 1 17 13 view .LVU23
+ 109 003e EB69     		ldr	r3, [r5, #28]
+ 110 0040 43F00203 		orr	r3, r3, #2
+ 111 0044 EB61     		str	r3, [r5, #28]
+  18:HARDWARE/Uart.c **** 	RCC->APB2RSTR |= 1<<14;
+ 112              		.loc 1 18 2 is_stmt 1 view .LVU24
+ 113              		.loc 1 18 16 is_stmt 0 view .LVU25
+ 114 0046 6B69     		ldr	r3, [r5, #20]
+ 115 0048 43F48043 		orr	r3, r3, #16384
+ 116 004c 6B61     		str	r3, [r5, #20]
+  19:HARDWARE/Uart.c **** 	RCC->APB2RSTR &= ~(1<<14);
+ 117              		.loc 1 19 2 is_stmt 1 view .LVU26
+ 118              		.loc 1 19 16 is_stmt 0 view .LVU27
+ 119 004e 6B69     		ldr	r3, [r5, #20]
+ 120 0050 23F48043 		bic	r3, r3, #16384
+ 121 0054 6B61     		str	r3, [r5, #20]
+  20:HARDWARE/Uart.c **** 	delay_ms(5);
+ 122              		.loc 1 20 2 is_stmt 1 view .LVU28
+ 123 0056 0520     		movs	r0, #5
+ 124              	.LVL17:
+ 125              		.loc 1 20 2 is_stmt 0 view .LVU29
+ 126 0058 0021     		movs	r1, #0
+ 127 005a FFF7FEFF 		bl	delay_ms
+ 128              	.LVL18:
+  21:HARDWARE/Uart.c **** 	RCC->APB2ENR|=1<<14;  	//Ê¹ÄÜ´®¿Ú1Ê±ÖÓ 
+ 129              		.loc 1 21 2 is_stmt 1 view .LVU30
+ 130              		.loc 1 21 14 is_stmt 0 view .LVU31
+ 131 005e 2B6A     		ldr	r3, [r5, #32]
+ 132 0060 43F48043 		orr	r3, r3, #16384
+ 133 0064 2B62     		str	r3, [r5, #32]
+  22:HARDWARE/Uart.c **** 	
+  23:HARDWARE/Uart.c **** 	GPIO_Set(GPIOB,PIN6|PIN7,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_SPEED_100M,GPIO_PUPD_NONE);//PA9,PA10,¸´Ó
+ 134              		.loc 1 23 2 is_stmt 1 view .LVU32
+ 135 0066 3F4C     		ldr	r4, .L3+8
+ 136 0068 0026     		movs	r6, #0
+ 137 006a 0196     		str	r6, [sp, #4]
+ 138 006c 0323     		movs	r3, #3
+ 139 006e 0093     		str	r3, [sp]
+ 140 0070 3346     		mov	r3, r6
+ 141 0072 0222     		movs	r2, #2
+ 142 0074 C021     		movs	r1, #192
+ 143 0076 2046     		mov	r0, r4
+ 144 0078 FFF7FEFF 		bl	GPIO_Set
+ 145              	.LVL19:
+  24:HARDWARE/Uart.c ****  	GPIO_AF_Set(GPIOB,6,7);	//PB6,AF7
+ 146              		.loc 1 24 3 view .LVU33
+ 147 007c 0722     		movs	r2, #7
+ 148 007e 0621     		movs	r1, #6
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 4
+
+
+ 149 0080 2046     		mov	r0, r4
+ 150 0082 FFF7FEFF 		bl	GPIO_AF_Set
+ 151              	.LVL20:
+  25:HARDWARE/Uart.c **** 	GPIO_AF_Set(GPIOB,7,7);//PB7,AF7  	   
+ 152              		.loc 1 25 2 view .LVU34
+ 153 0086 0722     		movs	r2, #7
+ 154 0088 1146     		mov	r1, r2
+ 155 008a 2046     		mov	r0, r4
+ 156 008c FFF7FEFF 		bl	GPIO_AF_Set
+ 157              	.LVL21:
+  26:HARDWARE/Uart.c **** 	//²¨ÌØÂÊÉèÖÃ
+  27:HARDWARE/Uart.c ****  	USART1->BRR=mantissa; 	//²¨ÌØÂÊÉèÖÃ	 
+ 158              		.loc 1 27 3 view .LVU35
+ 159              		.loc 1 27 14 is_stmt 0 view .LVU36
+ 160 0090 A4F54C44 		sub	r4, r4, #52224
+ 161 0094 A760     		str	r7, [r4, #8]
+  28:HARDWARE/Uart.c **** 	USART1->CR1&=~(1<<15); 	//ÉèÖÃOVER8=0 
+ 162              		.loc 1 28 2 is_stmt 1 view .LVU37
+ 163              		.loc 1 28 13 is_stmt 0 view .LVU38
+ 164 0096 E368     		ldr	r3, [r4, #12]
+ 165 0098 23F40043 		bic	r3, r3, #32768
+ 166 009c E360     		str	r3, [r4, #12]
+  29:HARDWARE/Uart.c **** 	USART1->CR1|=1<<3;  	//´®¿Ú·¢ËÍÊ¹ÄÜ 
+ 167              		.loc 1 29 2 is_stmt 1 view .LVU39
+ 168              		.loc 1 29 13 is_stmt 0 view .LVU40
+ 169 009e E368     		ldr	r3, [r4, #12]
+ 170 00a0 43F00803 		orr	r3, r3, #8
+ 171 00a4 E360     		str	r3, [r4, #12]
+  30:HARDWARE/Uart.c **** 	//Ê¹ÄÜ½ÓÊÕÖÐ¶Ï 
+  31:HARDWARE/Uart.c **** 	USART1->CR1|=1<<2;  	//´®¿Ú½ÓÊÕÊ¹ÄÜ
+ 172              		.loc 1 31 2 is_stmt 1 view .LVU41
+ 173              		.loc 1 31 13 is_stmt 0 view .LVU42
+ 174 00a6 E368     		ldr	r3, [r4, #12]
+ 175 00a8 43F00403 		orr	r3, r3, #4
+ 176 00ac E360     		str	r3, [r4, #12]
+  32:HARDWARE/Uart.c **** 	USART1->CR1 |= 1<<4;    //¿ÕÏÐÖÐ¶Ï	   	    	
+ 177              		.loc 1 32 2 is_stmt 1 view .LVU43
+ 178              		.loc 1 32 14 is_stmt 0 view .LVU44
+ 179 00ae E368     		ldr	r3, [r4, #12]
+ 180 00b0 43F01003 		orr	r3, r3, #16
+ 181 00b4 E360     		str	r3, [r4, #12]
+  33:HARDWARE/Uart.c **** 	MY_NVIC_Init(0,14,USART1_IRQn,0);
+ 182              		.loc 1 33 2 is_stmt 1 view .LVU45
+ 183 00b6 3346     		mov	r3, r6
+ 184 00b8 2522     		movs	r2, #37
+ 185 00ba 0E21     		movs	r1, #14
+ 186 00bc 3046     		mov	r0, r6
+ 187 00be FFF7FEFF 		bl	MY_NVIC_Init
+ 188              	.LVL22:
+  34:HARDWARE/Uart.c **** 	USART1->CR1|=1<<13;  	//´®¿ÚÊ¹ÄÜ
+ 189              		.loc 1 34 2 view .LVU46
+ 190              		.loc 1 34 13 is_stmt 0 view .LVU47
+ 191 00c2 E368     		ldr	r3, [r4, #12]
+ 192 00c4 43F40053 		orr	r3, r3, #8192
+ 193 00c8 E360     		str	r3, [r4, #12]
+  35:HARDWARE/Uart.c **** 	
+  36:HARDWARE/Uart.c **** 	RCC->AHBENR |= 1 << 24; //¿ªÆôDMA1Ê±ÖÓ
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 5
+
+
+ 194              		.loc 1 36 2 is_stmt 1 view .LVU48
+ 195              		.loc 1 36 14 is_stmt 0 view .LVU49
+ 196 00ca EB69     		ldr	r3, [r5, #28]
+ 197 00cc 43F08073 		orr	r3, r3, #16777216
+ 198 00d0 EB61     		str	r3, [r5, #28]
+  37:HARDWARE/Uart.c **** 	DMA1_Channel4->CPAR = (u32)&(USART1->DR);  	//ÍâÉèµØÖ·
+ 199              		.loc 1 37 2 is_stmt 1 view .LVU50
+ 200              		.loc 1 37 22 is_stmt 0 view .LVU51
+ 201 00d2 254B     		ldr	r3, .L3+12
+ 202 00d4 2549     		ldr	r1, .L3+16
+ 203 00d6 9960     		str	r1, [r3, #8]
+  38:HARDWARE/Uart.c **** 	DMA1_Channel4->CCR = 0x00000000;         	//¸´Î»
+ 204              		.loc 1 38 2 is_stmt 1 view .LVU52
+ 205              		.loc 1 38 21 is_stmt 0 view .LVU53
+ 206 00d8 1E60     		str	r6, [r3]
+  39:HARDWARE/Uart.c **** 	DMA1_Channel4->CCR |=  (1<<4);             	//´«Êä·½Ïò£¬´Ó´æ´¢Æ÷¶ÁÊý¾ÝÊä³öµ½ÍâÉè
+ 207              		.loc 1 39 2 is_stmt 1 view .LVU54
+ 208              		.loc 1 39 21 is_stmt 0 view .LVU55
+ 209 00da 1A68     		ldr	r2, [r3]
+ 210 00dc 42F01002 		orr	r2, r2, #16
+ 211 00e0 1A60     		str	r2, [r3]
+  40:HARDWARE/Uart.c **** 	DMA1_Channel4->CCR &= ~(1<<5);             	//²»Ö´ÐÐÑ­»·²Ù×÷
+ 212              		.loc 1 40 2 is_stmt 1 view .LVU56
+ 213              		.loc 1 40 21 is_stmt 0 view .LVU57
+ 214 00e2 1A68     		ldr	r2, [r3]
+ 215 00e4 22F02002 		bic	r2, r2, #32
+ 216 00e8 1A60     		str	r2, [r3]
+  41:HARDWARE/Uart.c **** 	DMA1_Channel4->CCR &= ~(1<<6);             	//ÍâÉèµØÖ·²»µÝÔö
+ 217              		.loc 1 41 2 is_stmt 1 view .LVU58
+ 218              		.loc 1 41 21 is_stmt 0 view .LVU59
+ 219 00ea 1A68     		ldr	r2, [r3]
+ 220 00ec 22F04002 		bic	r2, r2, #64
+ 221 00f0 1A60     		str	r2, [r3]
+  42:HARDWARE/Uart.c **** 	DMA1_Channel4->CCR |=  (1<<7);            	//´æ´¢Æ÷µØÖ·µÝÔö
+ 222              		.loc 1 42 2 is_stmt 1 view .LVU60
+ 223              		.loc 1 42 21 is_stmt 0 view .LVU61
+ 224 00f2 1A68     		ldr	r2, [r3]
+ 225 00f4 42F08002 		orr	r2, r2, #128
+ 226 00f8 1A60     		str	r2, [r3]
+  43:HARDWARE/Uart.c **** 	DMA1_Channel4->CCR &= ~(3<<8);            	//ÍâÉèÊý¾Ý¿í¶È8BIT
+ 227              		.loc 1 43 2 is_stmt 1 view .LVU62
+ 228              		.loc 1 43 21 is_stmt 0 view .LVU63
+ 229 00fa 1A68     		ldr	r2, [r3]
+ 230 00fc 22F44072 		bic	r2, r2, #768
+ 231 0100 1A60     		str	r2, [r3]
+  44:HARDWARE/Uart.c **** 	DMA1_Channel4->CCR &= ~(3<<10);           	//´æ´¢Êý¾Ý¿í¶È8bit
+ 232              		.loc 1 44 2 is_stmt 1 view .LVU64
+ 233              		.loc 1 44 21 is_stmt 0 view .LVU65
+ 234 0102 1A68     		ldr	r2, [r3]
+ 235 0104 22F44062 		bic	r2, r2, #3072
+ 236 0108 1A60     		str	r2, [r3]
+  45:HARDWARE/Uart.c **** 	DMA1_Channel4->CCR |=  (1<<12);           	//ÖÐµÈÓÅÏÈ¼¶
+ 237              		.loc 1 45 2 is_stmt 1 view .LVU66
+ 238              		.loc 1 45 21 is_stmt 0 view .LVU67
+ 239 010a 1A68     		ldr	r2, [r3]
+ 240 010c 42F48052 		orr	r2, r2, #4096
+ 241 0110 1A60     		str	r2, [r3]
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 6
+
+
+  46:HARDWARE/Uart.c **** 	DMA1_Channel4->CCR &= ~(1<<14);            	//·Ç´æ´¢Æ÷µ½´æ´¢Æ÷ 
+ 242              		.loc 1 46 2 is_stmt 1 view .LVU68
+ 243              		.loc 1 46 21 is_stmt 0 view .LVU69
+ 244 0112 1A68     		ldr	r2, [r3]
+ 245 0114 22F48042 		bic	r2, r2, #16384
+ 246 0118 1A60     		str	r2, [r3]
+  47:HARDWARE/Uart.c **** 	
+  48:HARDWARE/Uart.c **** 	DMA1_Channel5->CCR &= ~0x00000001;//¹Ø±ÕÊý¾ÝÁ÷
+ 247              		.loc 1 48 2 is_stmt 1 view .LVU70
+ 248              		.loc 1 48 21 is_stmt 0 view .LVU71
+ 249 011a 1433     		adds	r3, r3, #20
+ 250 011c 1A68     		ldr	r2, [r3]
+ 251 011e 22F00102 		bic	r2, r2, #1
+ 252 0122 1A60     		str	r2, [r3]
+  49:HARDWARE/Uart.c **** 	DMA1_Channel5->CCR |= (0x03 << 22);//ÓÅÏÈ¼¶¸ß
+ 253              		.loc 1 49 2 is_stmt 1 view .LVU72
+ 254              		.loc 1 49 21 is_stmt 0 view .LVU73
+ 255 0124 1A68     		ldr	r2, [r3]
+ 256 0126 42F44002 		orr	r2, r2, #12582912
+ 257 012a 1A60     		str	r2, [r3]
+  50:HARDWARE/Uart.c **** 	DMA1_Channel5->CCR |= (1 << 7);//´æ´¢Æ÷µØÖ·µÝÔö
+ 258              		.loc 1 50 2 is_stmt 1 view .LVU74
+ 259              		.loc 1 50 21 is_stmt 0 view .LVU75
+ 260 012c 1A68     		ldr	r2, [r3]
+ 261 012e 42F08002 		orr	r2, r2, #128
+ 262 0132 1A60     		str	r2, [r3]
+  51:HARDWARE/Uart.c **** 	DMA1_Channel5->CCR &= ~(0x01 << 4);//´«Êä·½Ïò£ºÍâÉèµ½´æ´¢Æ÷
+ 263              		.loc 1 51 2 is_stmt 1 view .LVU76
+ 264              		.loc 1 51 21 is_stmt 0 view .LVU77
+ 265 0134 1A68     		ldr	r2, [r3]
+ 266 0136 22F01002 		bic	r2, r2, #16
+ 267 013a 1A60     		str	r2, [r3]
+  52:HARDWARE/Uart.c **** 	DMA1_Channel5->CPAR = (u32)&USART1->DR;//´Ó´®¿ÚÊý¾Ý¼Ä´æÆ÷¶ÁÈ¡Êý¾Ý
+ 268              		.loc 1 52 2 is_stmt 1 view .LVU78
+ 269              		.loc 1 52 22 is_stmt 0 view .LVU79
+ 270 013c 9960     		str	r1, [r3, #8]
+  53:HARDWARE/Uart.c **** 	DMA1_Channel5->CMAR = (u32)UART1BUF;//Êý¾Ý°áÒÆÄ¿µÄµØÖ·
+ 271              		.loc 1 53 2 is_stmt 1 view .LVU80
+ 272              		.loc 1 53 24 is_stmt 0 view .LVU81
+ 273 013e 0C4A     		ldr	r2, .L3+20
+ 274              		.loc 1 53 22 view .LVU82
+ 275 0140 DA60     		str	r2, [r3, #12]
+  54:HARDWARE/Uart.c **** 	DMA1_Channel5->CNDTR = MAXUARTBUFLENN;
+ 276              		.loc 1 54 2 is_stmt 1 view .LVU83
+ 277              		.loc 1 54 23 is_stmt 0 view .LVU84
+ 278 0142 4FF48062 		mov	r2, #1024
+ 279 0146 5A60     		str	r2, [r3, #4]
+  55:HARDWARE/Uart.c **** 	
+  56:HARDWARE/Uart.c **** 	USART1->CR3 |= 0xC0; //Ê¹ÄÜUART1 DMAÊÕ·¢
+ 280              		.loc 1 56 2 is_stmt 1 view .LVU85
+ 281              		.loc 1 56 14 is_stmt 0 view .LVU86
+ 282 0148 6269     		ldr	r2, [r4, #20]
+ 283 014a 42F0C002 		orr	r2, r2, #192
+ 284 014e 6261     		str	r2, [r4, #20]
+  57:HARDWARE/Uart.c **** 	DMA1_Channel5->CCR |= 0x00000001;//¿ªÆôÊý¾ÝÁ÷
+ 285              		.loc 1 57 2 is_stmt 1 view .LVU87
+ 286              		.loc 1 57 21 is_stmt 0 view .LVU88
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 7
+
+
+ 287 0150 1A68     		ldr	r2, [r3]
+ 288 0152 42F00102 		orr	r2, r2, #1
+ 289 0156 1A60     		str	r2, [r3]
+  58:HARDWARE/Uart.c **** }
+ 290              		.loc 1 58 1 view .LVU89
+ 291 0158 03B0     		add	sp, sp, #12
+ 292              	.LCFI2:
+ 293              		.cfi_def_cfa_offset 20
+ 294              		@ sp needed
+ 295 015a F0BD     		pop	{r4, r5, r6, r7, pc}
+ 296              	.LVL23:
+ 297              	.L4:
+ 298              		.loc 1 58 1 view .LVU90
+ 299              		.align	2
+ 300              	.L3:
+ 301 015c 0024F448 		.word	1223959552
+ 302 0160 00380240 		.word	1073887232
+ 303 0164 00040240 		.word	1073873920
+ 304 0168 44600240 		.word	1073897540
+ 305 016c 04380140 		.word	1073821700
+ 306 0170 00000000 		.word	UART1BUF
+ 307              		.cfi_endproc
+ 308              	.LFE65:
+ 310              		.section	.text.Uart2Init,"ax",%progbits
+ 311              		.align	1
+ 312              		.global	Uart2Init
+ 313              		.syntax unified
+ 314              		.thumb
+ 315              		.thumb_func
+ 316              		.fpu softvfp
+ 318              	Uart2Init:
+ 319              	.LVL24:
+ 320              	.LFB66:
+  59:HARDWARE/Uart.c **** 
+  60:HARDWARE/Uart.c **** void Uart2Init(u32 baud)
+  61:HARDWARE/Uart.c **** {
+ 321              		.loc 1 61 1 is_stmt 1 view -0
+ 322              		.cfi_startproc
+ 323              		@ args = 0, pretend = 0, frame = 0
+ 324              		@ frame_needed = 0, uses_anonymous_args = 0
+ 325              		.loc 1 61 1 is_stmt 0 view .LVU92
+ 326 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 327              	.LCFI3:
+ 328              		.cfi_def_cfa_offset 24
+ 329              		.cfi_offset 4, -24
+ 330              		.cfi_offset 5, -20
+ 331              		.cfi_offset 6, -16
+ 332              		.cfi_offset 7, -12
+ 333              		.cfi_offset 8, -8
+ 334              		.cfi_offset 14, -4
+ 335 0004 82B0     		sub	sp, sp, #8
+ 336              	.LCFI4:
+ 337              		.cfi_def_cfa_offset 32
+  62:HARDWARE/Uart.c **** 	float temp;
+ 338              		.loc 1 62 2 is_stmt 1 view .LVU93
+  63:HARDWARE/Uart.c **** 	u16 mantissa;
+ 339              		.loc 1 63 2 view .LVU94
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 8
+
+
+  64:HARDWARE/Uart.c **** 	u16 fraction;	   
+ 340              		.loc 1 64 2 view .LVU95
+  65:HARDWARE/Uart.c **** 	temp=(float)((float)2000000/(float)baud);	//µÃµ½USARTDIV@OVER8=0
+ 341              		.loc 1 65 2 view .LVU96
+ 342              		.loc 1 65 30 is_stmt 0 view .LVU97
+ 343 0006 FFF7FEFF 		bl	__aeabi_ui2f
+ 344              	.LVL25:
+ 345              		.loc 1 65 6 view .LVU98
+ 346 000a 0146     		mov	r1, r0
+ 347 000c 4E48     		ldr	r0, .L7
+ 348 000e FFF7FEFF 		bl	__aeabi_fdiv
+ 349              	.LVL26:
+ 350 0012 0546     		mov	r5, r0
+ 351              	.LVL27:
+  66:HARDWARE/Uart.c **** 	mantissa=temp;				 				//µÃµ½ÕûÊý²¿·Ö
+ 352              		.loc 1 66 2 is_stmt 1 view .LVU99
+ 353              		.loc 1 66 10 is_stmt 0 view .LVU100
+ 354 0014 FFF7FEFF 		bl	__aeabi_f2uiz
+ 355              	.LVL28:
+ 356              		.loc 1 66 10 view .LVU101
+ 357 0018 84B2     		uxth	r4, r0
+ 358              	.LVL29:
+  67:HARDWARE/Uart.c **** 	fraction=(temp-mantissa)*16; 				//µÃµ½Ð¡Êý²¿·Ö@OVER8=0 
+ 359              		.loc 1 67 2 is_stmt 1 view .LVU102
+ 360              		.loc 1 67 16 is_stmt 0 view .LVU103
+ 361 001a 2046     		mov	r0, r4
+ 362 001c FFF7FEFF 		bl	__aeabi_i2f
+ 363              	.LVL30:
+ 364 0020 0146     		mov	r1, r0
+ 365 0022 2846     		mov	r0, r5
+ 366 0024 FFF7FEFF 		bl	__aeabi_fsub
+ 367              	.LVL31:
+ 368              		.loc 1 67 26 view .LVU104
+ 369 0028 4FF08341 		mov	r1, #1098907648
+ 370 002c FFF7FEFF 		bl	__aeabi_fmul
+ 371              	.LVL32:
+ 372              		.loc 1 67 10 view .LVU105
+ 373 0030 FFF7FEFF 		bl	__aeabi_f2uiz
+ 374              	.LVL33:
+ 375 0034 80B2     		uxth	r0, r0
+ 376              	.LVL34:
+  68:HARDWARE/Uart.c ****     mantissa<<=4;
+ 377              		.loc 1 68 5 is_stmt 1 view .LVU106
+ 378              		.loc 1 68 13 is_stmt 0 view .LVU107
+ 379 0036 2401     		lsls	r4, r4, #4
+ 380              	.LVL35:
+ 381              		.loc 1 68 13 view .LVU108
+ 382 0038 A4B2     		uxth	r4, r4
+ 383              	.LVL36:
+  69:HARDWARE/Uart.c **** 	mantissa+=fraction;
+ 384              		.loc 1 69 2 is_stmt 1 view .LVU109
+ 385              		.loc 1 69 10 is_stmt 0 view .LVU110
+ 386 003a 0444     		add	r4, r4, r0
+ 387              	.LVL37:
+ 388              		.loc 1 69 10 view .LVU111
+ 389 003c A7B2     		uxth	r7, r4
+ 390              	.LVL38:
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 9
+
+
+  70:HARDWARE/Uart.c **** 	
+  71:HARDWARE/Uart.c **** 	RCC->AHBENR|=1<<0;   	//Ê¹ÄÜPORTA¿ÚÊ±ÖÓ  
+ 391              		.loc 1 71 2 is_stmt 1 view .LVU112
+ 392              		.loc 1 71 13 is_stmt 0 view .LVU113
+ 393 003e 434D     		ldr	r5, .L7+4
+ 394              	.LVL39:
+ 395              		.loc 1 71 13 view .LVU114
+ 396 0040 EB69     		ldr	r3, [r5, #28]
+ 397 0042 43F00103 		orr	r3, r3, #1
+ 398 0046 EB61     		str	r3, [r5, #28]
+  72:HARDWARE/Uart.c **** 	RCC->APB1ENR|=1<<17;  	//Ê¹ÄÜ´®¿Ú2Ê±ÖÓ 
+ 399              		.loc 1 72 2 is_stmt 1 view .LVU115
+ 400              		.loc 1 72 14 is_stmt 0 view .LVU116
+ 401 0048 6B6A     		ldr	r3, [r5, #36]
+ 402 004a 43F40033 		orr	r3, r3, #131072
+ 403 004e 6B62     		str	r3, [r5, #36]
+  73:HARDWARE/Uart.c **** 	GPIO_Set(GPIOA,PIN2|PIN3,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_SPEED_100M,GPIO_PUPD_NONE);//PA9,PA10,¸´Ó
+ 404              		.loc 1 73 2 is_stmt 1 view .LVU117
+ 405 0050 3F4C     		ldr	r4, .L7+8
+ 406 0052 0026     		movs	r6, #0
+ 407 0054 0196     		str	r6, [sp, #4]
+ 408 0056 4FF00308 		mov	r8, #3
+ 409 005a CDF80080 		str	r8, [sp]
+ 410 005e 3346     		mov	r3, r6
+ 411 0060 0222     		movs	r2, #2
+ 412 0062 0C21     		movs	r1, #12
+ 413 0064 2046     		mov	r0, r4
+ 414              	.LVL40:
+ 415              		.loc 1 73 2 is_stmt 0 view .LVU118
+ 416 0066 FFF7FEFF 		bl	GPIO_Set
+ 417              	.LVL41:
+  74:HARDWARE/Uart.c ****  	GPIO_AF_Set(GPIOA,2,7);	//PA2,AF7
+ 418              		.loc 1 74 3 is_stmt 1 view .LVU119
+ 419 006a 0722     		movs	r2, #7
+ 420 006c 0221     		movs	r1, #2
+ 421 006e 2046     		mov	r0, r4
+ 422 0070 FFF7FEFF 		bl	GPIO_AF_Set
+ 423              	.LVL42:
+  75:HARDWARE/Uart.c **** 	GPIO_AF_Set(GPIOA,3,7);//PA3,AF7
+ 424              		.loc 1 75 2 view .LVU120
+ 425 0074 0722     		movs	r2, #7
+ 426 0076 4146     		mov	r1, r8
+ 427 0078 2046     		mov	r0, r4
+ 428 007a FFF7FEFF 		bl	GPIO_AF_Set
+ 429              	.LVL43:
+  76:HARDWARE/Uart.c **** 	//²¨ÌØÂÊÉèÖÃ
+  77:HARDWARE/Uart.c ****  	USART2->BRR=mantissa; 	//²¨ÌØÂÊÉèÖÃ	 
+ 430              		.loc 1 77 3 view .LVU121
+ 431              		.loc 1 77 14 is_stmt 0 view .LVU122
+ 432 007e A4F5DE34 		sub	r4, r4, #113664
+ 433 0082 A760     		str	r7, [r4, #8]
+  78:HARDWARE/Uart.c **** 	USART2->CR1&=~(1<<15); 	//ÉèÖÃOVER8=0 
+ 434              		.loc 1 78 2 is_stmt 1 view .LVU123
+ 435              		.loc 1 78 13 is_stmt 0 view .LVU124
+ 436 0084 E368     		ldr	r3, [r4, #12]
+ 437 0086 23F40043 		bic	r3, r3, #32768
+ 438 008a E360     		str	r3, [r4, #12]
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 10
+
+
+  79:HARDWARE/Uart.c **** 	USART2->CR1|=1<<3;  	//´®¿Ú·¢ËÍÊ¹ÄÜ 
+ 439              		.loc 1 79 2 is_stmt 1 view .LVU125
+ 440              		.loc 1 79 13 is_stmt 0 view .LVU126
+ 441 008c E368     		ldr	r3, [r4, #12]
+ 442 008e 43F00803 		orr	r3, r3, #8
+ 443 0092 E360     		str	r3, [r4, #12]
+  80:HARDWARE/Uart.c **** 	//Ê¹ÄÜ½ÓÊÕÖÐ¶Ï 
+  81:HARDWARE/Uart.c **** 	USART2->CR1|=1<<2;  	//´®¿Ú½ÓÊÕÊ¹ÄÜ
+ 444              		.loc 1 81 2 is_stmt 1 view .LVU127
+ 445              		.loc 1 81 13 is_stmt 0 view .LVU128
+ 446 0094 E368     		ldr	r3, [r4, #12]
+ 447 0096 43F00403 		orr	r3, r3, #4
+ 448 009a E360     		str	r3, [r4, #12]
+  82:HARDWARE/Uart.c **** 	USART2->CR1 |= 1<<4;    //¿ÕÏÐÖÐ¶Ï	   	    	
+ 449              		.loc 1 82 2 is_stmt 1 view .LVU129
+ 450              		.loc 1 82 14 is_stmt 0 view .LVU130
+ 451 009c E368     		ldr	r3, [r4, #12]
+ 452 009e 43F01003 		orr	r3, r3, #16
+ 453 00a2 E360     		str	r3, [r4, #12]
+  83:HARDWARE/Uart.c **** 	MY_NVIC_Init(0,13,USART2_IRQn,0);
+ 454              		.loc 1 83 2 is_stmt 1 view .LVU131
+ 455 00a4 3346     		mov	r3, r6
+ 456 00a6 2622     		movs	r2, #38
+ 457 00a8 0D21     		movs	r1, #13
+ 458 00aa 3046     		mov	r0, r6
+ 459 00ac FFF7FEFF 		bl	MY_NVIC_Init
+ 460              	.LVL44:
+  84:HARDWARE/Uart.c **** 	USART2->CR1|=1<<13;  	//´®¿ÚÊ¹ÄÜ
+ 461              		.loc 1 84 2 view .LVU132
+ 462              		.loc 1 84 13 is_stmt 0 view .LVU133
+ 463 00b0 E368     		ldr	r3, [r4, #12]
+ 464 00b2 43F40053 		orr	r3, r3, #8192
+ 465 00b6 E360     		str	r3, [r4, #12]
+  85:HARDWARE/Uart.c **** 	RCC->AHBENR |= 1 << 24; //¿ªÆôDMA1Ê±ÖÓ
+ 466              		.loc 1 85 2 is_stmt 1 view .LVU134
+ 467              		.loc 1 85 14 is_stmt 0 view .LVU135
+ 468 00b8 EB69     		ldr	r3, [r5, #28]
+ 469 00ba 43F08073 		orr	r3, r3, #16777216
+ 470 00be EB61     		str	r3, [r5, #28]
+  86:HARDWARE/Uart.c **** 	USART2->CR3 |= 0xC0; //Ê¹ÄÜUART1 DMAÊÕ·¢
+ 471              		.loc 1 86 2 is_stmt 1 view .LVU136
+ 472              		.loc 1 86 14 is_stmt 0 view .LVU137
+ 473 00c0 6369     		ldr	r3, [r4, #20]
+ 474 00c2 43F0C003 		orr	r3, r3, #192
+ 475 00c6 6361     		str	r3, [r4, #20]
+  87:HARDWARE/Uart.c **** 	DMA1_Channel7->CPAR = (u32)&(USART2->DR);  	//ÍâÉèµØÖ·
+ 476              		.loc 1 87 2 is_stmt 1 view .LVU138
+ 477              		.loc 1 87 22 is_stmt 0 view .LVU139
+ 478 00c8 224B     		ldr	r3, .L7+12
+ 479 00ca 2349     		ldr	r1, .L7+16
+ 480 00cc 9960     		str	r1, [r3, #8]
+  88:HARDWARE/Uart.c **** 	DMA1_Channel7->CCR = 0x00000000;         	//¸´Î»
+ 481              		.loc 1 88 2 is_stmt 1 view .LVU140
+ 482              		.loc 1 88 21 is_stmt 0 view .LVU141
+ 483 00ce 1E60     		str	r6, [r3]
+  89:HARDWARE/Uart.c **** 	DMA1_Channel7->CCR |=  (1<<4);             	//´«Êä·½Ïò£¬´Ó´æ´¢Æ÷¶ÁÊý¾ÝÊä³öµ½ÍâÉè
+ 484              		.loc 1 89 2 is_stmt 1 view .LVU142
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 11
+
+
+ 485              		.loc 1 89 21 is_stmt 0 view .LVU143
+ 486 00d0 1A68     		ldr	r2, [r3]
+ 487 00d2 42F01002 		orr	r2, r2, #16
+ 488 00d6 1A60     		str	r2, [r3]
+  90:HARDWARE/Uart.c **** 	DMA1_Channel7->CCR &= ~(1<<5);             	//²»Ö´ÐÐÑ­»·²Ù×÷
+ 489              		.loc 1 90 2 is_stmt 1 view .LVU144
+ 490              		.loc 1 90 21 is_stmt 0 view .LVU145
+ 491 00d8 1A68     		ldr	r2, [r3]
+ 492 00da 22F02002 		bic	r2, r2, #32
+ 493 00de 1A60     		str	r2, [r3]
+  91:HARDWARE/Uart.c **** 	DMA1_Channel7->CCR &= ~(1<<6);             	//ÍâÉèµØÖ·²»µÝÔö
+ 494              		.loc 1 91 2 is_stmt 1 view .LVU146
+ 495              		.loc 1 91 21 is_stmt 0 view .LVU147
+ 496 00e0 1A68     		ldr	r2, [r3]
+ 497 00e2 22F04002 		bic	r2, r2, #64
+ 498 00e6 1A60     		str	r2, [r3]
+  92:HARDWARE/Uart.c **** 	DMA1_Channel7->CCR |=  (1<<7);            	//´æ´¢Æ÷µØÖ·µÝÔö
+ 499              		.loc 1 92 2 is_stmt 1 view .LVU148
+ 500              		.loc 1 92 21 is_stmt 0 view .LVU149
+ 501 00e8 1A68     		ldr	r2, [r3]
+ 502 00ea 42F08002 		orr	r2, r2, #128
+ 503 00ee 1A60     		str	r2, [r3]
+  93:HARDWARE/Uart.c **** 	DMA1_Channel7->CCR &= ~(3<<8);            	//ÍâÉèÊý¾Ý¿í¶È8BIT
+ 504              		.loc 1 93 2 is_stmt 1 view .LVU150
+ 505              		.loc 1 93 21 is_stmt 0 view .LVU151
+ 506 00f0 1A68     		ldr	r2, [r3]
+ 507 00f2 22F44072 		bic	r2, r2, #768
+ 508 00f6 1A60     		str	r2, [r3]
+  94:HARDWARE/Uart.c **** 	DMA1_Channel7->CCR &= ~(3<<10);           	//´æ´¢Êý¾Ý¿í¶È8bit
+ 509              		.loc 1 94 2 is_stmt 1 view .LVU152
+ 510              		.loc 1 94 21 is_stmt 0 view .LVU153
+ 511 00f8 1A68     		ldr	r2, [r3]
+ 512 00fa 22F44062 		bic	r2, r2, #3072
+ 513 00fe 1A60     		str	r2, [r3]
+  95:HARDWARE/Uart.c **** 	DMA1_Channel7->CCR |=  (1<<12);           	//ÖÐµÈÓÅÏÈ¼¶
+ 514              		.loc 1 95 2 is_stmt 1 view .LVU154
+ 515              		.loc 1 95 21 is_stmt 0 view .LVU155
+ 516 0100 1A68     		ldr	r2, [r3]
+ 517 0102 42F48052 		orr	r2, r2, #4096
+ 518 0106 1A60     		str	r2, [r3]
+  96:HARDWARE/Uart.c **** 	DMA1_Channel7->CCR &= ~(1<<14);            	//·Ç´æ´¢Æ÷µ½´æ´¢Æ÷ 
+ 519              		.loc 1 96 2 is_stmt 1 view .LVU156
+ 520              		.loc 1 96 21 is_stmt 0 view .LVU157
+ 521 0108 1A68     		ldr	r2, [r3]
+ 522 010a 22F48042 		bic	r2, r2, #16384
+ 523 010e 1A60     		str	r2, [r3]
+  97:HARDWARE/Uart.c **** 	
+  98:HARDWARE/Uart.c **** 	DMA1_Channel6->CCR &= ~0x00000001;//¹Ø±ÕÊý¾ÝÁ÷
+ 524              		.loc 1 98 2 is_stmt 1 view .LVU158
+ 525              		.loc 1 98 21 is_stmt 0 view .LVU159
+ 526 0110 143B     		subs	r3, r3, #20
+ 527 0112 1A68     		ldr	r2, [r3]
+ 528 0114 22F00102 		bic	r2, r2, #1
+ 529 0118 1A60     		str	r2, [r3]
+  99:HARDWARE/Uart.c **** 	DMA1_Channel6->CCR |= (0x03 << 22);//ÓÅÏÈ¼¶¸ß
+ 530              		.loc 1 99 2 is_stmt 1 view .LVU160
+ 531              		.loc 1 99 21 is_stmt 0 view .LVU161
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 12
+
+
+ 532 011a 1A68     		ldr	r2, [r3]
+ 533 011c 42F44002 		orr	r2, r2, #12582912
+ 534 0120 1A60     		str	r2, [r3]
+ 100:HARDWARE/Uart.c **** 	DMA1_Channel6->CCR |= (0x01 << 7);//´æ´¢Æ÷µØÖ·µÝÔö
+ 535              		.loc 1 100 2 is_stmt 1 view .LVU162
+ 536              		.loc 1 100 21 is_stmt 0 view .LVU163
+ 537 0122 1A68     		ldr	r2, [r3]
+ 538 0124 42F08002 		orr	r2, r2, #128
+ 539 0128 1A60     		str	r2, [r3]
+ 101:HARDWARE/Uart.c **** 	DMA1_Channel6->CCR &= ~(0x00 << 4);//´«Êä·½Ïò£ºÍâÉèµ½´æ´¢Æ÷
+ 540              		.loc 1 101 2 is_stmt 1 view .LVU164
+ 541              		.loc 1 101 21 is_stmt 0 view .LVU165
+ 542 012a 1A68     		ldr	r2, [r3]
+ 543 012c 1A60     		str	r2, [r3]
+ 102:HARDWARE/Uart.c **** 	DMA1_Channel6->CPAR = (u32)&USART2->DR;//´Ó´®¿ÚÊý¾Ý¼Ä´æÆ÷¶ÁÈ¡Êý¾Ý
+ 544              		.loc 1 102 2 is_stmt 1 view .LVU166
+ 545              		.loc 1 102 22 is_stmt 0 view .LVU167
+ 546 012e 9960     		str	r1, [r3, #8]
+ 103:HARDWARE/Uart.c **** 	DMA1_Channel6->CMAR = (u32)UART2BUF;//Êý¾Ý°áÒÆÄ¿µÄµØÖ·
+ 547              		.loc 1 103 2 is_stmt 1 view .LVU168
+ 548              		.loc 1 103 24 is_stmt 0 view .LVU169
+ 549 0130 0A4A     		ldr	r2, .L7+20
+ 550              		.loc 1 103 22 view .LVU170
+ 551 0132 DA60     		str	r2, [r3, #12]
+ 104:HARDWARE/Uart.c **** 	DMA1_Channel6->CNDTR = MAXUARTBUFLENN;
+ 552              		.loc 1 104 2 is_stmt 1 view .LVU171
+ 553              		.loc 1 104 23 is_stmt 0 view .LVU172
+ 554 0134 4FF48062 		mov	r2, #1024
+ 555 0138 5A60     		str	r2, [r3, #4]
+ 105:HARDWARE/Uart.c **** 	DMA1_Channel6->CCR |= 0x01;//¿ªÆôÊý¾ÝÁ÷
+ 556              		.loc 1 105 2 is_stmt 1 view .LVU173
+ 557              		.loc 1 105 21 is_stmt 0 view .LVU174
+ 558 013a 1A68     		ldr	r2, [r3]
+ 559 013c 42F00102 		orr	r2, r2, #1
+ 560 0140 1A60     		str	r2, [r3]
+ 106:HARDWARE/Uart.c **** }
+ 561              		.loc 1 106 1 view .LVU175
+ 562 0142 02B0     		add	sp, sp, #8
+ 563              	.LCFI5:
+ 564              		.cfi_def_cfa_offset 24
+ 565              		@ sp needed
+ 566 0144 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 567              	.LVL45:
+ 568              	.L8:
+ 569              		.loc 1 106 1 view .LVU176
+ 570              		.align	2
+ 571              	.L7:
+ 572 0148 0024F449 		.word	1240736768
+ 573 014c 00380240 		.word	1073887232
+ 574 0150 00000240 		.word	1073872896
+ 575 0154 80600240 		.word	1073897600
+ 576 0158 04440040 		.word	1073759236
+ 577 015c 00000000 		.word	UART2BUF
+ 578              		.cfi_endproc
+ 579              	.LFE66:
+ 581              		.section	.text.USART2_IRQHandler,"ax",%progbits
+ 582              		.align	1
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 13
+
+
+ 583              		.global	USART2_IRQHandler
+ 584              		.syntax unified
+ 585              		.thumb
+ 586              		.thumb_func
+ 587              		.fpu softvfp
+ 589              	USART2_IRQHandler:
+ 590              	.LFB68:
+ 107:HARDWARE/Uart.c **** 
+ 108:HARDWARE/Uart.c **** //´®¿Ú1½ÓÊÕÖÐ¶Ï
+ 109:HARDWARE/Uart.c **** void USART1_IRQHandler(void)
+ 110:HARDWARE/Uart.c **** {
+ 111:HARDWARE/Uart.c **** 	u16 temp;
+ 112:HARDWARE/Uart.c **** 	if(USART1 -> SR & 0x10)    // ¿ÕÏÐÖÐ¶Ï , ÏÈ¹Ø±ÕDMAÍ¨µÀ£¬ÇåÁã¼ÆÊý£¬ÔÚ´ò¿ª
+ 113:HARDWARE/Uart.c **** 	{
+ 114:HARDWARE/Uart.c **** 		temp = MAXUARTBUFLENN - DMA1_Channel5->CNDTR;//´®¿Ú½ÓÊÕÊý¾Ý¸öÊý
+ 115:HARDWARE/Uart.c **** 		Uart1SendData(UART1BUF,temp);
+ 116:HARDWARE/Uart.c **** 		temp = USART1->SR;
+ 117:HARDWARE/Uart.c **** 		temp |= USART1->DR;
+ 118:HARDWARE/Uart.c **** 		DMA1->IFCR |= 0x0F << 16;//Çå³ýDMA±ê¼Ç
+ 119:HARDWARE/Uart.c **** 		DMA1_Channel5->CCR &= ~0x01;
+ 120:HARDWARE/Uart.c **** 		DMA1_Channel5->CNDTR = MAXUARTBUFLENN;
+ 121:HARDWARE/Uart.c **** 		DMA1_Channel5->CCR |= 0x01;
+ 122:HARDWARE/Uart.c **** 	}
+ 123:HARDWARE/Uart.c **** }
+ 124:HARDWARE/Uart.c **** 
+ 125:HARDWARE/Uart.c **** //´®¿Ú2½ÓÊÕÖÐ¶Ï
+ 126:HARDWARE/Uart.c **** void USART2_IRQHandler(void)
+ 127:HARDWARE/Uart.c **** {
+ 591              		.loc 1 127 1 is_stmt 1 view -0
+ 592              		.cfi_startproc
+ 593              		@ args = 0, pretend = 0, frame = 0
+ 594              		@ frame_needed = 0, uses_anonymous_args = 0
+ 595              		@ link register save eliminated.
+ 128:HARDWARE/Uart.c **** 	u16 temp;
+ 596              		.loc 1 128 2 view .LVU178
+ 129:HARDWARE/Uart.c **** 	if(USART2 -> SR & 0x10)    // ¿ÕÏÐÖÐ¶Ï , ÏÈ¹Ø±ÕDMAÍ¨µÀ£¬ÇåÁã¼ÆÊý£¬ÔÚ´ò¿ª
+ 597              		.loc 1 129 2 view .LVU179
+ 598              		.loc 1 129 12 is_stmt 0 view .LVU180
+ 599 0000 0D4B     		ldr	r3, .L11
+ 600 0002 1B68     		ldr	r3, [r3]
+ 601              		.loc 1 129 4 view .LVU181
+ 602 0004 13F0100F 		tst	r3, #16
+ 603 0008 14D0     		beq	.L9
+ 130:HARDWARE/Uart.c **** 	{
+ 131:HARDWARE/Uart.c **** 		temp = MAXUARTBUFLENN - DMA1_Channel6->CNDTR;//´®¿Ú½ÓÊÕÊý¾Ý¸öÊý
+ 604              		.loc 1 131 3 is_stmt 1 view .LVU182
+ 605              		.loc 1 131 40 is_stmt 0 view .LVU183
+ 606 000a 0C4B     		ldr	r3, .L11+4
+ 607 000c 5A68     		ldr	r2, [r3, #4]
+ 608              	.LVL46:
+ 132:HARDWARE/Uart.c **** 		temp = USART2->SR;
+ 609              		.loc 1 132 3 is_stmt 1 view .LVU184
+ 610              		.loc 1 132 16 is_stmt 0 view .LVU185
+ 611 000e 0A4A     		ldr	r2, .L11
+ 612 0010 1168     		ldr	r1, [r2]
+ 133:HARDWARE/Uart.c **** 		temp |= USART2->DR;
+ 613              		.loc 1 133 3 is_stmt 1 view .LVU186
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 14
+
+
+ 614              		.loc 1 133 17 is_stmt 0 view .LVU187
+ 615 0012 5268     		ldr	r2, [r2, #4]
+ 134:HARDWARE/Uart.c **** 		DMA1->IFCR |= 0x0F << 20;//Çå³ýDMA±ê¼Ç
+ 616              		.loc 1 134 3 is_stmt 1 view .LVU188
+ 617              		.loc 1 134 14 is_stmt 0 view .LVU189
+ 618 0014 0A49     		ldr	r1, .L11+8
+ 619 0016 4A68     		ldr	r2, [r1, #4]
+ 620 0018 42F47002 		orr	r2, r2, #15728640
+ 621 001c 4A60     		str	r2, [r1, #4]
+ 135:HARDWARE/Uart.c **** 		DMA1_Channel6->CCR &= ~0x01;
+ 622              		.loc 1 135 3 is_stmt 1 view .LVU190
+ 623              		.loc 1 135 22 is_stmt 0 view .LVU191
+ 624 001e 1A68     		ldr	r2, [r3]
+ 625 0020 22F00102 		bic	r2, r2, #1
+ 626 0024 1A60     		str	r2, [r3]
+ 136:HARDWARE/Uart.c **** 		DMA1_Channel6->CNDTR = MAXUARTBUFLENN;
+ 627              		.loc 1 136 3 is_stmt 1 view .LVU192
+ 628              		.loc 1 136 24 is_stmt 0 view .LVU193
+ 629 0026 4FF48062 		mov	r2, #1024
+ 630 002a 5A60     		str	r2, [r3, #4]
+ 137:HARDWARE/Uart.c **** 		DMA1_Channel6->CCR |= 0x01;
+ 631              		.loc 1 137 3 is_stmt 1 view .LVU194
+ 632              		.loc 1 137 22 is_stmt 0 view .LVU195
+ 633 002c 1A68     		ldr	r2, [r3]
+ 634 002e 42F00102 		orr	r2, r2, #1
+ 635 0032 1A60     		str	r2, [r3]
+ 636              	.L9:
+ 138:HARDWARE/Uart.c **** 	}
+ 139:HARDWARE/Uart.c **** }
+ 637              		.loc 1 139 1 view .LVU196
+ 638 0034 7047     		bx	lr
+ 639              	.L12:
+ 640 0036 00BF     		.align	2
+ 641              	.L11:
+ 642 0038 00440040 		.word	1073759232
+ 643 003c 6C600240 		.word	1073897580
+ 644 0040 00600240 		.word	1073897472
+ 645              		.cfi_endproc
+ 646              	.LFE68:
+ 648              		.section	.text.Uart1SendDat,"ax",%progbits
+ 649              		.align	1
+ 650              		.global	Uart1SendDat
+ 651              		.syntax unified
+ 652              		.thumb
+ 653              		.thumb_func
+ 654              		.fpu softvfp
+ 656              	Uart1SendDat:
+ 657              	.LVL47:
+ 658              	.LFB69:
+ 140:HARDWARE/Uart.c **** 
+ 141:HARDWARE/Uart.c **** void Uart1SendDat(u8 *buf,u16 len)
+ 142:HARDWARE/Uart.c **** {
+ 659              		.loc 1 142 1 is_stmt 1 view -0
+ 660              		.cfi_startproc
+ 661              		@ args = 0, pretend = 0, frame = 0
+ 662              		@ frame_needed = 0, uses_anonymous_args = 0
+ 663              		@ link register save eliminated.
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 15
+
+
+ 143:HARDWARE/Uart.c **** 	DMA1->IFCR = (0x0F << 12);
+ 664              		.loc 1 143 2 view .LVU198
+ 665              		.loc 1 143 13 is_stmt 0 view .LVU199
+ 666 0000 074B     		ldr	r3, .L14
+ 667 0002 4FF47042 		mov	r2, #61440
+ 668 0006 5A60     		str	r2, [r3, #4]
+ 144:HARDWARE/Uart.c **** 	DMA1_Channel4->CCR &= ~(1<<0);
+ 669              		.loc 1 144 2 is_stmt 1 view .LVU200
+ 670              		.loc 1 144 21 is_stmt 0 view .LVU201
+ 671 0008 4433     		adds	r3, r3, #68
+ 672 000a 1A68     		ldr	r2, [r3]
+ 673 000c 22F00102 		bic	r2, r2, #1
+ 674 0010 1A60     		str	r2, [r3]
+ 145:HARDWARE/Uart.c **** 	DMA1_Channel4->CMAR = (u32)buf;
+ 675              		.loc 1 145 2 is_stmt 1 view .LVU202
+ 676              		.loc 1 145 22 is_stmt 0 view .LVU203
+ 677 0012 D860     		str	r0, [r3, #12]
+ 146:HARDWARE/Uart.c **** 	DMA1_Channel4->CNDTR = len;
+ 678              		.loc 1 146 2 is_stmt 1 view .LVU204
+ 679              		.loc 1 146 23 is_stmt 0 view .LVU205
+ 680 0014 5960     		str	r1, [r3, #4]
+ 147:HARDWARE/Uart.c **** 	DMA1_Channel4->CCR |= (1<<0);
+ 681              		.loc 1 147 2 is_stmt 1 view .LVU206
+ 682              		.loc 1 147 21 is_stmt 0 view .LVU207
+ 683 0016 1A68     		ldr	r2, [r3]
+ 684 0018 42F00102 		orr	r2, r2, #1
+ 685 001c 1A60     		str	r2, [r3]
+ 148:HARDWARE/Uart.c **** }
+ 686              		.loc 1 148 1 view .LVU208
+ 687 001e 7047     		bx	lr
+ 688              	.L15:
+ 689              		.align	2
+ 690              	.L14:
+ 691 0020 00600240 		.word	1073897472
+ 692              		.cfi_endproc
+ 693              	.LFE69:
+ 695              		.section	.text.Uart1SendBuf,"ax",%progbits
+ 696              		.align	1
+ 697              		.global	Uart1SendBuf
+ 698              		.syntax unified
+ 699              		.thumb
+ 700              		.thumb_func
+ 701              		.fpu softvfp
+ 703              	Uart1SendBuf:
+ 704              	.LVL48:
+ 705              	.LFB70:
+ 149:HARDWARE/Uart.c **** 
+ 150:HARDWARE/Uart.c **** void Uart1SendBuf(u8 *buf)
+ 151:HARDWARE/Uart.c **** {
+ 706              		.loc 1 151 1 is_stmt 1 view -0
+ 707              		.cfi_startproc
+ 708              		@ args = 0, pretend = 0, frame = 0
+ 709              		@ frame_needed = 0, uses_anonymous_args = 0
+ 710              		.loc 1 151 1 is_stmt 0 view .LVU210
+ 711 0000 10B5     		push	{r4, lr}
+ 712              	.LCFI6:
+ 713              		.cfi_def_cfa_offset 8
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 16
+
+
+ 714              		.cfi_offset 4, -8
+ 715              		.cfi_offset 14, -4
+ 716 0002 0446     		mov	r4, r0
+ 152:HARDWARE/Uart.c **** 	u16 len = strlen((char*)buf);
+ 717              		.loc 1 152 2 is_stmt 1 view .LVU211
+ 718              		.loc 1 152 12 is_stmt 0 view .LVU212
+ 719 0004 FFF7FEFF 		bl	strlen
+ 720              	.LVL49:
+ 153:HARDWARE/Uart.c **** 	DMA1->IFCR = (0x0F << 12);
+ 721              		.loc 1 153 2 is_stmt 1 view .LVU213
+ 722              		.loc 1 153 13 is_stmt 0 view .LVU214
+ 723 0008 084B     		ldr	r3, .L18
+ 724 000a 4FF47042 		mov	r2, #61440
+ 725 000e 5A60     		str	r2, [r3, #4]
+ 154:HARDWARE/Uart.c **** 	DMA1_Channel4->CCR &= ~(1<<0);
+ 726              		.loc 1 154 2 is_stmt 1 view .LVU215
+ 727              		.loc 1 154 21 is_stmt 0 view .LVU216
+ 728 0010 4433     		adds	r3, r3, #68
+ 729 0012 1A68     		ldr	r2, [r3]
+ 730 0014 22F00102 		bic	r2, r2, #1
+ 731 0018 1A60     		str	r2, [r3]
+ 155:HARDWARE/Uart.c **** 	DMA1_Channel4->CMAR = (u32)buf;
+ 732              		.loc 1 155 2 is_stmt 1 view .LVU217
+ 733              		.loc 1 155 22 is_stmt 0 view .LVU218
+ 734 001a DC60     		str	r4, [r3, #12]
+ 156:HARDWARE/Uart.c **** 	DMA1_Channel4->CNDTR = len;
+ 735              		.loc 1 156 2 is_stmt 1 view .LVU219
+ 736 001c 80B2     		uxth	r0, r0
+ 737              		.loc 1 156 23 is_stmt 0 view .LVU220
+ 738 001e 5860     		str	r0, [r3, #4]
+ 157:HARDWARE/Uart.c **** 	DMA1_Channel4->CCR |= (1<<0);
+ 739              		.loc 1 157 2 is_stmt 1 view .LVU221
+ 740              		.loc 1 157 21 is_stmt 0 view .LVU222
+ 741 0020 1A68     		ldr	r2, [r3]
+ 742 0022 42F00102 		orr	r2, r2, #1
+ 743 0026 1A60     		str	r2, [r3]
+ 158:HARDWARE/Uart.c **** }
+ 744              		.loc 1 158 1 view .LVU223
+ 745 0028 10BD     		pop	{r4, pc}
+ 746              	.LVL50:
+ 747              	.L19:
+ 748              		.loc 1 158 1 view .LVU224
+ 749 002a 00BF     		.align	2
+ 750              	.L18:
+ 751 002c 00600240 		.word	1073897472
+ 752              		.cfi_endproc
+ 753              	.LFE70:
+ 755              		.section	.text.Uart1SendData,"ax",%progbits
+ 756              		.align	1
+ 757              		.global	Uart1SendData
+ 758              		.syntax unified
+ 759              		.thumb
+ 760              		.thumb_func
+ 761              		.fpu softvfp
+ 763              	Uart1SendData:
+ 764              	.LVL51:
+ 765              	.LFB71:
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 17
+
+
+ 159:HARDWARE/Uart.c **** 
+ 160:HARDWARE/Uart.c **** void Uart1SendData(u8 *buf,u16 len)
+ 161:HARDWARE/Uart.c **** {
+ 766              		.loc 1 161 1 is_stmt 1 view -0
+ 767              		.cfi_startproc
+ 768              		@ args = 0, pretend = 0, frame = 0
+ 769              		@ frame_needed = 0, uses_anonymous_args = 0
+ 770              		@ link register save eliminated.
+ 162:HARDWARE/Uart.c **** 	DMA1->IFCR = (0x0F << 12);
+ 771              		.loc 1 162 2 view .LVU226
+ 772              		.loc 1 162 13 is_stmt 0 view .LVU227
+ 773 0000 074B     		ldr	r3, .L21
+ 774 0002 4FF47042 		mov	r2, #61440
+ 775 0006 5A60     		str	r2, [r3, #4]
+ 163:HARDWARE/Uart.c **** 	DMA1_Channel4->CCR &= ~(1<<0);
+ 776              		.loc 1 163 2 is_stmt 1 view .LVU228
+ 777              		.loc 1 163 21 is_stmt 0 view .LVU229
+ 778 0008 4433     		adds	r3, r3, #68
+ 779 000a 1A68     		ldr	r2, [r3]
+ 780 000c 22F00102 		bic	r2, r2, #1
+ 781 0010 1A60     		str	r2, [r3]
+ 164:HARDWARE/Uart.c **** 	DMA1_Channel4->CMAR = (u32)buf;
+ 782              		.loc 1 164 2 is_stmt 1 view .LVU230
+ 783              		.loc 1 164 22 is_stmt 0 view .LVU231
+ 784 0012 D860     		str	r0, [r3, #12]
+ 165:HARDWARE/Uart.c **** 	DMA1_Channel4->CNDTR = len;
+ 785              		.loc 1 165 2 is_stmt 1 view .LVU232
+ 786              		.loc 1 165 23 is_stmt 0 view .LVU233
+ 787 0014 5960     		str	r1, [r3, #4]
+ 166:HARDWARE/Uart.c **** 	DMA1_Channel4->CCR |= 0x01;
+ 788              		.loc 1 166 2 is_stmt 1 view .LVU234
+ 789              		.loc 1 166 21 is_stmt 0 view .LVU235
+ 790 0016 1A68     		ldr	r2, [r3]
+ 791 0018 42F00102 		orr	r2, r2, #1
+ 792 001c 1A60     		str	r2, [r3]
+ 167:HARDWARE/Uart.c **** }
+ 793              		.loc 1 167 1 view .LVU236
+ 794 001e 7047     		bx	lr
+ 795              	.L22:
+ 796              		.align	2
+ 797              	.L21:
+ 798 0020 00600240 		.word	1073897472
+ 799              		.cfi_endproc
+ 800              	.LFE71:
+ 802              		.section	.text.USART1_IRQHandler,"ax",%progbits
+ 803              		.align	1
+ 804              		.global	USART1_IRQHandler
+ 805              		.syntax unified
+ 806              		.thumb
+ 807              		.thumb_func
+ 808              		.fpu softvfp
+ 810              	USART1_IRQHandler:
+ 811              	.LFB67:
+ 110:HARDWARE/Uart.c **** 	u16 temp;
+ 812              		.loc 1 110 1 is_stmt 1 view -0
+ 813              		.cfi_startproc
+ 814              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 18
+
+
+ 815              		@ frame_needed = 0, uses_anonymous_args = 0
+ 111:HARDWARE/Uart.c **** 	if(USART1 -> SR & 0x10)    // ¿ÕÏÐÖÐ¶Ï , ÏÈ¹Ø±ÕDMAÍ¨µÀ£¬ÇåÁã¼ÆÊý£¬ÔÚ´ò¿ª
+ 816              		.loc 1 111 2 view .LVU238
+ 112:HARDWARE/Uart.c **** 	{
+ 817              		.loc 1 112 2 view .LVU239
+ 112:HARDWARE/Uart.c **** 	{
+ 818              		.loc 1 112 12 is_stmt 0 view .LVU240
+ 819 0000 114B     		ldr	r3, .L30
+ 820 0002 1B68     		ldr	r3, [r3]
+ 112:HARDWARE/Uart.c **** 	{
+ 821              		.loc 1 112 4 view .LVU241
+ 822 0004 13F0100F 		tst	r3, #16
+ 823 0008 00D1     		bne	.L29
+ 824 000a 7047     		bx	lr
+ 825              	.L29:
+ 110:HARDWARE/Uart.c **** 	u16 temp;
+ 826              		.loc 1 110 1 view .LVU242
+ 827 000c 10B5     		push	{r4, lr}
+ 828              	.LCFI7:
+ 829              		.cfi_def_cfa_offset 8
+ 830              		.cfi_offset 4, -8
+ 831              		.cfi_offset 14, -4
+ 114:HARDWARE/Uart.c **** 		Uart1SendData(UART1BUF,temp);
+ 832              		.loc 1 114 3 is_stmt 1 view .LVU243
+ 114:HARDWARE/Uart.c **** 		Uart1SendData(UART1BUF,temp);
+ 833              		.loc 1 114 40 is_stmt 0 view .LVU244
+ 834 000e 0F4C     		ldr	r4, .L30+4
+ 835 0010 6168     		ldr	r1, [r4, #4]
+ 114:HARDWARE/Uart.c **** 		Uart1SendData(UART1BUF,temp);
+ 836              		.loc 1 114 25 view .LVU245
+ 837 0012 89B2     		uxth	r1, r1
+ 114:HARDWARE/Uart.c **** 		Uart1SendData(UART1BUF,temp);
+ 838              		.loc 1 114 8 view .LVU246
+ 839 0014 C1F58061 		rsb	r1, r1, #1024
+ 840              	.LVL52:
+ 115:HARDWARE/Uart.c **** 		temp = USART1->SR;
+ 841              		.loc 1 115 3 is_stmt 1 view .LVU247
+ 842 0018 89B2     		uxth	r1, r1
+ 115:HARDWARE/Uart.c **** 		temp = USART1->SR;
+ 843              		.loc 1 115 3 is_stmt 0 view .LVU248
+ 844 001a 0D48     		ldr	r0, .L30+8
+ 845 001c FFF7FEFF 		bl	Uart1SendData
+ 846              	.LVL53:
+ 116:HARDWARE/Uart.c **** 		temp |= USART1->DR;
+ 847              		.loc 1 116 3 is_stmt 1 view .LVU249
+ 116:HARDWARE/Uart.c **** 		temp |= USART1->DR;
+ 848              		.loc 1 116 16 is_stmt 0 view .LVU250
+ 849 0020 094B     		ldr	r3, .L30
+ 850 0022 1A68     		ldr	r2, [r3]
+ 117:HARDWARE/Uart.c **** 		DMA1->IFCR |= 0x0F << 16;//Çå³ýDMA±ê¼Ç
+ 851              		.loc 1 117 3 is_stmt 1 view .LVU251
+ 117:HARDWARE/Uart.c **** 		DMA1->IFCR |= 0x0F << 16;//Çå³ýDMA±ê¼Ç
+ 852              		.loc 1 117 17 is_stmt 0 view .LVU252
+ 853 0024 5B68     		ldr	r3, [r3, #4]
+ 118:HARDWARE/Uart.c **** 		DMA1_Channel5->CCR &= ~0x01;
+ 854              		.loc 1 118 3 is_stmt 1 view .LVU253
+ 118:HARDWARE/Uart.c **** 		DMA1_Channel5->CCR &= ~0x01;
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 19
+
+
+ 855              		.loc 1 118 14 is_stmt 0 view .LVU254
+ 856 0026 0B4A     		ldr	r2, .L30+12
+ 857 0028 5368     		ldr	r3, [r2, #4]
+ 858 002a 43F47023 		orr	r3, r3, #983040
+ 859 002e 5360     		str	r3, [r2, #4]
+ 119:HARDWARE/Uart.c **** 		DMA1_Channel5->CNDTR = MAXUARTBUFLENN;
+ 860              		.loc 1 119 3 is_stmt 1 view .LVU255
+ 119:HARDWARE/Uart.c **** 		DMA1_Channel5->CNDTR = MAXUARTBUFLENN;
+ 861              		.loc 1 119 22 is_stmt 0 view .LVU256
+ 862 0030 2368     		ldr	r3, [r4]
+ 863 0032 23F00103 		bic	r3, r3, #1
+ 864 0036 2360     		str	r3, [r4]
+ 120:HARDWARE/Uart.c **** 		DMA1_Channel5->CCR |= 0x01;
+ 865              		.loc 1 120 3 is_stmt 1 view .LVU257
+ 120:HARDWARE/Uart.c **** 		DMA1_Channel5->CCR |= 0x01;
+ 866              		.loc 1 120 24 is_stmt 0 view .LVU258
+ 867 0038 4FF48063 		mov	r3, #1024
+ 868 003c 6360     		str	r3, [r4, #4]
+ 121:HARDWARE/Uart.c **** 	}
+ 869              		.loc 1 121 3 is_stmt 1 view .LVU259
+ 121:HARDWARE/Uart.c **** 	}
+ 870              		.loc 1 121 22 is_stmt 0 view .LVU260
+ 871 003e 2368     		ldr	r3, [r4]
+ 872 0040 43F00103 		orr	r3, r3, #1
+ 873 0044 2360     		str	r3, [r4]
+ 123:HARDWARE/Uart.c **** 
+ 874              		.loc 1 123 1 view .LVU261
+ 875 0046 10BD     		pop	{r4, pc}
+ 876              	.L31:
+ 877              		.align	2
+ 878              	.L30:
+ 879 0048 00380140 		.word	1073821696
+ 880 004c 58600240 		.word	1073897560
+ 881 0050 00000000 		.word	UART1BUF
+ 882 0054 00600240 		.word	1073897472
+ 883              		.cfi_endproc
+ 884              	.LFE67:
+ 886              		.section	.text.Uart2SendBuf,"ax",%progbits
+ 887              		.align	1
+ 888              		.global	Uart2SendBuf
+ 889              		.syntax unified
+ 890              		.thumb
+ 891              		.thumb_func
+ 892              		.fpu softvfp
+ 894              	Uart2SendBuf:
+ 895              	.LVL54:
+ 896              	.LFB72:
+ 168:HARDWARE/Uart.c **** 
+ 169:HARDWARE/Uart.c **** void Uart2SendBuf(u8 *buf)
+ 170:HARDWARE/Uart.c **** {
+ 897              		.loc 1 170 1 is_stmt 1 view -0
+ 898              		.cfi_startproc
+ 899              		@ args = 0, pretend = 0, frame = 0
+ 900              		@ frame_needed = 0, uses_anonymous_args = 0
+ 901              		.loc 1 170 1 is_stmt 0 view .LVU263
+ 902 0000 10B5     		push	{r4, lr}
+ 903              	.LCFI8:
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 20
+
+
+ 904              		.cfi_def_cfa_offset 8
+ 905              		.cfi_offset 4, -8
+ 906              		.cfi_offset 14, -4
+ 907 0002 0446     		mov	r4, r0
+ 171:HARDWARE/Uart.c **** 	u16 len = strlen((char*)buf);
+ 908              		.loc 1 171 2 is_stmt 1 view .LVU264
+ 909              		.loc 1 171 12 is_stmt 0 view .LVU265
+ 910 0004 FFF7FEFF 		bl	strlen
+ 911              	.LVL55:
+ 172:HARDWARE/Uart.c **** 	DMA1->IFCR = (0x0F << 24);
+ 912              		.loc 1 172 2 is_stmt 1 view .LVU266
+ 913              		.loc 1 172 13 is_stmt 0 view .LVU267
+ 914 0008 084B     		ldr	r3, .L34
+ 915 000a 4FF07062 		mov	r2, #251658240
+ 916 000e 5A60     		str	r2, [r3, #4]
+ 173:HARDWARE/Uart.c **** 	DMA1_Channel7->CCR &= ~(1<<0);
+ 917              		.loc 1 173 2 is_stmt 1 view .LVU268
+ 918              		.loc 1 173 21 is_stmt 0 view .LVU269
+ 919 0010 8033     		adds	r3, r3, #128
+ 920 0012 1A68     		ldr	r2, [r3]
+ 921 0014 22F00102 		bic	r2, r2, #1
+ 922 0018 1A60     		str	r2, [r3]
+ 174:HARDWARE/Uart.c **** 	DMA1_Channel7->CMAR = (u32)buf;
+ 923              		.loc 1 174 2 is_stmt 1 view .LVU270
+ 924              		.loc 1 174 22 is_stmt 0 view .LVU271
+ 925 001a DC60     		str	r4, [r3, #12]
+ 175:HARDWARE/Uart.c **** 	DMA1_Channel7->CNDTR = len;
+ 926              		.loc 1 175 2 is_stmt 1 view .LVU272
+ 927 001c 80B2     		uxth	r0, r0
+ 928              		.loc 1 175 23 is_stmt 0 view .LVU273
+ 929 001e 5860     		str	r0, [r3, #4]
+ 176:HARDWARE/Uart.c **** 	DMA1_Channel7->CCR |= (1<<0);
+ 930              		.loc 1 176 2 is_stmt 1 view .LVU274
+ 931              		.loc 1 176 21 is_stmt 0 view .LVU275
+ 932 0020 1A68     		ldr	r2, [r3]
+ 933 0022 42F00102 		orr	r2, r2, #1
+ 934 0026 1A60     		str	r2, [r3]
+ 177:HARDWARE/Uart.c **** }
+ 935              		.loc 1 177 1 view .LVU276
+ 936 0028 10BD     		pop	{r4, pc}
+ 937              	.LVL56:
+ 938              	.L35:
+ 939              		.loc 1 177 1 view .LVU277
+ 940 002a 00BF     		.align	2
+ 941              	.L34:
+ 942 002c 00600240 		.word	1073897472
+ 943              		.cfi_endproc
+ 944              	.LFE72:
+ 946              		.section	.text.Uart2SendData,"ax",%progbits
+ 947              		.align	1
+ 948              		.global	Uart2SendData
+ 949              		.syntax unified
+ 950              		.thumb
+ 951              		.thumb_func
+ 952              		.fpu softvfp
+ 954              	Uart2SendData:
+ 955              	.LVL57:
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 21
+
+
+ 956              	.LFB73:
+ 178:HARDWARE/Uart.c **** 
+ 179:HARDWARE/Uart.c **** void Uart2SendData(u8 *buf,u16 len)
+ 180:HARDWARE/Uart.c **** {
+ 957              		.loc 1 180 1 is_stmt 1 view -0
+ 958              		.cfi_startproc
+ 959              		@ args = 0, pretend = 0, frame = 0
+ 960              		@ frame_needed = 0, uses_anonymous_args = 0
+ 961              		@ link register save eliminated.
+ 181:HARDWARE/Uart.c **** 	DMA1->IFCR = (0x0F << 24);
+ 962              		.loc 1 181 2 view .LVU279
+ 963              		.loc 1 181 13 is_stmt 0 view .LVU280
+ 964 0000 074B     		ldr	r3, .L37
+ 965 0002 4FF07062 		mov	r2, #251658240
+ 966 0006 5A60     		str	r2, [r3, #4]
+ 182:HARDWARE/Uart.c **** 	DMA1_Channel7->CCR &= ~(1<<0);
+ 967              		.loc 1 182 2 is_stmt 1 view .LVU281
+ 968              		.loc 1 182 21 is_stmt 0 view .LVU282
+ 969 0008 8033     		adds	r3, r3, #128
+ 970 000a 1A68     		ldr	r2, [r3]
+ 971 000c 22F00102 		bic	r2, r2, #1
+ 972 0010 1A60     		str	r2, [r3]
+ 183:HARDWARE/Uart.c **** 	DMA1_Channel7->CMAR = (u32)buf;
+ 973              		.loc 1 183 2 is_stmt 1 view .LVU283
+ 974              		.loc 1 183 22 is_stmt 0 view .LVU284
+ 975 0012 D860     		str	r0, [r3, #12]
+ 184:HARDWARE/Uart.c **** 	DMA1_Channel7->CNDTR = len;
+ 976              		.loc 1 184 2 is_stmt 1 view .LVU285
+ 977              		.loc 1 184 23 is_stmt 0 view .LVU286
+ 978 0014 5960     		str	r1, [r3, #4]
+ 185:HARDWARE/Uart.c **** 	DMA1_Channel7->CCR |= (1<<0);
+ 979              		.loc 1 185 2 is_stmt 1 view .LVU287
+ 980              		.loc 1 185 21 is_stmt 0 view .LVU288
+ 981 0016 1A68     		ldr	r2, [r3]
+ 982 0018 42F00102 		orr	r2, r2, #1
+ 983 001c 1A60     		str	r2, [r3]
+ 186:HARDWARE/Uart.c **** }
+ 984              		.loc 1 186 1 view .LVU289
+ 985 001e 7047     		bx	lr
+ 986              	.L38:
+ 987              		.align	2
+ 988              	.L37:
+ 989 0020 00600240 		.word	1073897472
+ 990              		.cfi_endproc
+ 991              	.LFE73:
+ 993              		.comm	UART2BUF,1024,4
+ 994              		.comm	UART1BUF,1024,4
+ 995              		.text
+ 996              	.Letext0:
+ 997              		.file 2 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 998              		.file 3 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/_stdint.h"
+ 999              		.file 4 "Inc/stm32l152xe.h"
+ 1000              		.file 5 "/Users/shuuyou/gcc-arm-none-eabi/lib/gcc/arm-none-eabi/8.3.1/include/stddef.h"
+ 1001              		.file 6 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/_types.h"
+ 1002              		.file 7 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/reent.h"
+ 1003              		.file 8 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/lock.h"
+ 1004              		.file 9 "Inc/core_cm3.h"
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 22
+
+
+ 1005              		.file 10 "APP/inc/Public.h"
+ 1006              		.file 11 "RML1028B/RML1028B.h"
+ 1007              		.file 12 "HARDWARE/inc/Temputer.h"
+ 1008              		.file 13 "HARDWARE/inc/Adc.h"
+ 1009              		.file 14 "HARDWARE/inc/Timer.h"
+ 1010              		.file 15 "HARDWARE/inc/Control.h"
+ 1011              		.file 16 "TOOL/inc/malloc.h"
+ 1012              		.file 17 "TOOL/inc/TaskManger.h"
+ 1013              		.file 18 "DISPALY/inc/DispManger.h"
+ 1014              		.file 19 "TOOL/inc/CrcUtil.h"
+ 1015              		.file 20 "APP/inc/VolPro.h"
+ 1016              		.file 21 "APP/inc/FreqPro.h"
+ 1017              		.file 22 "APP/inc/ParasCheckPro.h"
+ 1018              		.file 23 "APP/inc/TemputerPro.h"
+ 1019              		.file 24 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/string.h"
+ 1020              		.file 25 "HARDWARE/inc/Mcu.h"
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s 			page 23
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 Uart.c
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:22     .text.Uart1Init:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:30     .text.Uart1Init:0000000000000000 Uart1Init
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:301    .text.Uart1Init:000000000000015c $d
+                            *COM*:0000000000000400 UART1BUF
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:311    .text.Uart2Init:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:318    .text.Uart2Init:0000000000000000 Uart2Init
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:572    .text.Uart2Init:0000000000000148 $d
+                            *COM*:0000000000000400 UART2BUF
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:582    .text.USART2_IRQHandler:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:589    .text.USART2_IRQHandler:0000000000000000 USART2_IRQHandler
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:642    .text.USART2_IRQHandler:0000000000000038 $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:649    .text.Uart1SendDat:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:656    .text.Uart1SendDat:0000000000000000 Uart1SendDat
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:691    .text.Uart1SendDat:0000000000000020 $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:696    .text.Uart1SendBuf:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:703    .text.Uart1SendBuf:0000000000000000 Uart1SendBuf
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:751    .text.Uart1SendBuf:000000000000002c $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:756    .text.Uart1SendData:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:763    .text.Uart1SendData:0000000000000000 Uart1SendData
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:798    .text.Uart1SendData:0000000000000020 $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:803    .text.USART1_IRQHandler:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:810    .text.USART1_IRQHandler:0000000000000000 USART1_IRQHandler
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:879    .text.USART1_IRQHandler:0000000000000048 $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:887    .text.Uart2SendBuf:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:894    .text.Uart2SendBuf:0000000000000000 Uart2SendBuf
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:942    .text.Uart2SendBuf:000000000000002c $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:947    .text.Uart2SendData:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:954    .text.Uart2SendData:0000000000000000 Uart2SendData
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cckF2wHR.s:989    .text.Uart2SendData:0000000000000020 $d
+
+UNDEFINED SYMBOLS
+__aeabi_ui2f
+__aeabi_fdiv
+__aeabi_f2uiz
+__aeabi_i2f
+__aeabi_fsub
+__aeabi_fmul
+delay_ms
+GPIO_Set
+GPIO_AF_Set
+MY_NVIC_Init
+strlen

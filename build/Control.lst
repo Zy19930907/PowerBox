@@ -1,0 +1,554 @@
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"Control.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.ControlIoInit,"ax",%progbits
+  16              		.align	1
+  17              		.global	ControlIoInit
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	ControlIoInit:
+  25              	.LFB65:
+  26              		.file 1 "HARDWARE/Control.c"
+   1:HARDWARE/Control.c **** #include "Control.h"
+   2:HARDWARE/Control.c **** 
+   3:HARDWARE/Control.c **** _Ctrol Ctrol = {
+   4:HARDWARE/Control.c **** 	.KAC={GPIOC,PIN7},		//交流充电控制
+   5:HARDWARE/Control.c **** 	.KJC={GPIOC,PIN8},		//均充控制
+   6:HARDWARE/Control.c **** 	.KFN={GPIOC,PIN9},		//风能充电控制
+   7:HARDWARE/Control.c **** 	.KVO={GPIOA,PIN11},		//输出控制
+   8:HARDWARE/Control.c **** 	.KJD={GPIOA,PIN12},		//继电器控制
+   9:HARDWARE/Control.c **** };
+  10:HARDWARE/Control.c **** 
+  11:HARDWARE/Control.c **** void ControlIoInit(void)
+  12:HARDWARE/Control.c **** {
+  27              		.loc 1 12 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 10B5     		push	{r4, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  13:HARDWARE/Control.c **** 	//控制引脚配置为输出模式
+  14:HARDWARE/Control.c **** 	IoInit(Ctrol.KAC.PORT,Ctrol.KAC.PIN,IOOUT,NOPU);
+  36              		.loc 1 14 2 view .LVU1
+  37 0002 164C     		ldr	r4, .L3
+  38 0004 0023     		movs	r3, #0
+  39 0006 0122     		movs	r2, #1
+  40 0008 6168     		ldr	r1, [r4, #4]
+  41 000a 2068     		ldr	r0, [r4]
+  42 000c FFF7FEFF 		bl	IoInit
+  43              	.LVL0:
+  15:HARDWARE/Control.c **** 	IoInit(Ctrol.KFN.PORT,Ctrol.KFN.PIN,IOOUT,NOPU);
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s 			page 2
+
+
+  44              		.loc 1 15 2 view .LVU2
+  45 0010 0023     		movs	r3, #0
+  46 0012 0122     		movs	r2, #1
+  47 0014 6169     		ldr	r1, [r4, #20]
+  48 0016 2069     		ldr	r0, [r4, #16]
+  49 0018 FFF7FEFF 		bl	IoInit
+  50              	.LVL1:
+  16:HARDWARE/Control.c **** 	IoInit(Ctrol.KJC.PORT,Ctrol.KJC.PIN,IOOUT,NOPU);
+  51              		.loc 1 16 2 view .LVU3
+  52 001c 0023     		movs	r3, #0
+  53 001e 0122     		movs	r2, #1
+  54 0020 E168     		ldr	r1, [r4, #12]
+  55 0022 A068     		ldr	r0, [r4, #8]
+  56 0024 FFF7FEFF 		bl	IoInit
+  57              	.LVL2:
+  17:HARDWARE/Control.c **** 	IoInit(Ctrol.KJD.PORT,Ctrol.KJD.PIN,IOOUT,NOPU);
+  58              		.loc 1 17 2 view .LVU4
+  59 0028 0023     		movs	r3, #0
+  60 002a 0122     		movs	r2, #1
+  61 002c 616A     		ldr	r1, [r4, #36]
+  62 002e 206A     		ldr	r0, [r4, #32]
+  63 0030 FFF7FEFF 		bl	IoInit
+  64              	.LVL3:
+  18:HARDWARE/Control.c **** 	IoInit(Ctrol.KVO.PORT,Ctrol.KVO.PIN,IOOUT,NOPU);
+  65              		.loc 1 18 2 view .LVU5
+  66 0034 0023     		movs	r3, #0
+  67 0036 0122     		movs	r2, #1
+  68 0038 E169     		ldr	r1, [r4, #28]
+  69 003a A069     		ldr	r0, [r4, #24]
+  70 003c FFF7FEFF 		bl	IoInit
+  71              	.LVL4:
+  19:HARDWARE/Control.c **** 	KACEN;
+  72              		.loc 1 19 2 view .LVU6
+  73 0040 2368     		ldr	r3, [r4]
+  74 0042 6268     		ldr	r2, [r4, #4]
+  75 0044 9A61     		str	r2, [r3, #24]
+  20:HARDWARE/Control.c **** 	KFNEN;
+  76              		.loc 1 20 2 view .LVU7
+  77 0046 2369     		ldr	r3, [r4, #16]
+  78 0048 6269     		ldr	r2, [r4, #20]
+  79 004a 9A61     		str	r2, [r3, #24]
+  21:HARDWARE/Control.c **** 	KJCEN;
+  80              		.loc 1 21 2 view .LVU8
+  81 004c A368     		ldr	r3, [r4, #8]
+  82 004e E268     		ldr	r2, [r4, #12]
+  83 0050 9A61     		str	r2, [r3, #24]
+  22:HARDWARE/Control.c **** 	//KJDDIS;
+  23:HARDWARE/Control.c **** 	KVOEN;
+  84              		.loc 1 23 2 view .LVU9
+  85 0052 E369     		ldr	r3, [r4, #28]
+  86 0054 A269     		ldr	r2, [r4, #24]
+  87 0056 1B04     		lsls	r3, r3, #16
+  88 0058 9361     		str	r3, [r2, #24]
+  24:HARDWARE/Control.c **** }
+  89              		.loc 1 24 1 is_stmt 0 view .LVU10
+  90 005a 10BD     		pop	{r4, pc}
+  91              	.L4:
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s 			page 3
+
+
+  92              		.align	2
+  93              	.L3:
+  94 005c 00000000 		.word	.LANCHOR0
+  95              		.cfi_endproc
+  96              	.LFE65:
+  98              		.section	.text.KAC_EN,"ax",%progbits
+  99              		.align	1
+ 100              		.global	KAC_EN
+ 101              		.syntax unified
+ 102              		.thumb
+ 103              		.thumb_func
+ 104              		.fpu softvfp
+ 106              	KAC_EN:
+ 107              	.LFB66:
+  25:HARDWARE/Control.c **** 
+  26:HARDWARE/Control.c **** void KAC_EN(void)
+  27:HARDWARE/Control.c **** {
+ 108              		.loc 1 27 1 is_stmt 1 view -0
+ 109              		.cfi_startproc
+ 110              		@ args = 0, pretend = 0, frame = 0
+ 111              		@ frame_needed = 0, uses_anonymous_args = 0
+ 112              		@ link register save eliminated.
+  28:HARDWARE/Control.c **** 	KACEN;
+ 113              		.loc 1 28 2 view .LVU12
+ 114 0000 024B     		ldr	r3, .L6
+ 115 0002 1A68     		ldr	r2, [r3]
+ 116 0004 5B68     		ldr	r3, [r3, #4]
+ 117 0006 9361     		str	r3, [r2, #24]
+  29:HARDWARE/Control.c **** }
+ 118              		.loc 1 29 1 is_stmt 0 view .LVU13
+ 119 0008 7047     		bx	lr
+ 120              	.L7:
+ 121 000a 00BF     		.align	2
+ 122              	.L6:
+ 123 000c 00000000 		.word	.LANCHOR0
+ 124              		.cfi_endproc
+ 125              	.LFE66:
+ 127              		.section	.text.KAC_DIS,"ax",%progbits
+ 128              		.align	1
+ 129              		.global	KAC_DIS
+ 130              		.syntax unified
+ 131              		.thumb
+ 132              		.thumb_func
+ 133              		.fpu softvfp
+ 135              	KAC_DIS:
+ 136              	.LFB67:
+  30:HARDWARE/Control.c **** 
+  31:HARDWARE/Control.c **** void KAC_DIS(void)
+  32:HARDWARE/Control.c **** {
+ 137              		.loc 1 32 1 is_stmt 1 view -0
+ 138              		.cfi_startproc
+ 139              		@ args = 0, pretend = 0, frame = 0
+ 140              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141              		@ link register save eliminated.
+  33:HARDWARE/Control.c **** 	KACDIS;
+ 142              		.loc 1 33 2 view .LVU15
+ 143 0000 024A     		ldr	r2, .L9
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s 			page 4
+
+
+ 144 0002 5368     		ldr	r3, [r2, #4]
+ 145 0004 1268     		ldr	r2, [r2]
+ 146 0006 1B04     		lsls	r3, r3, #16
+ 147 0008 9361     		str	r3, [r2, #24]
+  34:HARDWARE/Control.c **** }
+ 148              		.loc 1 34 1 is_stmt 0 view .LVU16
+ 149 000a 7047     		bx	lr
+ 150              	.L10:
+ 151              		.align	2
+ 152              	.L9:
+ 153 000c 00000000 		.word	.LANCHOR0
+ 154              		.cfi_endproc
+ 155              	.LFE67:
+ 157              		.section	.text.KJC_EN,"ax",%progbits
+ 158              		.align	1
+ 159              		.global	KJC_EN
+ 160              		.syntax unified
+ 161              		.thumb
+ 162              		.thumb_func
+ 163              		.fpu softvfp
+ 165              	KJC_EN:
+ 166              	.LFB68:
+  35:HARDWARE/Control.c **** 
+  36:HARDWARE/Control.c **** void KJC_EN(void)
+  37:HARDWARE/Control.c **** {
+ 167              		.loc 1 37 1 is_stmt 1 view -0
+ 168              		.cfi_startproc
+ 169              		@ args = 0, pretend = 0, frame = 0
+ 170              		@ frame_needed = 0, uses_anonymous_args = 0
+ 171              		@ link register save eliminated.
+  38:HARDWARE/Control.c **** 	KJCEN;
+ 172              		.loc 1 38 2 view .LVU18
+ 173 0000 024B     		ldr	r3, .L12
+ 174 0002 9A68     		ldr	r2, [r3, #8]
+ 175 0004 DB68     		ldr	r3, [r3, #12]
+ 176 0006 9361     		str	r3, [r2, #24]
+  39:HARDWARE/Control.c **** }
+ 177              		.loc 1 39 1 is_stmt 0 view .LVU19
+ 178 0008 7047     		bx	lr
+ 179              	.L13:
+ 180 000a 00BF     		.align	2
+ 181              	.L12:
+ 182 000c 00000000 		.word	.LANCHOR0
+ 183              		.cfi_endproc
+ 184              	.LFE68:
+ 186              		.section	.text.KJC_DIS,"ax",%progbits
+ 187              		.align	1
+ 188              		.global	KJC_DIS
+ 189              		.syntax unified
+ 190              		.thumb
+ 191              		.thumb_func
+ 192              		.fpu softvfp
+ 194              	KJC_DIS:
+ 195              	.LFB69:
+  40:HARDWARE/Control.c **** 
+  41:HARDWARE/Control.c **** void KJC_DIS(void)
+  42:HARDWARE/Control.c **** {
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s 			page 5
+
+
+ 196              		.loc 1 42 1 is_stmt 1 view -0
+ 197              		.cfi_startproc
+ 198              		@ args = 0, pretend = 0, frame = 0
+ 199              		@ frame_needed = 0, uses_anonymous_args = 0
+ 200              		@ link register save eliminated.
+  43:HARDWARE/Control.c **** 	KJCDIS;
+ 201              		.loc 1 43 2 view .LVU21
+ 202 0000 024A     		ldr	r2, .L15
+ 203 0002 D368     		ldr	r3, [r2, #12]
+ 204 0004 9268     		ldr	r2, [r2, #8]
+ 205 0006 1B04     		lsls	r3, r3, #16
+ 206 0008 9361     		str	r3, [r2, #24]
+  44:HARDWARE/Control.c **** }
+ 207              		.loc 1 44 1 is_stmt 0 view .LVU22
+ 208 000a 7047     		bx	lr
+ 209              	.L16:
+ 210              		.align	2
+ 211              	.L15:
+ 212 000c 00000000 		.word	.LANCHOR0
+ 213              		.cfi_endproc
+ 214              	.LFE69:
+ 216              		.section	.text.KFN_EN,"ax",%progbits
+ 217              		.align	1
+ 218              		.global	KFN_EN
+ 219              		.syntax unified
+ 220              		.thumb
+ 221              		.thumb_func
+ 222              		.fpu softvfp
+ 224              	KFN_EN:
+ 225              	.LFB70:
+  45:HARDWARE/Control.c **** 
+  46:HARDWARE/Control.c **** void KFN_EN(void)
+  47:HARDWARE/Control.c **** {
+ 226              		.loc 1 47 1 is_stmt 1 view -0
+ 227              		.cfi_startproc
+ 228              		@ args = 0, pretend = 0, frame = 0
+ 229              		@ frame_needed = 0, uses_anonymous_args = 0
+ 230              		@ link register save eliminated.
+  48:HARDWARE/Control.c **** 	KFNEN;
+ 231              		.loc 1 48 2 view .LVU24
+ 232 0000 024B     		ldr	r3, .L18
+ 233 0002 1A69     		ldr	r2, [r3, #16]
+ 234 0004 5B69     		ldr	r3, [r3, #20]
+ 235 0006 9361     		str	r3, [r2, #24]
+  49:HARDWARE/Control.c **** }
+ 236              		.loc 1 49 1 is_stmt 0 view .LVU25
+ 237 0008 7047     		bx	lr
+ 238              	.L19:
+ 239 000a 00BF     		.align	2
+ 240              	.L18:
+ 241 000c 00000000 		.word	.LANCHOR0
+ 242              		.cfi_endproc
+ 243              	.LFE70:
+ 245              		.section	.text.KFN_DIS,"ax",%progbits
+ 246              		.align	1
+ 247              		.global	KFN_DIS
+ 248              		.syntax unified
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s 			page 6
+
+
+ 249              		.thumb
+ 250              		.thumb_func
+ 251              		.fpu softvfp
+ 253              	KFN_DIS:
+ 254              	.LFB71:
+  50:HARDWARE/Control.c **** 
+  51:HARDWARE/Control.c **** void KFN_DIS(void)
+  52:HARDWARE/Control.c **** {
+ 255              		.loc 1 52 1 is_stmt 1 view -0
+ 256              		.cfi_startproc
+ 257              		@ args = 0, pretend = 0, frame = 0
+ 258              		@ frame_needed = 0, uses_anonymous_args = 0
+ 259              		@ link register save eliminated.
+  53:HARDWARE/Control.c **** 	KFNDIS;
+ 260              		.loc 1 53 2 view .LVU27
+ 261 0000 024A     		ldr	r2, .L21
+ 262 0002 5369     		ldr	r3, [r2, #20]
+ 263 0004 1269     		ldr	r2, [r2, #16]
+ 264 0006 1B04     		lsls	r3, r3, #16
+ 265 0008 9361     		str	r3, [r2, #24]
+  54:HARDWARE/Control.c **** }
+ 266              		.loc 1 54 1 is_stmt 0 view .LVU28
+ 267 000a 7047     		bx	lr
+ 268              	.L22:
+ 269              		.align	2
+ 270              	.L21:
+ 271 000c 00000000 		.word	.LANCHOR0
+ 272              		.cfi_endproc
+ 273              	.LFE71:
+ 275              		.section	.text.KVO_EN,"ax",%progbits
+ 276              		.align	1
+ 277              		.global	KVO_EN
+ 278              		.syntax unified
+ 279              		.thumb
+ 280              		.thumb_func
+ 281              		.fpu softvfp
+ 283              	KVO_EN:
+ 284              	.LFB72:
+  55:HARDWARE/Control.c **** 
+  56:HARDWARE/Control.c **** void KVO_EN(void)
+  57:HARDWARE/Control.c **** {
+ 285              		.loc 1 57 1 is_stmt 1 view -0
+ 286              		.cfi_startproc
+ 287              		@ args = 0, pretend = 0, frame = 0
+ 288              		@ frame_needed = 0, uses_anonymous_args = 0
+ 289              		@ link register save eliminated.
+  58:HARDWARE/Control.c **** 	KVOEN;
+ 290              		.loc 1 58 2 view .LVU30
+ 291 0000 024A     		ldr	r2, .L24
+ 292 0002 D369     		ldr	r3, [r2, #28]
+ 293 0004 9269     		ldr	r2, [r2, #24]
+ 294 0006 1B04     		lsls	r3, r3, #16
+ 295 0008 9361     		str	r3, [r2, #24]
+  59:HARDWARE/Control.c **** }
+ 296              		.loc 1 59 1 is_stmt 0 view .LVU31
+ 297 000a 7047     		bx	lr
+ 298              	.L25:
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s 			page 7
+
+
+ 299              		.align	2
+ 300              	.L24:
+ 301 000c 00000000 		.word	.LANCHOR0
+ 302              		.cfi_endproc
+ 303              	.LFE72:
+ 305              		.section	.text.KVO_DIS,"ax",%progbits
+ 306              		.align	1
+ 307              		.global	KVO_DIS
+ 308              		.syntax unified
+ 309              		.thumb
+ 310              		.thumb_func
+ 311              		.fpu softvfp
+ 313              	KVO_DIS:
+ 314              	.LFB73:
+  60:HARDWARE/Control.c **** 
+  61:HARDWARE/Control.c **** void KVO_DIS(void)
+  62:HARDWARE/Control.c **** {
+ 315              		.loc 1 62 1 is_stmt 1 view -0
+ 316              		.cfi_startproc
+ 317              		@ args = 0, pretend = 0, frame = 0
+ 318              		@ frame_needed = 0, uses_anonymous_args = 0
+ 319              		@ link register save eliminated.
+  63:HARDWARE/Control.c **** 	KACDIS;
+ 320              		.loc 1 63 2 view .LVU33
+ 321 0000 024A     		ldr	r2, .L27
+ 322 0002 5368     		ldr	r3, [r2, #4]
+ 323 0004 1268     		ldr	r2, [r2]
+ 324 0006 1B04     		lsls	r3, r3, #16
+ 325 0008 9361     		str	r3, [r2, #24]
+  64:HARDWARE/Control.c **** }
+ 326              		.loc 1 64 1 is_stmt 0 view .LVU34
+ 327 000a 7047     		bx	lr
+ 328              	.L28:
+ 329              		.align	2
+ 330              	.L27:
+ 331 000c 00000000 		.word	.LANCHOR0
+ 332              		.cfi_endproc
+ 333              	.LFE73:
+ 335              		.section	.text.KJD_EN,"ax",%progbits
+ 336              		.align	1
+ 337              		.global	KJD_EN
+ 338              		.syntax unified
+ 339              		.thumb
+ 340              		.thumb_func
+ 341              		.fpu softvfp
+ 343              	KJD_EN:
+ 344              	.LFB74:
+  65:HARDWARE/Control.c **** 
+  66:HARDWARE/Control.c **** void KJD_EN(void)
+  67:HARDWARE/Control.c **** {
+ 345              		.loc 1 67 1 is_stmt 1 view -0
+ 346              		.cfi_startproc
+ 347              		@ args = 0, pretend = 0, frame = 0
+ 348              		@ frame_needed = 0, uses_anonymous_args = 0
+ 349              		@ link register save eliminated.
+  68:HARDWARE/Control.c **** 	KJDEN;
+ 350              		.loc 1 68 2 view .LVU36
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s 			page 8
+
+
+ 351 0000 024B     		ldr	r3, .L30
+ 352 0002 1A6A     		ldr	r2, [r3, #32]
+ 353 0004 5B6A     		ldr	r3, [r3, #36]
+ 354 0006 9361     		str	r3, [r2, #24]
+  69:HARDWARE/Control.c **** }
+ 355              		.loc 1 69 1 is_stmt 0 view .LVU37
+ 356 0008 7047     		bx	lr
+ 357              	.L31:
+ 358 000a 00BF     		.align	2
+ 359              	.L30:
+ 360 000c 00000000 		.word	.LANCHOR0
+ 361              		.cfi_endproc
+ 362              	.LFE74:
+ 364              		.section	.text.KJD_DIS,"ax",%progbits
+ 365              		.align	1
+ 366              		.global	KJD_DIS
+ 367              		.syntax unified
+ 368              		.thumb
+ 369              		.thumb_func
+ 370              		.fpu softvfp
+ 372              	KJD_DIS:
+ 373              	.LFB75:
+  70:HARDWARE/Control.c **** 
+  71:HARDWARE/Control.c **** void KJD_DIS(void)
+  72:HARDWARE/Control.c **** {
+ 374              		.loc 1 72 1 is_stmt 1 view -0
+ 375              		.cfi_startproc
+ 376              		@ args = 0, pretend = 0, frame = 0
+ 377              		@ frame_needed = 0, uses_anonymous_args = 0
+ 378              		@ link register save eliminated.
+  73:HARDWARE/Control.c **** 	KJDDIS;
+ 379              		.loc 1 73 2 view .LVU39
+ 380 0000 024A     		ldr	r2, .L33
+ 381 0002 536A     		ldr	r3, [r2, #36]
+ 382 0004 126A     		ldr	r2, [r2, #32]
+ 383 0006 1B04     		lsls	r3, r3, #16
+ 384 0008 9361     		str	r3, [r2, #24]
+  74:HARDWARE/Control.c **** }
+ 385              		.loc 1 74 1 is_stmt 0 view .LVU40
+ 386 000a 7047     		bx	lr
+ 387              	.L34:
+ 388              		.align	2
+ 389              	.L33:
+ 390 000c 00000000 		.word	.LANCHOR0
+ 391              		.cfi_endproc
+ 392              	.LFE75:
+ 394              		.global	Ctrol
+ 395              		.section	.data.Ctrol,"aw"
+ 396              		.align	2
+ 397              		.set	.LANCHOR0,. + 0
+ 400              	Ctrol:
+ 401 0000 00080240 		.word	1073874944
+ 402 0004 80000000 		.word	128
+ 403 0008 00080240 		.word	1073874944
+ 404 000c 00010000 		.word	256
+ 405 0010 00080240 		.word	1073874944
+ 406 0014 00020000 		.word	512
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s 			page 9
+
+
+ 407 0018 00000240 		.word	1073872896
+ 408 001c 00080000 		.word	2048
+ 409 0020 00000240 		.word	1073872896
+ 410 0024 00100000 		.word	4096
+ 411              		.text
+ 412              	.Letext0:
+ 413              		.file 2 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 414              		.file 3 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/_stdint.h"
+ 415              		.file 4 "Inc/stm32l152xe.h"
+ 416              		.file 5 "/Users/shuuyou/gcc-arm-none-eabi/lib/gcc/arm-none-eabi/8.3.1/include/stddef.h"
+ 417              		.file 6 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/_types.h"
+ 418              		.file 7 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/reent.h"
+ 419              		.file 8 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/lock.h"
+ 420              		.file 9 "Inc/core_cm3.h"
+ 421              		.file 10 "APP/inc/Public.h"
+ 422              		.file 11 "RML1028B/RML1028B.h"
+ 423              		.file 12 "HARDWARE/inc/Temputer.h"
+ 424              		.file 13 "HARDWARE/inc/Adc.h"
+ 425              		.file 14 "HARDWARE/inc/Timer.h"
+ 426              		.file 15 "TOOL/inc/malloc.h"
+ 427              		.file 16 "TOOL/inc/TaskManger.h"
+ 428              		.file 17 "DISPALY/inc/DispManger.h"
+ 429              		.file 18 "TOOL/inc/CrcUtil.h"
+ 430              		.file 19 "APP/inc/VolPro.h"
+ 431              		.file 20 "APP/inc/FreqPro.h"
+ 432              		.file 21 "APP/inc/ParasCheckPro.h"
+ 433              		.file 22 "APP/inc/TemputerPro.h"
+ 434              		.file 23 "HARDWARE/inc/Control.h"
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 Control.c
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:16     .text.ControlIoInit:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:24     .text.ControlIoInit:0000000000000000 ControlIoInit
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:94     .text.ControlIoInit:000000000000005c $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:99     .text.KAC_EN:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:106    .text.KAC_EN:0000000000000000 KAC_EN
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:123    .text.KAC_EN:000000000000000c $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:128    .text.KAC_DIS:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:135    .text.KAC_DIS:0000000000000000 KAC_DIS
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:153    .text.KAC_DIS:000000000000000c $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:158    .text.KJC_EN:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:165    .text.KJC_EN:0000000000000000 KJC_EN
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:182    .text.KJC_EN:000000000000000c $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:187    .text.KJC_DIS:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:194    .text.KJC_DIS:0000000000000000 KJC_DIS
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:212    .text.KJC_DIS:000000000000000c $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:217    .text.KFN_EN:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:224    .text.KFN_EN:0000000000000000 KFN_EN
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:241    .text.KFN_EN:000000000000000c $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:246    .text.KFN_DIS:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:253    .text.KFN_DIS:0000000000000000 KFN_DIS
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:271    .text.KFN_DIS:000000000000000c $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:276    .text.KVO_EN:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:283    .text.KVO_EN:0000000000000000 KVO_EN
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:301    .text.KVO_EN:000000000000000c $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:306    .text.KVO_DIS:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:313    .text.KVO_DIS:0000000000000000 KVO_DIS
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:331    .text.KVO_DIS:000000000000000c $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:336    .text.KJD_EN:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:343    .text.KJD_EN:0000000000000000 KJD_EN
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:360    .text.KJD_EN:000000000000000c $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:365    .text.KJD_DIS:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:372    .text.KJD_DIS:0000000000000000 KJD_DIS
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:390    .text.KJD_DIS:000000000000000c $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:400    .data.Ctrol:0000000000000000 Ctrol
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDUSy39.s:396    .data.Ctrol:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+IoInit

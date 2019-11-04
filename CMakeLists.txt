@@ -1,0 +1,94 @@
+cmake_minimum_required(VERSION 3.15)
+project(PowerBox C)
+
+set(CMAKE_C_STANDARD 11)
+
+include_directories(APP/inc)
+include_directories(DISPALY/inc)
+include_directories(Drivers)
+include_directories(Drivers/CMSIS)
+include_directories(Drivers/CMSIS/Device)
+include_directories(Drivers/CMSIS/Device/ST)
+include_directories(Drivers/CMSIS/Device/ST/STM32L1xx)
+include_directories(Drivers/CMSIS/Device/ST/STM32L1xx/Include)
+include_directories(Drivers/CMSIS/Include)
+include_directories(HARDWARE/inc)
+include_directories(Inc)
+include_directories(RML1028B)
+include_directories(TOOL/inc)
+
+add_executable(PowerBox
+        APP/inc/CtrPro.h
+        APP/inc/DebugPro.h
+        APP/inc/FreqPro.h
+        APP/inc/KeyPro.h
+        APP/inc/ParasCheckPro.h
+        APP/inc/Public.h
+        APP/inc/TemputerPro.h
+        APP/inc/VolPro.h
+        APP/CtrPro.c
+        APP/DebugPro.c
+        APP/FreqPro.c
+        APP/KeyPro.c
+        APP/main.c
+        APP/ParasCheckPro.c
+        APP/Public.c
+        APP/TemputerPro.c
+        APP/VolPro.c
+        DISPALY/CURINFOPAGE/CurInfoPage.c
+        DISPALY/DISPMANGER/DispManger.c
+        DISPALY/inc/CurInfoPage.h
+        DISPALY/inc/DispManger.h
+        Inc/stm32l152xe.h
+        Drivers/CMSIS/Device/ST/STM32L1xx/Include/stm32l1xx.h
+        Drivers/CMSIS/Device/ST/STM32L1xx/Include/system_stm32l1xx.h
+        Inc/cmsis_armcc.h
+        Drivers/CMSIS/Include/cmsis_armclang.h
+        Inc/cmsis_compiler.h
+        Inc/cmsis_gcc.h
+        Drivers/CMSIS/Include/cmsis_iccarm.h
+        Inc/cmsis_version.h
+        Drivers/CMSIS/Include/core_armv8mbl.h
+        Drivers/CMSIS/Include/core_armv8mml.h
+        Drivers/CMSIS/Include/core_cm0.h
+        Drivers/CMSIS/Include/core_cm0plus.h
+        Drivers/CMSIS/Include/core_cm1.h
+        Drivers/CMSIS/Include/core_cm23.h
+        Inc/core_cm3.h
+        Drivers/CMSIS/Include/core_cm33.h
+        Drivers/CMSIS/Include/core_cm4.h
+        Drivers/CMSIS/Include/core_cm7.h
+        Drivers/CMSIS/Include/core_sc000.h
+        Drivers/CMSIS/Include/core_sc300.h
+        Inc/mpu_armv7.h
+        Drivers/CMSIS/Include/mpu_armv8.h
+        Drivers/CMSIS/Include/tz_context.h
+        HARDWARE/inc/Adc.h
+        HARDWARE/inc/Beep.h
+        HARDWARE/inc/Control.h
+        HARDWARE/inc/Exti.h
+        HARDWARE/inc/Keys.h
+        HARDWARE/inc/Leds.h
+        HARDWARE/inc/Mcu.h
+        HARDWARE/inc/Temputer.h
+        HARDWARE/inc/Timer.h
+        HARDWARE/inc/Uart.h
+        HARDWARE/Adc.c
+        HARDWARE/Beep.c
+        HARDWARE/Control.c
+        HARDWARE/Exti.c
+        HARDWARE/Keys.c
+        HARDWARE/Mcu.c
+        HARDWARE/Temputer.c
+        HARDWARE/Timer.c
+        HARDWARE/Uart.c
+        RML1028B/RML1028B.c
+        RML1028B/RML1028B.h
+        TOOL/inc/cJSON.h
+        TOOL/inc/CrcUtil.h
+        TOOL/inc/malloc.h
+        TOOL/inc/TaskManger.h
+        TOOL/cJSON.c
+        TOOL/CrcUtil.c
+        TOOL/malloc.c
+        TOOL/TaskManger.c)

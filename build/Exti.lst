@@ -1,0 +1,246 @@
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccmSMDDt.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"Exti.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.ExtiInit,"ax",%progbits
+  16              		.align	1
+  17              		.global	ExtiInit
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	ExtiInit:
+  25              	.LFB65:
+  26              		.file 1 "HARDWARE/Exti.c"
+   1:HARDWARE/Exti.c **** #include "Exti.h"
+   2:HARDWARE/Exti.c **** 
+   3:HARDWARE/Exti.c **** void ExtiInit(void)
+   4:HARDWARE/Exti.c **** {
+  27              		.loc 1 4 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 30B5     		push	{r4, r5, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 12
+  34              		.cfi_offset 4, -12
+  35              		.cfi_offset 5, -8
+  36              		.cfi_offset 14, -4
+  37 0002 83B0     		sub	sp, sp, #12
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 24
+   5:HARDWARE/Exti.c **** 	RCC->AHBENR |= 0x02;		//使能PB时钟
+  40              		.loc 1 5 2 view .LVU1
+  41              		.loc 1 5 14 is_stmt 0 view .LVU2
+  42 0004 134A     		ldr	r2, .L3
+  43 0006 D369     		ldr	r3, [r2, #28]
+  44 0008 43F00203 		orr	r3, r3, #2
+  45 000c D361     		str	r3, [r2, #28]
+   6:HARDWARE/Exti.c **** 	GPIO_Set(GPIOB,PIN0 | PIN1,GPIO_MODE_IN,0,0,GPIO_PUPD_PD); 			//下拉输入 
+  46              		.loc 1 6 2 is_stmt 1 view .LVU3
+  47 000e 0225     		movs	r5, #2
+  48 0010 0195     		str	r5, [sp, #4]
+  49 0012 0024     		movs	r4, #0
+  50 0014 0094     		str	r4, [sp]
+  51 0016 2346     		mov	r3, r4
+  52 0018 2246     		mov	r2, r4
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccmSMDDt.s 			page 2
+
+
+  53 001a 0321     		movs	r1, #3
+  54 001c 0E48     		ldr	r0, .L3+4
+  55 001e FFF7FEFF 		bl	GPIO_Set
+  56              	.LVL0:
+   7:HARDWARE/Exti.c **** 	Ex_NVIC_Config(GPIO_B,0,RTIR);
+  57              		.loc 1 7 2 view .LVU4
+  58 0022 2A46     		mov	r2, r5
+  59 0024 2146     		mov	r1, r4
+  60 0026 0120     		movs	r0, #1
+  61 0028 FFF7FEFF 		bl	Ex_NVIC_Config
+  62              	.LVL1:
+   8:HARDWARE/Exti.c **** 	Ex_NVIC_Config(GPIO_B,1,RTIR);
+  63              		.loc 1 8 2 view .LVU5
+  64 002c 2A46     		mov	r2, r5
+  65 002e 0121     		movs	r1, #1
+  66 0030 0846     		mov	r0, r1
+  67 0032 FFF7FEFF 		bl	Ex_NVIC_Config
+  68              	.LVL2:
+   9:HARDWARE/Exti.c **** 	MY_NVIC_Init(0,1,EXTI0_IRQn,0);		
+  69              		.loc 1 9 2 view .LVU6
+  70 0036 2346     		mov	r3, r4
+  71 0038 0622     		movs	r2, #6
+  72 003a 0121     		movs	r1, #1
+  73 003c 2046     		mov	r0, r4
+  74 003e FFF7FEFF 		bl	MY_NVIC_Init
+  75              	.LVL3:
+  10:HARDWARE/Exti.c **** 	MY_NVIC_Init(0,2,EXTI1_IRQn,0);		   
+  76              		.loc 1 10 2 view .LVU7
+  77 0042 2346     		mov	r3, r4
+  78 0044 0722     		movs	r2, #7
+  79 0046 2946     		mov	r1, r5
+  80 0048 2046     		mov	r0, r4
+  81 004a FFF7FEFF 		bl	MY_NVIC_Init
+  82              	.LVL4:
+  11:HARDWARE/Exti.c **** }
+  83              		.loc 1 11 1 is_stmt 0 view .LVU8
+  84 004e 03B0     		add	sp, sp, #12
+  85              	.LCFI2:
+  86              		.cfi_def_cfa_offset 12
+  87              		@ sp needed
+  88 0050 30BD     		pop	{r4, r5, pc}
+  89              	.L4:
+  90 0052 00BF     		.align	2
+  91              	.L3:
+  92 0054 00380240 		.word	1073887232
+  93 0058 00040240 		.word	1073873920
+  94              		.cfi_endproc
+  95              	.LFE65:
+  97              		.section	.text.EXTI0_IRQHandler,"ax",%progbits
+  98              		.align	1
+  99              		.global	EXTI0_IRQHandler
+ 100              		.syntax unified
+ 101              		.thumb
+ 102              		.thumb_func
+ 103              		.fpu softvfp
+ 105              	EXTI0_IRQHandler:
+ 106              	.LFB66:
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccmSMDDt.s 			page 3
+
+
+  12:HARDWARE/Exti.c **** 
+  13:HARDWARE/Exti.c **** //外部中断0服务程序
+  14:HARDWARE/Exti.c **** void EXTI0_IRQHandler(void)
+  15:HARDWARE/Exti.c **** {	 
+ 107              		.loc 1 15 1 is_stmt 1 view -0
+ 108              		.cfi_startproc
+ 109              		@ args = 0, pretend = 0, frame = 0
+ 110              		@ frame_needed = 0, uses_anonymous_args = 0
+ 111              		@ link register save eliminated.
+  16:HARDWARE/Exti.c **** 	if(EXTI->PR & 0x01)
+ 112              		.loc 1 16 2 view .LVU10
+ 113              		.loc 1 16 9 is_stmt 0 view .LVU11
+ 114 0000 054B     		ldr	r3, .L7
+ 115 0002 5B69     		ldr	r3, [r3, #20]
+ 116              		.loc 1 16 4 view .LVU12
+ 117 0004 13F0010F 		tst	r3, #1
+ 118 0008 04D0     		beq	.L5
+  17:HARDWARE/Exti.c **** 	EXTI->PR |=1<<0;  //清除LINE0上的中断标志位  
+ 119              		.loc 1 17 2 is_stmt 1 view .LVU13
+ 120              		.loc 1 17 11 is_stmt 0 view .LVU14
+ 121 000a 034A     		ldr	r2, .L7
+ 122 000c 5369     		ldr	r3, [r2, #20]
+ 123 000e 43F00103 		orr	r3, r3, #1
+ 124 0012 5361     		str	r3, [r2, #20]
+ 125              	.L5:
+  18:HARDWARE/Exti.c **** }
+ 126              		.loc 1 18 1 view .LVU15
+ 127 0014 7047     		bx	lr
+ 128              	.L8:
+ 129 0016 00BF     		.align	2
+ 130              	.L7:
+ 131 0018 00040140 		.word	1073808384
+ 132              		.cfi_endproc
+ 133              	.LFE66:
+ 135              		.section	.text.EXTI1_IRQHandler,"ax",%progbits
+ 136              		.align	1
+ 137              		.global	EXTI1_IRQHandler
+ 138              		.syntax unified
+ 139              		.thumb
+ 140              		.thumb_func
+ 141              		.fpu softvfp
+ 143              	EXTI1_IRQHandler:
+ 144              	.LFB67:
+  19:HARDWARE/Exti.c **** 
+  20:HARDWARE/Exti.c **** //外部中断2服务程序
+  21:HARDWARE/Exti.c **** void EXTI1_IRQHandler(void)
+  22:HARDWARE/Exti.c **** { 
+ 145              		.loc 1 22 1 is_stmt 1 view -0
+ 146              		.cfi_startproc
+ 147              		@ args = 0, pretend = 0, frame = 0
+ 148              		@ frame_needed = 0, uses_anonymous_args = 0
+ 149              		@ link register save eliminated.
+  23:HARDWARE/Exti.c **** 	if(EXTI->PR & 0x02)
+ 150              		.loc 1 23 2 view .LVU17
+ 151              		.loc 1 23 9 is_stmt 0 view .LVU18
+ 152 0000 044B     		ldr	r3, .L11
+ 153 0002 5B69     		ldr	r3, [r3, #20]
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccmSMDDt.s 			page 4
+
+
+ 154              		.loc 1 23 4 view .LVU19
+ 155 0004 13F0020F 		tst	r3, #2
+ 156 0008 02D0     		beq	.L9
+  24:HARDWARE/Exti.c **** 	EXTI->PR = 1<<1;  //清除LINE2上的中断标志位  
+ 157              		.loc 1 24 2 is_stmt 1 view .LVU20
+ 158              		.loc 1 24 11 is_stmt 0 view .LVU21
+ 159 000a 024B     		ldr	r3, .L11
+ 160 000c 0222     		movs	r2, #2
+ 161 000e 5A61     		str	r2, [r3, #20]
+ 162              	.L9:
+  25:HARDWARE/Exti.c **** }
+ 163              		.loc 1 25 1 view .LVU22
+ 164 0010 7047     		bx	lr
+ 165              	.L12:
+ 166 0012 00BF     		.align	2
+ 167              	.L11:
+ 168 0014 00040140 		.word	1073808384
+ 169              		.cfi_endproc
+ 170              	.LFE67:
+ 172              		.text
+ 173              	.Letext0:
+ 174              		.file 2 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 175              		.file 3 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/_stdint.h"
+ 176              		.file 4 "Inc/stm32l152xe.h"
+ 177              		.file 5 "/Users/shuuyou/gcc-arm-none-eabi/lib/gcc/arm-none-eabi/8.3.1/include/stddef.h"
+ 178              		.file 6 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/_types.h"
+ 179              		.file 7 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/reent.h"
+ 180              		.file 8 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/lock.h"
+ 181              		.file 9 "Inc/core_cm3.h"
+ 182              		.file 10 "APP/inc/Public.h"
+ 183              		.file 11 "RML1028B/RML1028B.h"
+ 184              		.file 12 "HARDWARE/inc/Temputer.h"
+ 185              		.file 13 "HARDWARE/inc/Adc.h"
+ 186              		.file 14 "HARDWARE/inc/Timer.h"
+ 187              		.file 15 "HARDWARE/inc/Control.h"
+ 188              		.file 16 "TOOL/inc/malloc.h"
+ 189              		.file 17 "TOOL/inc/TaskManger.h"
+ 190              		.file 18 "DISPALY/inc/DispManger.h"
+ 191              		.file 19 "TOOL/inc/CrcUtil.h"
+ 192              		.file 20 "APP/inc/VolPro.h"
+ 193              		.file 21 "APP/inc/FreqPro.h"
+ 194              		.file 22 "APP/inc/ParasCheckPro.h"
+ 195              		.file 23 "APP/inc/TemputerPro.h"
+ 196              		.file 24 "HARDWARE/inc/Mcu.h"
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccmSMDDt.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 Exti.c
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccmSMDDt.s:16     .text.ExtiInit:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccmSMDDt.s:24     .text.ExtiInit:0000000000000000 ExtiInit
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccmSMDDt.s:92     .text.ExtiInit:0000000000000054 $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccmSMDDt.s:98     .text.EXTI0_IRQHandler:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccmSMDDt.s:105    .text.EXTI0_IRQHandler:0000000000000000 EXTI0_IRQHandler
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccmSMDDt.s:131    .text.EXTI0_IRQHandler:0000000000000018 $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccmSMDDt.s:136    .text.EXTI1_IRQHandler:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccmSMDDt.s:143    .text.EXTI1_IRQHandler:0000000000000000 EXTI1_IRQHandler
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccmSMDDt.s:168    .text.EXTI1_IRQHandler:0000000000000014 $d
+
+UNDEFINED SYMBOLS
+GPIO_Set
+Ex_NVIC_Config
+MY_NVIC_Init

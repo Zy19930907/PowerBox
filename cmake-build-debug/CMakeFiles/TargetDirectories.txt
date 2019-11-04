@@ -1,0 +1,3 @@
+/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/shuuyou/STM32Cube/Repository/PowerBox/cmake-build-debug/CMakeFiles/PowerBox.dir

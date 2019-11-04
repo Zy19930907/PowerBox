@@ -1,0 +1,370 @@
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDeq3Nj.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"KeyPro.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.ResetKey,"ax",%progbits
+  16              		.align	1
+  17              		.global	ResetKey
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	ResetKey:
+  25              	.LFB65:
+  26              		.file 1 "APP/KeyPro.c"
+   1:APP/KeyPro.c  **** #include "KeyPro.h"
+   2:APP/KeyPro.c  **** 
+   3:APP/KeyPro.c  **** _Key Key = {
+   4:APP/KeyPro.c  **** 	.KeyVal={0,0},
+   5:APP/KeyPro.c  **** 	.Status = KEYINIT,
+   6:APP/KeyPro.c  **** 	.cnt = 0,
+   7:APP/KeyPro.c  **** };
+   8:APP/KeyPro.c  **** 
+   9:APP/KeyPro.c  **** void ResetKey(void)
+  10:APP/KeyPro.c  **** {
+  27              		.loc 1 10 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  11:APP/KeyPro.c  **** 	Key.KeyVal[0] = 0;
+  32              		.loc 1 11 2 view .LVU1
+  33              		.loc 1 11 16 is_stmt 0 view .LVU2
+  34 0000 024B     		ldr	r3, .L2
+  35 0002 0022     		movs	r2, #0
+  36 0004 5A70     		strb	r2, [r3, #1]
+  12:APP/KeyPro.c  **** 	Key.KeyVal[1] = 0;
+  37              		.loc 1 12 2 is_stmt 1 view .LVU3
+  38              		.loc 1 12 16 is_stmt 0 view .LVU4
+  39 0006 9A70     		strb	r2, [r3, #2]
+  13:APP/KeyPro.c  **** 	Key.cnt = 0;
+  40              		.loc 1 13 2 is_stmt 1 view .LVU5
+  41              		.loc 1 13 10 is_stmt 0 view .LVU6
+  42 0008 DA70     		strb	r2, [r3, #3]
+  14:APP/KeyPro.c  **** }
+  43              		.loc 1 14 1 view .LVU7
+  44 000a 7047     		bx	lr
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDeq3Nj.s 			page 2
+
+
+  45              	.L3:
+  46              		.align	2
+  47              	.L2:
+  48 000c 00000000 		.word	.LANCHOR0
+  49              		.cfi_endproc
+  50              	.LFE65:
+  52              		.section	.text.KeyPro,"ax",%progbits
+  53              		.align	1
+  54              		.global	KeyPro
+  55              		.syntax unified
+  56              		.thumb
+  57              		.thumb_func
+  58              		.fpu softvfp
+  60              	KeyPro:
+  61              	.LFB66:
+  15:APP/KeyPro.c  **** 
+  16:APP/KeyPro.c  **** void KeyPro(void)
+  17:APP/KeyPro.c  **** {
+  62              		.loc 1 17 1 is_stmt 1 view -0
+  63              		.cfi_startproc
+  64              		@ args = 0, pretend = 0, frame = 0
+  65              		@ frame_needed = 0, uses_anonymous_args = 0
+  66 0000 08B5     		push	{r3, lr}
+  67              	.LCFI0:
+  68              		.cfi_def_cfa_offset 8
+  69              		.cfi_offset 3, -8
+  70              		.cfi_offset 14, -4
+  18:APP/KeyPro.c  **** 	u8 key = KEYSVAL;
+  71              		.loc 1 18 2 view .LVU9
+  72              		.loc 1 18 11 is_stmt 0 view .LVU10
+  73 0002 224B     		ldr	r3, .L16
+  74 0004 1B69     		ldr	r3, [r3, #16]
+  75 0006 DB43     		mvns	r3, r3
+  76              		.loc 1 18 5 view .LVU11
+  77 0008 03F00303 		and	r3, r3, #3
+  78              	.LVL0:
+  19:APP/KeyPro.c  **** 	switch(Key.Status)
+  79              		.loc 1 19 2 is_stmt 1 view .LVU12
+  80              		.loc 1 19 12 is_stmt 0 view .LVU13
+  81 000c 204A     		ldr	r2, .L16+4
+  82 000e 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+  83              		.loc 1 19 2 view .LVU14
+  84 0010 032A     		cmp	r2, #3
+  85 0012 08D8     		bhi	.L4
+  86 0014 DFE802F0 		tbb	[pc, r2]
+  87              	.L7:
+  88 0018 02       		.byte	(.L10-.L7)/2
+  89 0019 08       		.byte	(.L9-.L7)/2
+  90 001a 1E       		.byte	(.L8-.L7)/2
+  91 001b 24       		.byte	(.L6-.L7)/2
+  92              		.p2align 1
+  93              	.L10:
+  20:APP/KeyPro.c  **** 	{
+  21:APP/KeyPro.c  **** 	case KEYINIT:
+  22:APP/KeyPro.c  **** 		KeysInit();
+  94              		.loc 1 22 3 is_stmt 1 view .LVU15
+  95 001c FFF7FEFF 		bl	KeysInit
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDeq3Nj.s 			page 3
+
+
+  96              	.LVL1:
+  23:APP/KeyPro.c  **** 		Key.Status = READKEY;
+  97              		.loc 1 23 3 view .LVU16
+  98              		.loc 1 23 14 is_stmt 0 view .LVU17
+  99 0020 1B4B     		ldr	r3, .L16+4
+ 100 0022 0122     		movs	r2, #1
+ 101 0024 1A70     		strb	r2, [r3]
+  24:APP/KeyPro.c  **** 		break;
+ 102              		.loc 1 24 3 is_stmt 1 view .LVU18
+ 103              	.L4:
+  25:APP/KeyPro.c  **** 	case READKEY:
+  26:APP/KeyPro.c  **** 		if(key)//有按键按下
+  27:APP/KeyPro.c  **** 		{
+  28:APP/KeyPro.c  **** 			Key.KeyVal[Key.cnt++] = key;
+  29:APP/KeyPro.c  **** 			if((Key.cnt == 2) && Key.KeyVal[0] == Key.KeyVal[1])//两次读取按键值消抖
+  30:APP/KeyPro.c  **** 				Key.Status = KEYPRESS;
+  31:APP/KeyPro.c  **** 		}
+  32:APP/KeyPro.c  **** 		else
+  33:APP/KeyPro.c  **** 		{
+  34:APP/KeyPro.c  **** 			ResetKey();
+  35:APP/KeyPro.c  **** 		}
+  36:APP/KeyPro.c  **** 		break;
+  37:APP/KeyPro.c  **** 
+  38:APP/KeyPro.c  **** 	case KEYPRESS:
+  39:APP/KeyPro.c  **** 		if(key == 0)
+  40:APP/KeyPro.c  **** 			Key.Status = KEYCLICK;
+  41:APP/KeyPro.c  **** 		break;
+  42:APP/KeyPro.c  **** 
+  43:APP/KeyPro.c  **** 	case KEYCLICK:
+  44:APP/KeyPro.c  **** 		switch(Key.KeyVal[1] & 0x03)
+  45:APP/KeyPro.c  **** 		{
+  46:APP/KeyPro.c  **** 		case 0x01://KEY1按下
+  47:APP/KeyPro.c  **** 			Disp_KeyHandler(KEY_ENTER);
+  48:APP/KeyPro.c  **** 			break;
+  49:APP/KeyPro.c  **** 		case 0x02://KEY2按下
+  50:APP/KeyPro.c  **** 			Disp_KeyHandler(KEY_RIGHT);
+  51:APP/KeyPro.c  **** 			break;
+  52:APP/KeyPro.c  **** 		default:
+  53:APP/KeyPro.c  **** 			break;
+  54:APP/KeyPro.c  **** 		}
+  55:APP/KeyPro.c  **** 		ResetKey();
+  56:APP/KeyPro.c  **** 		Key.Status = READKEY;
+  57:APP/KeyPro.c  **** 		break;
+  58:APP/KeyPro.c  **** 	}
+  59:APP/KeyPro.c  **** }
+ 104              		.loc 1 59 1 is_stmt 0 view .LVU19
+ 105 0026 08BD     		pop	{r3, pc}
+ 106              	.LVL2:
+ 107              	.L9:
+  26:APP/KeyPro.c  **** 		{
+ 108              		.loc 1 26 3 is_stmt 1 view .LVU20
+  26:APP/KeyPro.c  **** 		{
+ 109              		.loc 1 26 5 is_stmt 0 view .LVU21
+ 110 0028 8BB1     		cbz	r3, .L11
+  28:APP/KeyPro.c  **** 			if((Key.cnt == 2) && Key.KeyVal[0] == Key.KeyVal[1])//两次读取按键值消抖
+ 111              		.loc 1 28 4 is_stmt 1 view .LVU22
+  28:APP/KeyPro.c  **** 			if((Key.cnt == 2) && Key.KeyVal[0] == Key.KeyVal[1])//两次读取按键值消抖
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDeq3Nj.s 			page 4
+
+
+ 112              		.loc 1 28 18 is_stmt 0 view .LVU23
+ 113 002a 194A     		ldr	r2, .L16+4
+ 114 002c D078     		ldrb	r0, [r2, #3]	@ zero_extendqisi2
+  28:APP/KeyPro.c  **** 			if((Key.cnt == 2) && Key.KeyVal[0] == Key.KeyVal[1])//两次读取按键值消抖
+ 115              		.loc 1 28 22 view .LVU24
+ 116 002e 411C     		adds	r1, r0, #1
+ 117 0030 C9B2     		uxtb	r1, r1
+ 118 0032 D170     		strb	r1, [r2, #3]
+  28:APP/KeyPro.c  **** 			if((Key.cnt == 2) && Key.KeyVal[0] == Key.KeyVal[1])//两次读取按键值消抖
+ 119              		.loc 1 28 26 view .LVU25
+ 120 0034 0244     		add	r2, r2, r0
+ 121 0036 5370     		strb	r3, [r2, #1]
+  29:APP/KeyPro.c  **** 				Key.Status = KEYPRESS;
+ 122              		.loc 1 29 4 is_stmt 1 view .LVU26
+  29:APP/KeyPro.c  **** 				Key.Status = KEYPRESS;
+ 123              		.loc 1 29 6 is_stmt 0 view .LVU27
+ 124 0038 0229     		cmp	r1, #2
+ 125 003a F4D1     		bne	.L4
+  29:APP/KeyPro.c  **** 				Key.Status = KEYPRESS;
+ 126              		.loc 1 29 35 discriminator 1 view .LVU28
+ 127 003c 144B     		ldr	r3, .L16+4
+ 128              	.LVL3:
+  29:APP/KeyPro.c  **** 				Key.Status = KEYPRESS;
+ 129              		.loc 1 29 35 discriminator 1 view .LVU29
+ 130 003e 5A78     		ldrb	r2, [r3, #1]	@ zero_extendqisi2
+ 131              	.LVL4:
+  29:APP/KeyPro.c  **** 				Key.Status = KEYPRESS;
+ 132              		.loc 1 29 52 discriminator 1 view .LVU30
+ 133 0040 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 134              	.LVL5:
+  29:APP/KeyPro.c  **** 				Key.Status = KEYPRESS;
+ 135              		.loc 1 29 22 discriminator 1 view .LVU31
+ 136 0042 9A42     		cmp	r2, r3
+ 137 0044 EFD1     		bne	.L4
+  30:APP/KeyPro.c  **** 		}
+ 138              		.loc 1 30 5 is_stmt 1 view .LVU32
+  30:APP/KeyPro.c  **** 		}
+ 139              		.loc 1 30 16 is_stmt 0 view .LVU33
+ 140 0046 124B     		ldr	r3, .L16+4
+ 141              	.LVL6:
+  30:APP/KeyPro.c  **** 		}
+ 142              		.loc 1 30 16 view .LVU34
+ 143 0048 0222     		movs	r2, #2
+ 144 004a 1A70     		strb	r2, [r3]
+ 145 004c EBE7     		b	.L4
+ 146              	.LVL7:
+ 147              	.L11:
+  34:APP/KeyPro.c  **** 		}
+ 148              		.loc 1 34 4 is_stmt 1 view .LVU35
+ 149 004e FFF7FEFF 		bl	ResetKey
+ 150              	.LVL8:
+  34:APP/KeyPro.c  **** 		}
+ 151              		.loc 1 34 4 is_stmt 0 view .LVU36
+ 152 0052 E8E7     		b	.L4
+ 153              	.LVL9:
+ 154              	.L8:
+  39:APP/KeyPro.c  **** 			Key.Status = KEYCLICK;
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDeq3Nj.s 			page 5
+
+
+ 155              		.loc 1 39 3 is_stmt 1 view .LVU37
+  39:APP/KeyPro.c  **** 			Key.Status = KEYCLICK;
+ 156              		.loc 1 39 5 is_stmt 0 view .LVU38
+ 157 0054 002B     		cmp	r3, #0
+ 158 0056 E6D1     		bne	.L4
+  40:APP/KeyPro.c  **** 		break;
+ 159              		.loc 1 40 4 is_stmt 1 view .LVU39
+  40:APP/KeyPro.c  **** 		break;
+ 160              		.loc 1 40 15 is_stmt 0 view .LVU40
+ 161 0058 0D4B     		ldr	r3, .L16+4
+ 162              	.LVL10:
+  40:APP/KeyPro.c  **** 		break;
+ 163              		.loc 1 40 15 view .LVU41
+ 164 005a 0322     		movs	r2, #3
+ 165 005c 1A70     		strb	r2, [r3]
+ 166 005e E2E7     		b	.L4
+ 167              	.LVL11:
+ 168              	.L6:
+  44:APP/KeyPro.c  **** 		{
+ 169              		.loc 1 44 3 is_stmt 1 view .LVU42
+  44:APP/KeyPro.c  **** 		{
+ 170              		.loc 1 44 20 is_stmt 0 view .LVU43
+ 171 0060 0B4B     		ldr	r3, .L16+4
+ 172              	.LVL12:
+  44:APP/KeyPro.c  **** 		{
+ 173              		.loc 1 44 20 view .LVU44
+ 174 0062 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 175 0064 03F00303 		and	r3, r3, #3
+ 176 0068 012B     		cmp	r3, #1
+ 177 006a 07D0     		beq	.L12
+ 178 006c 022B     		cmp	r3, #2
+ 179 006e 09D0     		beq	.L13
+ 180              	.L14:
+  55:APP/KeyPro.c  **** 		Key.Status = READKEY;
+ 181              		.loc 1 55 3 is_stmt 1 view .LVU45
+ 182 0070 FFF7FEFF 		bl	ResetKey
+ 183              	.LVL13:
+  56:APP/KeyPro.c  **** 		break;
+ 184              		.loc 1 56 3 view .LVU46
+  56:APP/KeyPro.c  **** 		break;
+ 185              		.loc 1 56 14 is_stmt 0 view .LVU47
+ 186 0074 064B     		ldr	r3, .L16+4
+ 187 0076 0122     		movs	r2, #1
+ 188 0078 1A70     		strb	r2, [r3]
+  57:APP/KeyPro.c  **** 	}
+ 189              		.loc 1 57 3 is_stmt 1 view .LVU48
+ 190              		.loc 1 59 1 is_stmt 0 view .LVU49
+ 191 007a D4E7     		b	.L4
+ 192              	.L12:
+  47:APP/KeyPro.c  **** 			break;
+ 193              		.loc 1 47 4 is_stmt 1 view .LVU50
+ 194 007c 0420     		movs	r0, #4
+ 195 007e FFF7FEFF 		bl	Disp_KeyHandler
+ 196              	.LVL14:
+  48:APP/KeyPro.c  **** 		case 0x02://KEY2按下
+ 197              		.loc 1 48 4 view .LVU51
+ 198 0082 F5E7     		b	.L14
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDeq3Nj.s 			page 6
+
+
+ 199              	.L13:
+  50:APP/KeyPro.c  **** 			break;
+ 200              		.loc 1 50 4 view .LVU52
+ 201 0084 0320     		movs	r0, #3
+ 202 0086 FFF7FEFF 		bl	Disp_KeyHandler
+ 203              	.LVL15:
+  51:APP/KeyPro.c  **** 		default:
+ 204              		.loc 1 51 4 view .LVU53
+ 205 008a F1E7     		b	.L14
+ 206              	.L17:
+ 207              		.align	2
+ 208              	.L16:
+ 209 008c 00000240 		.word	1073872896
+ 210 0090 00000000 		.word	.LANCHOR0
+ 211              		.cfi_endproc
+ 212              	.LFE66:
+ 214              		.global	Key
+ 215              		.section	.bss.Key,"aw",%nobits
+ 216              		.align	2
+ 217              		.set	.LANCHOR0,. + 0
+ 220              	Key:
+ 221 0000 00000000 		.space	4
+ 222              		.text
+ 223              	.Letext0:
+ 224              		.file 2 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 225              		.file 3 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/_stdint.h"
+ 226              		.file 4 "Inc/stm32l152xe.h"
+ 227              		.file 5 "/Users/shuuyou/gcc-arm-none-eabi/lib/gcc/arm-none-eabi/8.3.1/include/stddef.h"
+ 228              		.file 6 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/_types.h"
+ 229              		.file 7 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/reent.h"
+ 230              		.file 8 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/lock.h"
+ 231              		.file 9 "Inc/core_cm3.h"
+ 232              		.file 10 "APP/inc/Public.h"
+ 233              		.file 11 "RML1028B/RML1028B.h"
+ 234              		.file 12 "HARDWARE/inc/Temputer.h"
+ 235              		.file 13 "HARDWARE/inc/Adc.h"
+ 236              		.file 14 "HARDWARE/inc/Timer.h"
+ 237              		.file 15 "HARDWARE/inc/Control.h"
+ 238              		.file 16 "TOOL/inc/malloc.h"
+ 239              		.file 17 "TOOL/inc/TaskManger.h"
+ 240              		.file 18 "DISPALY/inc/DispManger.h"
+ 241              		.file 19 "TOOL/inc/CrcUtil.h"
+ 242              		.file 20 "APP/inc/VolPro.h"
+ 243              		.file 21 "APP/inc/FreqPro.h"
+ 244              		.file 22 "APP/inc/ParasCheckPro.h"
+ 245              		.file 23 "APP/inc/TemputerPro.h"
+ 246              		.file 24 "APP/inc/KeyPro.h"
+ 247              		.file 25 "HARDWARE/inc/Keys.h"
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDeq3Nj.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 KeyPro.c
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDeq3Nj.s:16     .text.ResetKey:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDeq3Nj.s:24     .text.ResetKey:0000000000000000 ResetKey
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDeq3Nj.s:48     .text.ResetKey:000000000000000c $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDeq3Nj.s:53     .text.KeyPro:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDeq3Nj.s:60     .text.KeyPro:0000000000000000 KeyPro
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDeq3Nj.s:88     .text.KeyPro:0000000000000018 $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDeq3Nj.s:92     .text.KeyPro:000000000000001c $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDeq3Nj.s:209    .text.KeyPro:000000000000008c $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDeq3Nj.s:220    .bss.Key:0000000000000000 Key
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//ccDeq3Nj.s:216    .bss.Key:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+KeysInit
+Disp_KeyHandler

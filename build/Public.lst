@@ -1,0 +1,1084 @@
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"Public.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.Ex_NVIC_Config,"ax",%progbits
+  16              		.align	1
+  17              		.global	Ex_NVIC_Config
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	Ex_NVIC_Config:
+  25              	.LVL0:
+  26              	.LFB65:
+  27              		.file 1 "APP/Public.c"
+   1:APP/Public.c  **** #include "Public.h"
+   2:APP/Public.c  **** 
+   3:APP/Public.c  **** //外部中断配置函数
+   4:APP/Public.c  **** //只针对GPIOA~I;不包括PVD,RTC,USB_OTG,USB_HS,以太网唤醒等
+   5:APP/Public.c  **** //参数:
+   6:APP/Public.c  **** //GPIOx:0~8,代表GPIOA~I
+   7:APP/Public.c  **** //BITx:需要使能的位;
+   8:APP/Public.c  **** //TRIM:触发模式,1,下升沿;2,上降沿;3，任意电平触发
+   9:APP/Public.c  **** //该函数一次只能配置1个IO口,多个IO口,需多次调用
+  10:APP/Public.c  **** //该函数会自动开启对应中断,以及屏蔽线   	    
+  11:APP/Public.c  **** void Ex_NVIC_Config(u8 GPIOx,u8 BITx,u8 TRIM) 
+  12:APP/Public.c  **** { 
+  28              		.loc 1 12 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              		.loc 1 12 1 is_stmt 0 view .LVU1
+  34 0000 F0B4     		push	{r4, r5, r6, r7}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 16
+  37              		.cfi_offset 4, -16
+  38              		.cfi_offset 5, -12
+  39              		.cfi_offset 6, -8
+  40              		.cfi_offset 7, -4
+  13:APP/Public.c  **** 	u8 EXTOFFSET=(BITx%4)*4;  
+  41              		.loc 1 13 2 is_stmt 1 view .LVU2
+  42              		.loc 1 13 5 is_stmt 0 view .LVU3
+  43 0002 01F00304 		and	r4, r1, #3
+  44 0006 A400     		lsls	r4, r4, #2
+  45              	.LVL1:
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 2
+
+
+  14:APP/Public.c  **** 	RCC->APB2ENR|=1<<14;  						//使能SYSCFG时钟  
+  46              		.loc 1 14 2 is_stmt 1 view .LVU4
+  47              		.loc 1 14 14 is_stmt 0 view .LVU5
+  48 0008 164D     		ldr	r5, .L5
+  49 000a 2B6A     		ldr	r3, [r5, #32]
+  50 000c 43F48043 		orr	r3, r3, #16384
+  51 0010 2B62     		str	r3, [r5, #32]
+  15:APP/Public.c  **** 	SYSCFG->EXTICR[BITx/4]&=~(0x000F<<EXTOFFSET);//清除原来设置！！！
+  52              		.loc 1 15 2 is_stmt 1 view .LVU6
+  53              		.loc 1 15 24 is_stmt 0 view .LVU7
+  54 0012 8B08     		lsrs	r3, r1, #2
+  55 0014 A5F59C35 		sub	r5, r5, #79872
+  56 0018 0233     		adds	r3, r3, #2
+  57 001a 55F82360 		ldr	r6, [r5, r3, lsl #2]
+  58              		.loc 1 15 34 view .LVU8
+  59 001e 0F27     		movs	r7, #15
+  60 0020 A740     		lsls	r7, r7, r4
+  61              		.loc 1 15 24 view .LVU9
+  62 0022 26EA0706 		bic	r6, r6, r7
+  63 0026 45F82360 		str	r6, [r5, r3, lsl #2]
+  16:APP/Public.c  **** 	SYSCFG->EXTICR[BITx/4]|=GPIOx<<EXTOFFSET;	//EXTI.BITx映射到GPIOx.BITx 
+  64              		.loc 1 16 2 is_stmt 1 view .LVU10
+  65              		.loc 1 16 24 is_stmt 0 view .LVU11
+  66 002a 55F82360 		ldr	r6, [r5, r3, lsl #2]
+  67              		.loc 1 16 31 view .LVU12
+  68 002e A040     		lsls	r0, r0, r4
+  69              	.LVL2:
+  70              		.loc 1 16 24 view .LVU13
+  71 0030 3043     		orrs	r0, r0, r6
+  72 0032 45F82300 		str	r0, [r5, r3, lsl #2]
+  17:APP/Public.c  **** 	//自动设置
+  18:APP/Public.c  **** 	EXTI->IMR|=1<<BITx;					//开启line BITx上的中断(如果要禁止中断，则反操作即可)
+  73              		.loc 1 18 2 is_stmt 1 view .LVU14
+  74              		.loc 1 18 11 is_stmt 0 view .LVU15
+  75 0036 0C4C     		ldr	r4, .L5+4
+  76              	.LVL3:
+  77              		.loc 1 18 11 view .LVU16
+  78 0038 2068     		ldr	r0, [r4]
+  79              		.loc 1 18 14 view .LVU17
+  80 003a 0123     		movs	r3, #1
+  81 003c 03FA01F1 		lsl	r1, r3, r1
+  82              	.LVL4:
+  83              		.loc 1 18 11 view .LVU18
+  84 0040 0843     		orrs	r0, r0, r1
+  85 0042 2060     		str	r0, [r4]
+  19:APP/Public.c  **** 	if(TRIM&0x01)EXTI->FTSR|=1<<BITx;	//line BITx上事件下降沿触发
+  86              		.loc 1 19 2 is_stmt 1 view .LVU19
+  87              		.loc 1 19 4 is_stmt 0 view .LVU20
+  88 0044 12F0010F 		tst	r2, #1
+  89 0048 02D0     		beq	.L2
+  90              		.loc 1 19 15 is_stmt 1 discriminator 1 view .LVU21
+  91              		.loc 1 19 25 is_stmt 0 discriminator 1 view .LVU22
+  92 004a E368     		ldr	r3, [r4, #12]
+  93 004c 0B43     		orrs	r3, r3, r1
+  94 004e E360     		str	r3, [r4, #12]
+  95              	.L2:
+  20:APP/Public.c  **** 	if(TRIM&0x02)EXTI->RTSR|=1<<BITx;	//line BITx上事件上升降沿触发
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 3
+
+
+  96              		.loc 1 20 2 is_stmt 1 view .LVU23
+  97              		.loc 1 20 4 is_stmt 0 view .LVU24
+  98 0050 12F0020F 		tst	r2, #2
+  99 0054 03D0     		beq	.L1
+ 100              		.loc 1 20 15 is_stmt 1 discriminator 1 view .LVU25
+ 101              		.loc 1 20 25 is_stmt 0 discriminator 1 view .LVU26
+ 102 0056 044B     		ldr	r3, .L5+4
+ 103 0058 9A68     		ldr	r2, [r3, #8]
+ 104              	.LVL5:
+ 105              		.loc 1 20 25 discriminator 1 view .LVU27
+ 106 005a 1143     		orrs	r1, r1, r2
+ 107 005c 9960     		str	r1, [r3, #8]
+ 108              	.L1:
+  21:APP/Public.c  **** } 	
+ 109              		.loc 1 21 1 view .LVU28
+ 110 005e F0BC     		pop	{r4, r5, r6, r7}
+ 111              	.LCFI1:
+ 112              		.cfi_restore 7
+ 113              		.cfi_restore 6
+ 114              		.cfi_restore 5
+ 115              		.cfi_restore 4
+ 116              		.cfi_def_cfa_offset 0
+ 117 0060 7047     		bx	lr
+ 118              	.L6:
+ 119 0062 00BF     		.align	2
+ 120              	.L5:
+ 121 0064 00380240 		.word	1073887232
+ 122 0068 00040140 		.word	1073808384
+ 123              		.cfi_endproc
+ 124              	.LFE65:
+ 126              		.section	.text.GPIO_AF_Set,"ax",%progbits
+ 127              		.align	1
+ 128              		.global	GPIO_AF_Set
+ 129              		.syntax unified
+ 130              		.thumb
+ 131              		.thumb_func
+ 132              		.fpu softvfp
+ 134              	GPIO_AF_Set:
+ 135              	.LVL6:
+ 136              	.LFB66:
+  22:APP/Public.c  **** 
+  23:APP/Public.c  **** void GPIO_AF_Set(GPIO_TypeDef* GPIOx,u8 BITx,u8 AFx)
+  24:APP/Public.c  **** {  
+ 137              		.loc 1 24 1 is_stmt 1 view -0
+ 138              		.cfi_startproc
+ 139              		@ args = 0, pretend = 0, frame = 0
+ 140              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141              		@ link register save eliminated.
+ 142              		.loc 1 24 1 is_stmt 0 view .LVU30
+ 143 0000 30B4     		push	{r4, r5}
+ 144              	.LCFI2:
+ 145              		.cfi_def_cfa_offset 8
+ 146              		.cfi_offset 4, -8
+ 147              		.cfi_offset 5, -4
+  25:APP/Public.c  **** 	GPIOx->AFR[BITx>>3]&=~(0X0F<<((BITx&0X07)*4));
+ 148              		.loc 1 25 2 is_stmt 1 view .LVU31
+ 149              		.loc 1 25 21 is_stmt 0 view .LVU32
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 4
+
+
+ 150 0002 CB08     		lsrs	r3, r1, #3
+ 151 0004 0833     		adds	r3, r3, #8
+ 152 0006 50F82340 		ldr	r4, [r0, r3, lsl #2]
+ 153              		.loc 1 25 37 view .LVU33
+ 154 000a 01F00701 		and	r1, r1, #7
+ 155              	.LVL7:
+ 156              		.loc 1 25 43 view .LVU34
+ 157 000e 8900     		lsls	r1, r1, #2
+ 158              		.loc 1 25 29 view .LVU35
+ 159 0010 0F25     		movs	r5, #15
+ 160 0012 8D40     		lsls	r5, r5, r1
+ 161              		.loc 1 25 21 view .LVU36
+ 162 0014 24EA0504 		bic	r4, r4, r5
+ 163 0018 40F82340 		str	r4, [r0, r3, lsl #2]
+  26:APP/Public.c  **** 	GPIOx->AFR[BITx>>3]|=(u32)AFx<<((BITx&0X07)*4);
+ 164              		.loc 1 26 2 is_stmt 1 view .LVU37
+ 165              		.loc 1 26 21 is_stmt 0 view .LVU38
+ 166 001c 50F82340 		ldr	r4, [r0, r3, lsl #2]
+ 167              		.loc 1 26 31 view .LVU39
+ 168 0020 8A40     		lsls	r2, r2, r1
+ 169              	.LVL8:
+ 170              		.loc 1 26 21 view .LVU40
+ 171 0022 2243     		orrs	r2, r2, r4
+ 172 0024 40F82320 		str	r2, [r0, r3, lsl #2]
+  27:APP/Public.c  **** }   
+ 173              		.loc 1 27 1 view .LVU41
+ 174 0028 30BC     		pop	{r4, r5}
+ 175              	.LCFI3:
+ 176              		.cfi_restore 5
+ 177              		.cfi_restore 4
+ 178              		.cfi_def_cfa_offset 0
+ 179 002a 7047     		bx	lr
+ 180              		.cfi_endproc
+ 181              	.LFE66:
+ 183              		.section	.text.GPIO_Set,"ax",%progbits
+ 184              		.align	1
+ 185              		.global	GPIO_Set
+ 186              		.syntax unified
+ 187              		.thumb
+ 188              		.thumb_func
+ 189              		.fpu softvfp
+ 191              	GPIO_Set:
+ 192              	.LVL9:
+ 193              	.LFB67:
+  28:APP/Public.c  **** 
+  29:APP/Public.c  **** //GPIO通用设置 
+  30:APP/Public.c  **** //GPIOx:GPIOA~GPIOI.
+  31:APP/Public.c  **** //BITx:0X0000~0XFFFF,位设置,每个位代表一个IO,第0位代表Px0,第1位代表Px1,依次类推.比如0X0101,代表同时
+  32:APP/Public.c  **** //MODE:0~3;模式选择,0,输入(系统复位默认状态);1,普通输出;2,复用功能;3,模拟输入.
+  33:APP/Public.c  **** //OTYPE:0/1;输出类型选择,0,推挽输出;1,开漏输出.
+  34:APP/Public.c  **** //OSPEED:0~3;输出速度设置,0,2Mhz;1,25Mhz;2,50Mhz;3,100Mh. 
+  35:APP/Public.c  **** //PUPD:0~3:上下拉设置,0,不带上下拉;1,上拉;2,下拉;3,保留.
+  36:APP/Public.c  **** //注意:在输入模式(普通输入/模拟输入)下,OTYPE和OSPEED参数无效!!
+  37:APP/Public.c  **** void GPIO_Set(GPIO_TypeDef* GPIOx,u32 BITx,u32 MODE,u32 OTYPE,u32 OSPEED,u32 PUPD)
+  38:APP/Public.c  **** {  
+ 194              		.loc 1 38 1 is_stmt 1 view -0
+ 195              		.cfi_startproc
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 5
+
+
+ 196              		@ args = 8, pretend = 0, frame = 0
+ 197              		@ frame_needed = 0, uses_anonymous_args = 0
+ 198              		.loc 1 38 1 is_stmt 0 view .LVU43
+ 199 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 200              	.LCFI4:
+ 201              		.cfi_def_cfa_offset 28
+ 202              		.cfi_offset 4, -28
+ 203              		.cfi_offset 5, -24
+ 204              		.cfi_offset 6, -20
+ 205              		.cfi_offset 7, -16
+ 206              		.cfi_offset 8, -12
+ 207              		.cfi_offset 9, -8
+ 208              		.cfi_offset 14, -4
+ 209 0004 DDF81CE0 		ldr	lr, [sp, #28]
+ 210 0008 DDF820C0 		ldr	ip, [sp, #32]
+  39:APP/Public.c  **** 	u32 pinpos=0,pos=0,curpin=0;
+ 211              		.loc 1 39 2 is_stmt 1 view .LVU44
+ 212              	.LVL10:
+  40:APP/Public.c  **** 	for(pinpos=0;pinpos<16;pinpos++)
+ 213              		.loc 1 40 2 view .LVU45
+ 214              		.loc 1 40 12 is_stmt 0 view .LVU46
+ 215 000c 0024     		movs	r4, #0
+ 216              		.loc 1 40 2 view .LVU47
+ 217 000e 21E0     		b	.L10
+ 218              	.LVL11:
+ 219              	.L16:
+  41:APP/Public.c  **** 	{
+  42:APP/Public.c  **** 		pos=1<<pinpos;	//一个个位检查 
+  43:APP/Public.c  **** 		curpin=BITx&pos;//检查引脚是否要设置
+  44:APP/Public.c  **** 		if(curpin==pos)	//需要设置
+  45:APP/Public.c  **** 		{
+  46:APP/Public.c  **** 			GPIOx->MODER&=~(3<<(pinpos*2));	//先清除原来的设置
+  47:APP/Public.c  **** 			GPIOx->MODER|=MODE<<(pinpos*2);	//设置新的模式 
+  48:APP/Public.c  **** 			if((MODE==0X01)||(MODE==0X02))	//如果是输出模式/复用功能模式
+  49:APP/Public.c  **** 			{  
+  50:APP/Public.c  **** 				GPIOx->OSPEEDR&=~(3<<(pinpos*2));	//清除原来的设置
+ 220              		.loc 1 50 5 is_stmt 1 view .LVU48
+ 221              		.loc 1 50 19 is_stmt 0 view .LVU49
+ 222 0010 D0F80880 		ldr	r8, [r0, #8]
+ 223 0014 06EA0808 		and	r8, r6, r8
+ 224 0018 C0F80880 		str	r8, [r0, #8]
+  51:APP/Public.c  **** 				GPIOx->OSPEEDR|=(OSPEED<<(pinpos*2));//设置新的速度值  
+ 225              		.loc 1 51 5 is_stmt 1 view .LVU50
+ 226              		.loc 1 51 19 is_stmt 0 view .LVU51
+ 227 001c D0F80880 		ldr	r8, [r0, #8]
+ 228              		.loc 1 51 28 view .LVU52
+ 229 0020 0EFA07F9 		lsl	r9, lr, r7
+ 230              		.loc 1 51 19 view .LVU53
+ 231 0024 48EA0908 		orr	r8, r8, r9
+ 232 0028 C0F80880 		str	r8, [r0, #8]
+  52:APP/Public.c  **** 				GPIOx->OTYPER&=~(1<<pinpos) ;		//清除原来的设置
+ 233              		.loc 1 52 5 is_stmt 1 view .LVU54
+ 234              		.loc 1 52 18 is_stmt 0 view .LVU55
+ 235 002c D0F80480 		ldr	r8, [r0, #4]
+ 236 0030 28EA0505 		bic	r5, r8, r5
+ 237              	.LVL12:
+ 238              		.loc 1 52 18 view .LVU56
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 6
+
+
+ 239 0034 4560     		str	r5, [r0, #4]
+  53:APP/Public.c  **** 				GPIOx->OTYPER|=OTYPE<<pinpos;		//设置新的输出模式
+ 240              		.loc 1 53 5 is_stmt 1 view .LVU57
+ 241              		.loc 1 53 18 is_stmt 0 view .LVU58
+ 242 0036 4568     		ldr	r5, [r0, #4]
+ 243              		.loc 1 53 25 view .LVU59
+ 244 0038 03FA04F8 		lsl	r8, r3, r4
+ 245              		.loc 1 53 18 view .LVU60
+ 246 003c 45EA0805 		orr	r5, r5, r8
+ 247 0040 4560     		str	r5, [r0, #4]
+ 248              	.L12:
+  54:APP/Public.c  **** 			}  
+  55:APP/Public.c  **** 			GPIOx->PUPDR&=~(3<<(pinpos*2));	//先清除原来的设置
+ 249              		.loc 1 55 4 is_stmt 1 view .LVU61
+ 250              		.loc 1 55 16 is_stmt 0 view .LVU62
+ 251 0042 C568     		ldr	r5, [r0, #12]
+ 252 0044 2E40     		ands	r6, r6, r5
+ 253 0046 C660     		str	r6, [r0, #12]
+  56:APP/Public.c  **** 			GPIOx->PUPDR|=PUPD<<(pinpos*2);	//设置新的上下拉
+ 254              		.loc 1 56 4 is_stmt 1 view .LVU63
+ 255              		.loc 1 56 16 is_stmt 0 view .LVU64
+ 256 0048 C668     		ldr	r6, [r0, #12]
+ 257              		.loc 1 56 22 view .LVU65
+ 258 004a 0CFA07F5 		lsl	r5, ip, r7
+ 259              		.loc 1 56 16 view .LVU66
+ 260 004e 3543     		orrs	r5, r5, r6
+ 261 0050 C560     		str	r5, [r0, #12]
+ 262              	.L11:
+  40:APP/Public.c  **** 	{
+ 263              		.loc 1 40 31 discriminator 2 view .LVU67
+ 264 0052 0134     		adds	r4, r4, #1
+ 265              	.LVL13:
+ 266              	.L10:
+  40:APP/Public.c  **** 	{
+ 267              		.loc 1 40 2 discriminator 1 view .LVU68
+ 268 0054 0F2C     		cmp	r4, #15
+ 269 0056 1CD8     		bhi	.L15
+  42:APP/Public.c  **** 		curpin=BITx&pos;//检查引脚是否要设置
+ 270              		.loc 1 42 3 is_stmt 1 view .LVU69
+  42:APP/Public.c  **** 		curpin=BITx&pos;//检查引脚是否要设置
+ 271              		.loc 1 42 8 is_stmt 0 view .LVU70
+ 272 0058 0125     		movs	r5, #1
+ 273 005a A540     		lsls	r5, r5, r4
+ 274              	.LVL14:
+  43:APP/Public.c  **** 		if(curpin==pos)	//需要设置
+ 275              		.loc 1 43 3 is_stmt 1 view .LVU71
+  44:APP/Public.c  **** 		{
+ 276              		.loc 1 44 3 view .LVU72
+  44:APP/Public.c  **** 		{
+ 277              		.loc 1 44 5 is_stmt 0 view .LVU73
+ 278 005c 35EA0106 		bics	r6, r5, r1
+ 279 0060 F7D1     		bne	.L11
+  46:APP/Public.c  **** 			GPIOx->MODER|=MODE<<(pinpos*2);	//设置新的模式 
+ 280              		.loc 1 46 4 is_stmt 1 view .LVU74
+  46:APP/Public.c  **** 			GPIOx->MODER|=MODE<<(pinpos*2);	//设置新的模式 
+ 281              		.loc 1 46 16 is_stmt 0 view .LVU75
+ 282 0062 D0F80080 		ldr	r8, [r0]
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 7
+
+
+  46:APP/Public.c  **** 			GPIOx->MODER|=MODE<<(pinpos*2);	//设置新的模式 
+ 283              		.loc 1 46 30 view .LVU76
+ 284 0066 6700     		lsls	r7, r4, #1
+  46:APP/Public.c  **** 			GPIOx->MODER|=MODE<<(pinpos*2);	//设置新的模式 
+ 285              		.loc 1 46 21 view .LVU77
+ 286 0068 0326     		movs	r6, #3
+ 287 006a BE40     		lsls	r6, r6, r7
+  46:APP/Public.c  **** 			GPIOx->MODER|=MODE<<(pinpos*2);	//设置新的模式 
+ 288              		.loc 1 46 18 view .LVU78
+ 289 006c F643     		mvns	r6, r6
+  46:APP/Public.c  **** 			GPIOx->MODER|=MODE<<(pinpos*2);	//设置新的模式 
+ 290              		.loc 1 46 16 view .LVU79
+ 291 006e 08EA0608 		and	r8, r8, r6
+ 292 0072 C0F80080 		str	r8, [r0]
+  47:APP/Public.c  **** 			if((MODE==0X01)||(MODE==0X02))	//如果是输出模式/复用功能模式
+ 293              		.loc 1 47 4 is_stmt 1 view .LVU80
+  47:APP/Public.c  **** 			if((MODE==0X01)||(MODE==0X02))	//如果是输出模式/复用功能模式
+ 294              		.loc 1 47 16 is_stmt 0 view .LVU81
+ 295 0076 D0F80080 		ldr	r8, [r0]
+  47:APP/Public.c  **** 			if((MODE==0X01)||(MODE==0X02))	//如果是输出模式/复用功能模式
+ 296              		.loc 1 47 22 view .LVU82
+ 297 007a 02FA07F9 		lsl	r9, r2, r7
+  47:APP/Public.c  **** 			if((MODE==0X01)||(MODE==0X02))	//如果是输出模式/复用功能模式
+ 298              		.loc 1 47 16 view .LVU83
+ 299 007e 48EA0908 		orr	r8, r8, r9
+ 300 0082 C0F80080 		str	r8, [r0]
+  48:APP/Public.c  **** 			{  
+ 301              		.loc 1 48 4 is_stmt 1 view .LVU84
+  48:APP/Public.c  **** 			{  
+ 302              		.loc 1 48 19 is_stmt 0 view .LVU85
+ 303 0086 02F1FF38 		add	r8, r2, #-1
+  48:APP/Public.c  **** 			{  
+ 304              		.loc 1 48 6 view .LVU86
+ 305 008a B8F1010F 		cmp	r8, #1
+ 306 008e D8D8     		bhi	.L12
+ 307 0090 BEE7     		b	.L16
+ 308              	.LVL15:
+ 309              	.L15:
+  57:APP/Public.c  **** 		}
+  58:APP/Public.c  **** 	}
+  59:APP/Public.c  **** } 
+ 310              		.loc 1 59 1 view .LVU87
+ 311 0092 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 312              		.loc 1 59 1 view .LVU88
+ 313              		.cfi_endproc
+ 314              	.LFE67:
+ 316              		.section	.text.IoInit,"ax",%progbits
+ 317              		.align	1
+ 318              		.global	IoInit
+ 319              		.syntax unified
+ 320              		.thumb
+ 321              		.thumb_func
+ 322              		.fpu softvfp
+ 324              	IoInit:
+ 325              	.LVL16:
+ 326              	.LFB68:
+  60:APP/Public.c  **** 
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 8
+
+
+  61:APP/Public.c  **** void IoInit(GPIO_TypeDef* Portx,u32 Pinx,_IOMode mode,_IOPuPd pupd)
+  62:APP/Public.c  **** {
+ 327              		.loc 1 62 1 is_stmt 1 view -0
+ 328              		.cfi_startproc
+ 329              		@ args = 0, pretend = 0, frame = 0
+ 330              		@ frame_needed = 0, uses_anonymous_args = 0
+ 331              		@ link register save eliminated.
+ 332              		.loc 1 62 1 is_stmt 0 view .LVU90
+ 333 0000 F0B4     		push	{r4, r5, r6, r7}
+ 334              	.LCFI5:
+ 335              		.cfi_def_cfa_offset 16
+ 336              		.cfi_offset 4, -16
+ 337              		.cfi_offset 5, -12
+ 338              		.cfi_offset 6, -8
+ 339              		.cfi_offset 7, -4
+  63:APP/Public.c  **** 	u8 Pin = 0;
+ 340              		.loc 1 63 2 is_stmt 1 view .LVU91
+ 341              	.LVL17:
+  64:APP/Public.c  **** 	Pinx >>= 1;
+ 342              		.loc 1 64 2 view .LVU92
+ 343              		.loc 1 64 7 is_stmt 0 view .LVU93
+ 344 0002 4908     		lsrs	r1, r1, #1
+ 345              	.LVL18:
+  65:APP/Public.c  **** 	while(Pinx > 0)
+ 346              		.loc 1 65 2 is_stmt 1 view .LVU94
+  63:APP/Public.c  **** 	u8 Pin = 0;
+ 347              		.loc 1 63 5 is_stmt 0 view .LVU95
+ 348 0004 0024     		movs	r4, #0
+ 349              	.LVL19:
+ 350              	.L18:
+ 351              		.loc 1 65 7 view .LVU96
+ 352 0006 19B1     		cbz	r1, .L30
+  66:APP/Public.c  **** 	{
+  67:APP/Public.c  **** 		Pin++;
+ 353              		.loc 1 67 3 is_stmt 1 view .LVU97
+ 354              		.loc 1 67 6 is_stmt 0 view .LVU98
+ 355 0008 0134     		adds	r4, r4, #1
+ 356              	.LVL20:
+ 357              		.loc 1 67 6 view .LVU99
+ 358 000a E4B2     		uxtb	r4, r4
+ 359              	.LVL21:
+  68:APP/Public.c  **** 		Pinx >>= 1;
+ 360              		.loc 1 68 3 is_stmt 1 view .LVU100
+ 361              		.loc 1 68 8 is_stmt 0 view .LVU101
+ 362 000c 4908     		lsrs	r1, r1, #1
+ 363              	.LVL22:
+ 364              		.loc 1 68 8 view .LVU102
+ 365 000e FAE7     		b	.L18
+ 366              	.L30:
+  69:APP/Public.c  **** 	}
+  70:APP/Public.c  **** 	Portx->MODER &= ~(0x03 << (Pin << 1));
+ 367              		.loc 1 70 2 is_stmt 1 view .LVU103
+ 368              		.loc 1 70 15 is_stmt 0 view .LVU104
+ 369 0010 0568     		ldr	r5, [r0]
+ 370              		.loc 1 70 33 view .LVU105
+ 371 0012 6600     		lsls	r6, r4, #1
+ 372              		.loc 1 70 25 view .LVU106
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 9
+
+
+ 373 0014 0321     		movs	r1, #3
+ 374              	.LVL23:
+ 375              		.loc 1 70 25 view .LVU107
+ 376 0016 B140     		lsls	r1, r1, r6
+ 377              		.loc 1 70 18 view .LVU108
+ 378 0018 C943     		mvns	r1, r1
+ 379              		.loc 1 70 15 view .LVU109
+ 380 001a 0D40     		ands	r5, r5, r1
+ 381 001c 0560     		str	r5, [r0]
+  71:APP/Public.c  **** 	Portx->OTYPER &= ~(0x01 << Pin);
+ 382              		.loc 1 71 2 is_stmt 1 view .LVU110
+ 383              		.loc 1 71 16 is_stmt 0 view .LVU111
+ 384 001e 4568     		ldr	r5, [r0, #4]
+ 385              		.loc 1 71 26 view .LVU112
+ 386 0020 0127     		movs	r7, #1
+ 387 0022 07FA04F4 		lsl	r4, r7, r4
+ 388              	.LVL24:
+ 389              		.loc 1 71 19 view .LVU113
+ 390 0026 E743     		mvns	r7, r4
+ 391              		.loc 1 71 16 view .LVU114
+ 392 0028 3D40     		ands	r5, r5, r7
+ 393 002a 4560     		str	r5, [r0, #4]
+  72:APP/Public.c  **** 	Portx->PUPDR &= ~(0x03 << (Pin << 1));
+ 394              		.loc 1 72 2 is_stmt 1 view .LVU115
+ 395              		.loc 1 72 15 is_stmt 0 view .LVU116
+ 396 002c C568     		ldr	r5, [r0, #12]
+ 397 002e 0D40     		ands	r5, r5, r1
+ 398 0030 C560     		str	r5, [r0, #12]
+  73:APP/Public.c  **** 	Portx->OSPEEDR &= ~(3<<(Pin<<1));
+ 399              		.loc 1 73 2 is_stmt 1 view .LVU117
+ 400              		.loc 1 73 17 is_stmt 0 view .LVU118
+ 401 0032 8568     		ldr	r5, [r0, #8]
+ 402 0034 0D40     		ands	r5, r5, r1
+ 403 0036 8560     		str	r5, [r0, #8]
+  74:APP/Public.c  **** 	switch(pupd)
+ 404              		.loc 1 74 2 is_stmt 1 view .LVU119
+ 405 0038 012B     		cmp	r3, #1
+ 406 003a 0FD0     		beq	.L20
+ 407 003c 5DB2     		sxtb	r5, r3
+ 408 003e 4DB1     		cbz	r5, .L21
+ 409 0040 022B     		cmp	r3, #2
+ 410 0042 11D0     		beq	.L22
+ 411              	.L23:
+  75:APP/Public.c  **** 	{
+  76:APP/Public.c  **** 		case NOPU://不上拉不下拉
+  77:APP/Public.c  **** 			Portx->PUPDR &= ~(0x03 << (Pin << 1));
+  78:APP/Public.c  **** 			break;
+  79:APP/Public.c  **** 		
+  80:APP/Public.c  **** 		case IOPU://上拉
+  81:APP/Public.c  **** 			Portx->PUPDR |= (0x01 << (Pin << 1));
+  82:APP/Public.c  **** 			break;
+  83:APP/Public.c  **** 		
+  84:APP/Public.c  **** 		case IOPD://下拉
+  85:APP/Public.c  **** 			Portx->PUPDR |= (0x02 << (Pin << 1));
+  86:APP/Public.c  **** 			break;
+  87:APP/Public.c  **** 	}
+  88:APP/Public.c  **** 	
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 10
+
+
+  89:APP/Public.c  **** 	switch(mode)
+ 412              		.loc 1 89 2 view .LVU120
+ 413 0044 012A     		cmp	r2, #1
+ 414 0046 15D0     		beq	.L24
+ 415 0048 51B2     		sxtb	r1, r2
+ 416 004a E9B1     		cbz	r1, .L25
+ 417 004c 022A     		cmp	r2, #2
+ 418 004e 27D0     		beq	.L26
+ 419              	.LVL25:
+ 420              	.L17:
+  90:APP/Public.c  **** 	{
+  91:APP/Public.c  **** 	case IOOUT:
+  92:APP/Public.c  **** 		Portx->MODER |= (0x01 << (Pin << 1));
+  93:APP/Public.c  **** 		Portx->OSPEEDR |= (0x01 << (Pin << 1));
+  94:APP/Public.c  **** 	break;
+  95:APP/Public.c  **** 	
+  96:APP/Public.c  **** 	case IOIN:
+  97:APP/Public.c  **** 		if(pupd == IOPU)
+  98:APP/Public.c  **** 			Portx->ODR |= (0x01<<Pin);
+  99:APP/Public.c  **** 		else if(pupd == IOPD)
+ 100:APP/Public.c  **** 			Portx->ODR &= ~(0x01<<Pin);
+ 101:APP/Public.c  **** 	break;
+ 102:APP/Public.c  **** 	case IOFUNC:
+ 103:APP/Public.c  **** 		Portx->MODER |= (0x02 << (Pin << 1));
+ 104:APP/Public.c  **** 		break;
+ 105:APP/Public.c  **** 	}
+ 106:APP/Public.c  **** }
+ 421              		.loc 1 106 1 is_stmt 0 view .LVU121
+ 422 0050 F0BC     		pop	{r4, r5, r6, r7}
+ 423              	.LCFI6:
+ 424              		.cfi_remember_state
+ 425              		.cfi_restore 7
+ 426              		.cfi_restore 6
+ 427              		.cfi_restore 5
+ 428              		.cfi_restore 4
+ 429              		.cfi_def_cfa_offset 0
+ 430 0052 7047     		bx	lr
+ 431              	.LVL26:
+ 432              	.L21:
+ 433              	.LCFI7:
+ 434              		.cfi_restore_state
+  77:APP/Public.c  **** 			break;
+ 435              		.loc 1 77 4 is_stmt 1 view .LVU122
+  77:APP/Public.c  **** 			break;
+ 436              		.loc 1 77 17 is_stmt 0 view .LVU123
+ 437 0054 C568     		ldr	r5, [r0, #12]
+ 438 0056 2940     		ands	r1, r1, r5
+ 439 0058 C160     		str	r1, [r0, #12]
+  78:APP/Public.c  **** 		
+ 440              		.loc 1 78 4 is_stmt 1 view .LVU124
+ 441 005a F3E7     		b	.L23
+ 442              	.L20:
+  81:APP/Public.c  **** 			break;
+ 443              		.loc 1 81 4 view .LVU125
+  81:APP/Public.c  **** 			break;
+ 444              		.loc 1 81 17 is_stmt 0 view .LVU126
+ 445 005c C168     		ldr	r1, [r0, #12]
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 11
+
+
+  81:APP/Public.c  **** 			break;
+ 446              		.loc 1 81 26 view .LVU127
+ 447 005e 0125     		movs	r5, #1
+ 448 0060 B540     		lsls	r5, r5, r6
+  81:APP/Public.c  **** 			break;
+ 449              		.loc 1 81 17 view .LVU128
+ 450 0062 2943     		orrs	r1, r1, r5
+ 451 0064 C160     		str	r1, [r0, #12]
+  82:APP/Public.c  **** 		
+ 452              		.loc 1 82 4 is_stmt 1 view .LVU129
+ 453 0066 EDE7     		b	.L23
+ 454              	.L22:
+  85:APP/Public.c  **** 			break;
+ 455              		.loc 1 85 4 view .LVU130
+  85:APP/Public.c  **** 			break;
+ 456              		.loc 1 85 17 is_stmt 0 view .LVU131
+ 457 0068 C168     		ldr	r1, [r0, #12]
+  85:APP/Public.c  **** 			break;
+ 458              		.loc 1 85 26 view .LVU132
+ 459 006a 0225     		movs	r5, #2
+ 460 006c B540     		lsls	r5, r5, r6
+  85:APP/Public.c  **** 			break;
+ 461              		.loc 1 85 17 view .LVU133
+ 462 006e 2943     		orrs	r1, r1, r5
+ 463 0070 C160     		str	r1, [r0, #12]
+  86:APP/Public.c  **** 	}
+ 464              		.loc 1 86 4 is_stmt 1 view .LVU134
+ 465 0072 E7E7     		b	.L23
+ 466              	.L24:
+  92:APP/Public.c  **** 		Portx->OSPEEDR |= (0x01 << (Pin << 1));
+ 467              		.loc 1 92 3 view .LVU135
+  92:APP/Public.c  **** 		Portx->OSPEEDR |= (0x01 << (Pin << 1));
+ 468              		.loc 1 92 16 is_stmt 0 view .LVU136
+ 469 0074 0268     		ldr	r2, [r0]
+ 470              	.LVL27:
+  92:APP/Public.c  **** 		Portx->OSPEEDR |= (0x01 << (Pin << 1));
+ 471              		.loc 1 92 25 view .LVU137
+ 472 0076 0123     		movs	r3, #1
+ 473              	.LVL28:
+  92:APP/Public.c  **** 		Portx->OSPEEDR |= (0x01 << (Pin << 1));
+ 474              		.loc 1 92 25 view .LVU138
+ 475 0078 03FA06F6 		lsl	r6, r3, r6
+  92:APP/Public.c  **** 		Portx->OSPEEDR |= (0x01 << (Pin << 1));
+ 476              		.loc 1 92 16 view .LVU139
+ 477 007c 3243     		orrs	r2, r2, r6
+ 478 007e 0260     		str	r2, [r0]
+  93:APP/Public.c  **** 	break;
+ 479              		.loc 1 93 3 is_stmt 1 view .LVU140
+  93:APP/Public.c  **** 	break;
+ 480              		.loc 1 93 18 is_stmt 0 view .LVU141
+ 481 0080 8368     		ldr	r3, [r0, #8]
+ 482 0082 1E43     		orrs	r6, r6, r3
+ 483 0084 8660     		str	r6, [r0, #8]
+  94:APP/Public.c  **** 	
+ 484              		.loc 1 94 2 is_stmt 1 view .LVU142
+ 485 0086 E3E7     		b	.L17
+ 486              	.LVL29:
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 12
+
+
+ 487              	.L25:
+  97:APP/Public.c  **** 			Portx->ODR |= (0x01<<Pin);
+ 488              		.loc 1 97 3 view .LVU143
+  97:APP/Public.c  **** 			Portx->ODR |= (0x01<<Pin);
+ 489              		.loc 1 97 5 is_stmt 0 view .LVU144
+ 490 0088 012B     		cmp	r3, #1
+ 491 008a 05D0     		beq	.L31
+  99:APP/Public.c  **** 			Portx->ODR &= ~(0x01<<Pin);
+ 492              		.loc 1 99 8 is_stmt 1 view .LVU145
+  99:APP/Public.c  **** 			Portx->ODR &= ~(0x01<<Pin);
+ 493              		.loc 1 99 10 is_stmt 0 view .LVU146
+ 494 008c 022B     		cmp	r3, #2
+ 495 008e DFD1     		bne	.L17
+ 100:APP/Public.c  **** 	break;
+ 496              		.loc 1 100 4 is_stmt 1 view .LVU147
+ 100:APP/Public.c  **** 	break;
+ 497              		.loc 1 100 15 is_stmt 0 view .LVU148
+ 498 0090 4369     		ldr	r3, [r0, #20]
+ 499              	.LVL30:
+ 100:APP/Public.c  **** 	break;
+ 500              		.loc 1 100 15 view .LVU149
+ 501 0092 1F40     		ands	r7, r7, r3
+ 502 0094 4761     		str	r7, [r0, #20]
+ 503 0096 DBE7     		b	.L17
+ 504              	.LVL31:
+ 505              	.L31:
+  98:APP/Public.c  **** 		else if(pupd == IOPD)
+ 506              		.loc 1 98 4 is_stmt 1 view .LVU150
+  98:APP/Public.c  **** 		else if(pupd == IOPD)
+ 507              		.loc 1 98 15 is_stmt 0 view .LVU151
+ 508 0098 4369     		ldr	r3, [r0, #20]
+ 509              	.LVL32:
+  98:APP/Public.c  **** 		else if(pupd == IOPD)
+ 510              		.loc 1 98 15 view .LVU152
+ 511 009a 1C43     		orrs	r4, r4, r3
+ 512 009c 4461     		str	r4, [r0, #20]
+ 513 009e D7E7     		b	.L17
+ 514              	.LVL33:
+ 515              	.L26:
+ 103:APP/Public.c  **** 		break;
+ 516              		.loc 1 103 3 is_stmt 1 view .LVU153
+ 103:APP/Public.c  **** 		break;
+ 517              		.loc 1 103 16 is_stmt 0 view .LVU154
+ 518 00a0 0368     		ldr	r3, [r0]
+ 519              	.LVL34:
+ 103:APP/Public.c  **** 		break;
+ 520              		.loc 1 103 25 view .LVU155
+ 521 00a2 0222     		movs	r2, #2
+ 522              	.LVL35:
+ 103:APP/Public.c  **** 		break;
+ 523              		.loc 1 103 25 view .LVU156
+ 524 00a4 02FA06F6 		lsl	r6, r2, r6
+ 103:APP/Public.c  **** 		break;
+ 525              		.loc 1 103 16 view .LVU157
+ 526 00a8 1E43     		orrs	r6, r6, r3
+ 527 00aa 0660     		str	r6, [r0]
+ 104:APP/Public.c  **** 	}
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 13
+
+
+ 528              		.loc 1 104 3 is_stmt 1 view .LVU158
+ 529              		.loc 1 106 1 is_stmt 0 view .LVU159
+ 530 00ac D0E7     		b	.L17
+ 531              		.cfi_endproc
+ 532              	.LFE68:
+ 534              		.section	.text.Pin2Num,"ax",%progbits
+ 535              		.align	1
+ 536              		.global	Pin2Num
+ 537              		.syntax unified
+ 538              		.thumb
+ 539              		.thumb_func
+ 540              		.fpu softvfp
+ 542              	Pin2Num:
+ 543              	.LVL36:
+ 544              	.LFB69:
+ 107:APP/Public.c  **** 
+ 108:APP/Public.c  **** u8 Pin2Num(u32 Pinx)
+ 109:APP/Public.c  **** {
+ 545              		.loc 1 109 1 is_stmt 1 view -0
+ 546              		.cfi_startproc
+ 547              		@ args = 0, pretend = 0, frame = 0
+ 548              		@ frame_needed = 0, uses_anonymous_args = 0
+ 549              		@ link register save eliminated.
+ 110:APP/Public.c  **** 	u8 i=0;
+ 550              		.loc 1 110 2 view .LVU161
+ 111:APP/Public.c  **** 	Pinx>>=1;
+ 551              		.loc 1 111 2 view .LVU162
+ 552              		.loc 1 111 6 is_stmt 0 view .LVU163
+ 553 0000 4308     		lsrs	r3, r0, #1
+ 554              	.LVL37:
+ 112:APP/Public.c  **** 	while(Pinx>0)
+ 555              		.loc 1 112 2 is_stmt 1 view .LVU164
+ 110:APP/Public.c  **** 	u8 i=0;
+ 556              		.loc 1 110 5 is_stmt 0 view .LVU165
+ 557 0002 0020     		movs	r0, #0
+ 558              	.LVL38:
+ 559              	.L33:
+ 560              		.loc 1 112 7 view .LVU166
+ 561 0004 1BB1     		cbz	r3, .L35
+ 113:APP/Public.c  **** 	{
+ 114:APP/Public.c  **** 		i++;
+ 562              		.loc 1 114 3 is_stmt 1 view .LVU167
+ 563              		.loc 1 114 4 is_stmt 0 view .LVU168
+ 564 0006 0130     		adds	r0, r0, #1
+ 565              	.LVL39:
+ 566              		.loc 1 114 4 view .LVU169
+ 567 0008 C0B2     		uxtb	r0, r0
+ 568              	.LVL40:
+ 115:APP/Public.c  **** 		Pinx >>= 1;
+ 569              		.loc 1 115 3 is_stmt 1 view .LVU170
+ 570              		.loc 1 115 8 is_stmt 0 view .LVU171
+ 571 000a 5B08     		lsrs	r3, r3, #1
+ 572              	.LVL41:
+ 573              		.loc 1 115 8 view .LVU172
+ 574 000c FAE7     		b	.L33
+ 575              	.L35:
+ 116:APP/Public.c  **** 	}
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 14
+
+
+ 117:APP/Public.c  **** 	return i;
+ 118:APP/Public.c  **** }
+ 576              		.loc 1 118 1 view .LVU173
+ 577 000e 7047     		bx	lr
+ 578              		.cfi_endproc
+ 579              	.LFE69:
+ 581              		.section	.text.mySort,"ax",%progbits
+ 582              		.align	1
+ 583              		.global	mySort
+ 584              		.syntax unified
+ 585              		.thumb
+ 586              		.thumb_func
+ 587              		.fpu softvfp
+ 589              	mySort:
+ 590              	.LVL42:
+ 591              	.LFB70:
+ 119:APP/Public.c  **** 
+ 120:APP/Public.c  **** //冒泡排序
+ 121:APP/Public.c  **** void mySort(u32 *buf,u16 len)
+ 122:APP/Public.c  **** {
+ 592              		.loc 1 122 1 is_stmt 1 view -0
+ 593              		.cfi_startproc
+ 594              		@ args = 0, pretend = 0, frame = 0
+ 595              		@ frame_needed = 0, uses_anonymous_args = 0
+ 596              		@ link register save eliminated.
+ 597              		.loc 1 122 1 is_stmt 0 view .LVU175
+ 598 0000 70B4     		push	{r4, r5, r6}
+ 599              	.LCFI8:
+ 600              		.cfi_def_cfa_offset 12
+ 601              		.cfi_offset 4, -12
+ 602              		.cfi_offset 5, -8
+ 603              		.cfi_offset 6, -4
+ 123:APP/Public.c  **** 	u16 i,k;
+ 604              		.loc 1 123 2 is_stmt 1 view .LVU176
+ 124:APP/Public.c  **** 	u32 temp;
+ 605              		.loc 1 124 2 view .LVU177
+ 125:APP/Public.c  **** 	for(i=0;i<len-1;i++)
+ 606              		.loc 1 125 2 view .LVU178
+ 607              	.LVL43:
+ 608              		.loc 1 125 7 is_stmt 0 view .LVU179
+ 609 0002 0025     		movs	r5, #0
+ 610              		.loc 1 125 2 view .LVU180
+ 611 0004 0FE0     		b	.L37
+ 612              	.LVL44:
+ 613              	.L39:
+ 126:APP/Public.c  **** 	{
+ 127:APP/Public.c  **** 		for(k = i+1;k < len;k ++)
+ 614              		.loc 1 127 25 discriminator 2 view .LVU181
+ 615 0006 0133     		adds	r3, r3, #1
+ 616              	.LVL45:
+ 617              		.loc 1 127 25 discriminator 2 view .LVU182
+ 618 0008 9BB2     		uxth	r3, r3
+ 619              	.LVL46:
+ 620              	.L38:
+ 621              		.loc 1 127 3 discriminator 1 view .LVU183
+ 622 000a 8B42     		cmp	r3, r1
+ 623 000c 0AD2     		bcs	.L43
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 15
+
+
+ 128:APP/Public.c  **** 		{
+ 129:APP/Public.c  **** 			if(buf[i] > buf[k])
+ 624              		.loc 1 129 4 is_stmt 1 view .LVU184
+ 625              		.loc 1 129 10 is_stmt 0 view .LVU185
+ 626 000e 50F82520 		ldr	r2, [r0, r5, lsl #2]
+ 627              		.loc 1 129 19 view .LVU186
+ 628 0012 50F82340 		ldr	r4, [r0, r3, lsl #2]
+ 629              		.loc 1 129 6 view .LVU187
+ 630 0016 A242     		cmp	r2, r4
+ 631 0018 F5D9     		bls	.L39
+ 130:APP/Public.c  **** 			{
+ 131:APP/Public.c  **** 				temp = buf[i];
+ 632              		.loc 1 131 5 is_stmt 1 view .LVU188
+ 633              	.LVL47:
+ 132:APP/Public.c  **** 				buf[i] = buf[k];
+ 634              		.loc 1 132 5 view .LVU189
+ 635              		.loc 1 132 12 is_stmt 0 view .LVU190
+ 636 001a 40F82540 		str	r4, [r0, r5, lsl #2]
+ 133:APP/Public.c  **** 				buf[k] = temp;
+ 637              		.loc 1 133 5 is_stmt 1 view .LVU191
+ 638              		.loc 1 133 12 is_stmt 0 view .LVU192
+ 639 001e 40F82320 		str	r2, [r0, r3, lsl #2]
+ 640 0022 F0E7     		b	.L39
+ 641              	.LVL48:
+ 642              	.L43:
+ 125:APP/Public.c  **** 	{
+ 643              		.loc 1 125 19 view .LVU193
+ 644 0024 3546     		mov	r5, r6
+ 645              	.LVL49:
+ 646              	.L37:
+ 125:APP/Public.c  **** 	{
+ 647              		.loc 1 125 15 discriminator 1 view .LVU194
+ 648 0026 4B1E     		subs	r3, r1, #1
+ 125:APP/Public.c  **** 	{
+ 649              		.loc 1 125 2 discriminator 1 view .LVU195
+ 650 0028 9D42     		cmp	r5, r3
+ 651 002a 03DA     		bge	.L44
+ 127:APP/Public.c  **** 		{
+ 652              		.loc 1 127 3 is_stmt 1 view .LVU196
+ 127:APP/Public.c  **** 		{
+ 653              		.loc 1 127 9 is_stmt 0 view .LVU197
+ 654 002c 6E1C     		adds	r6, r5, #1
+ 655 002e B6B2     		uxth	r6, r6
+ 656              	.LVL50:
+ 127:APP/Public.c  **** 		{
+ 657              		.loc 1 127 9 view .LVU198
+ 658 0030 3346     		mov	r3, r6
+ 127:APP/Public.c  **** 		{
+ 659              		.loc 1 127 3 view .LVU199
+ 660 0032 EAE7     		b	.L38
+ 661              	.LVL51:
+ 662              	.L44:
+ 134:APP/Public.c  **** 			}
+ 135:APP/Public.c  **** 		}
+ 136:APP/Public.c  **** 	}
+ 137:APP/Public.c  **** }
+ 663              		.loc 1 137 1 view .LVU200
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 16
+
+
+ 664 0034 70BC     		pop	{r4, r5, r6}
+ 665              	.LCFI9:
+ 666              		.cfi_restore 6
+ 667              		.cfi_restore 5
+ 668              		.cfi_restore 4
+ 669              		.cfi_def_cfa_offset 0
+ 670              	.LVL52:
+ 671              		.loc 1 137 1 view .LVU201
+ 672 0036 7047     		bx	lr
+ 673              		.cfi_endproc
+ 674              	.LFE70:
+ 676              		.section	.text.mySort_u8,"ax",%progbits
+ 677              		.align	1
+ 678              		.global	mySort_u8
+ 679              		.syntax unified
+ 680              		.thumb
+ 681              		.thumb_func
+ 682              		.fpu softvfp
+ 684              	mySort_u8:
+ 685              	.LVL53:
+ 686              	.LFB71:
+ 138:APP/Public.c  **** 
+ 139:APP/Public.c  **** void mySort_u8(u8 *buf,u16 len)
+ 140:APP/Public.c  **** {
+ 687              		.loc 1 140 1 is_stmt 1 view -0
+ 688              		.cfi_startproc
+ 689              		@ args = 0, pretend = 0, frame = 0
+ 690              		@ frame_needed = 0, uses_anonymous_args = 0
+ 691              		@ link register save eliminated.
+ 692              		.loc 1 140 1 is_stmt 0 view .LVU203
+ 693 0000 70B4     		push	{r4, r5, r6}
+ 694              	.LCFI10:
+ 695              		.cfi_def_cfa_offset 12
+ 696              		.cfi_offset 4, -12
+ 697              		.cfi_offset 5, -8
+ 698              		.cfi_offset 6, -4
+ 141:APP/Public.c  **** 	u16 i,k;
+ 699              		.loc 1 141 2 is_stmt 1 view .LVU204
+ 142:APP/Public.c  **** 	u8 temp;
+ 700              		.loc 1 142 2 view .LVU205
+ 143:APP/Public.c  **** 	for(i=0;i<len-1;i++)
+ 701              		.loc 1 143 2 view .LVU206
+ 702              	.LVL54:
+ 703              		.loc 1 143 7 is_stmt 0 view .LVU207
+ 704 0002 0025     		movs	r5, #0
+ 705              		.loc 1 143 2 view .LVU208
+ 706 0004 0BE0     		b	.L46
+ 707              	.LVL55:
+ 708              	.L48:
+ 144:APP/Public.c  **** 	{
+ 145:APP/Public.c  **** 		for(k = i+1;k < len;k ++)
+ 709              		.loc 1 145 25 discriminator 2 view .LVU209
+ 710 0006 0133     		adds	r3, r3, #1
+ 711              	.LVL56:
+ 712              		.loc 1 145 25 discriminator 2 view .LVU210
+ 713 0008 9BB2     		uxth	r3, r3
+ 714              	.LVL57:
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 17
+
+
+ 715              	.L47:
+ 716              		.loc 1 145 3 discriminator 1 view .LVU211
+ 717 000a 8B42     		cmp	r3, r1
+ 718 000c 06D2     		bcs	.L52
+ 146:APP/Public.c  **** 		{
+ 147:APP/Public.c  **** 			if(buf[i] > buf[k])
+ 719              		.loc 1 147 4 is_stmt 1 view .LVU212
+ 720              		.loc 1 147 10 is_stmt 0 view .LVU213
+ 721 000e 425D     		ldrb	r2, [r0, r5]	@ zero_extendqisi2
+ 722              		.loc 1 147 19 view .LVU214
+ 723 0010 C45C     		ldrb	r4, [r0, r3]	@ zero_extendqisi2
+ 724              		.loc 1 147 6 view .LVU215
+ 725 0012 A242     		cmp	r2, r4
+ 726 0014 F7D9     		bls	.L48
+ 148:APP/Public.c  **** 			{
+ 149:APP/Public.c  **** 				temp = buf[i];
+ 727              		.loc 1 149 5 is_stmt 1 view .LVU216
+ 728              	.LVL58:
+ 150:APP/Public.c  **** 				buf[i] = buf[k];
+ 729              		.loc 1 150 5 view .LVU217
+ 730              		.loc 1 150 12 is_stmt 0 view .LVU218
+ 731 0016 4455     		strb	r4, [r0, r5]
+ 151:APP/Public.c  **** 				buf[k] = temp;
+ 732              		.loc 1 151 5 is_stmt 1 view .LVU219
+ 733              		.loc 1 151 12 is_stmt 0 view .LVU220
+ 734 0018 C254     		strb	r2, [r0, r3]
+ 735 001a F4E7     		b	.L48
+ 736              	.LVL59:
+ 737              	.L52:
+ 143:APP/Public.c  **** 	{
+ 738              		.loc 1 143 19 view .LVU221
+ 739 001c 3546     		mov	r5, r6
+ 740              	.LVL60:
+ 741              	.L46:
+ 143:APP/Public.c  **** 	{
+ 742              		.loc 1 143 15 discriminator 1 view .LVU222
+ 743 001e 4B1E     		subs	r3, r1, #1
+ 143:APP/Public.c  **** 	{
+ 744              		.loc 1 143 2 discriminator 1 view .LVU223
+ 745 0020 9D42     		cmp	r5, r3
+ 746 0022 03DA     		bge	.L53
+ 145:APP/Public.c  **** 		{
+ 747              		.loc 1 145 3 is_stmt 1 view .LVU224
+ 145:APP/Public.c  **** 		{
+ 748              		.loc 1 145 9 is_stmt 0 view .LVU225
+ 749 0024 6E1C     		adds	r6, r5, #1
+ 750 0026 B6B2     		uxth	r6, r6
+ 751              	.LVL61:
+ 145:APP/Public.c  **** 		{
+ 752              		.loc 1 145 9 view .LVU226
+ 753 0028 3346     		mov	r3, r6
+ 145:APP/Public.c  **** 		{
+ 754              		.loc 1 145 3 view .LVU227
+ 755 002a EEE7     		b	.L47
+ 756              	.LVL62:
+ 757              	.L53:
+ 152:APP/Public.c  **** 			}
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 18
+
+
+ 153:APP/Public.c  **** 		}
+ 154:APP/Public.c  **** 	}
+ 155:APP/Public.c  **** }
+ 758              		.loc 1 155 1 view .LVU228
+ 759 002c 70BC     		pop	{r4, r5, r6}
+ 760              	.LCFI11:
+ 761              		.cfi_restore 6
+ 762              		.cfi_restore 5
+ 763              		.cfi_restore 4
+ 764              		.cfi_def_cfa_offset 0
+ 765              	.LVL63:
+ 766              		.loc 1 155 1 view .LVU229
+ 767 002e 7047     		bx	lr
+ 768              		.cfi_endproc
+ 769              	.LFE71:
+ 771              		.text
+ 772              	.Letext0:
+ 773              		.file 2 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 774              		.file 3 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/_stdint.h"
+ 775              		.file 4 "Inc/stm32l152xe.h"
+ 776              		.file 5 "/Users/shuuyou/gcc-arm-none-eabi/lib/gcc/arm-none-eabi/8.3.1/include/stddef.h"
+ 777              		.file 6 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/_types.h"
+ 778              		.file 7 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/reent.h"
+ 779              		.file 8 "/Users/shuuyou/gcc-arm-none-eabi/arm-none-eabi/include/sys/lock.h"
+ 780              		.file 9 "Inc/core_cm3.h"
+ 781              		.file 10 "APP/inc/Public.h"
+ 782              		.file 11 "RML1028B/RML1028B.h"
+ 783              		.file 12 "HARDWARE/inc/Temputer.h"
+ 784              		.file 13 "HARDWARE/inc/Adc.h"
+ 785              		.file 14 "HARDWARE/inc/Timer.h"
+ 786              		.file 15 "HARDWARE/inc/Control.h"
+ 787              		.file 16 "TOOL/inc/malloc.h"
+ 788              		.file 17 "TOOL/inc/TaskManger.h"
+ 789              		.file 18 "DISPALY/inc/DispManger.h"
+ 790              		.file 19 "TOOL/inc/CrcUtil.h"
+ 791              		.file 20 "APP/inc/VolPro.h"
+ 792              		.file 21 "APP/inc/FreqPro.h"
+ 793              		.file 22 "APP/inc/ParasCheckPro.h"
+ 794              		.file 23 "APP/inc/TemputerPro.h"
+ARM GAS  /var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s 			page 19
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 Public.c
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s:16     .text.Ex_NVIC_Config:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s:24     .text.Ex_NVIC_Config:0000000000000000 Ex_NVIC_Config
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s:121    .text.Ex_NVIC_Config:0000000000000064 $d
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s:127    .text.GPIO_AF_Set:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s:134    .text.GPIO_AF_Set:0000000000000000 GPIO_AF_Set
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s:184    .text.GPIO_Set:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s:191    .text.GPIO_Set:0000000000000000 GPIO_Set
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s:317    .text.IoInit:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s:324    .text.IoInit:0000000000000000 IoInit
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s:535    .text.Pin2Num:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s:542    .text.Pin2Num:0000000000000000 Pin2Num
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s:582    .text.mySort:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s:589    .text.mySort:0000000000000000 mySort
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s:677    .text.mySort_u8:0000000000000000 $t
+/var/folders/ww/n4ctlbrs3x70633t9y2ks63c0000gn/T//cc9XRh2u.s:684    .text.mySort_u8:0000000000000000 mySort_u8
+
+NO UNDEFINED SYMBOLS
